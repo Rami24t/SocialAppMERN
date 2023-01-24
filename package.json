@@ -1,0 +1,19 @@
+{
+  "name": "socialappmern",
+  "version": "1.0.0",
+  "description": "a social app made using the mern stack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rami24t/SocialAppMERN.git"
+  },
+  "author": "Rami Al-Saadi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rami24t/SocialAppMERN/issues"
+  },
+  "homepage": "https://github.com/Rami24t/SocialAppMERN#readme"
+}
