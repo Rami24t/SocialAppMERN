@@ -11,7 +11,7 @@ import {
   MDBCheckbox
 }
 from 'mdb-react-ui-kit';
-import './registrationCard.css';
+import './RegistrationCard.css';
 
 function App() {
   return (
@@ -26,11 +26,11 @@ function App() {
               <h2 className="fw-bold mb-5">Sign up now</h2>
 
               <MDBRow>
-                <MDBCol col='6'>
+                <MDBCol className="col-auto mw-50">
                   <MDBInput wrapperClass='mb-4' label='First name' id='form1' type='text'/>
                 </MDBCol>
 
-                <MDBCol col='6'>
+                <MDBCol className="col-auto mw-50">
                   <MDBInput wrapperClass='mb-4' label='Last name' id='form2' type='text'/>
                 </MDBCol>
               </MDBRow>
@@ -70,13 +70,11 @@ function App() {
           </MDBCard>
         </MDBCol>
 
-        <MDBCol col='6'>
-          <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4"
+        <MDBCol>
+          <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" className="rounded-4 shadow-4"
             alt="" fluid/>
         </MDBCol>
-
       </MDBRow>
-
     </MDBContainer>
   );
 }

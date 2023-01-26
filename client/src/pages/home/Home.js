@@ -1,6 +1,6 @@
 import React from "react"
-import Header from "../../components/header/header";
-import Posts from "../../components/posts/posts";
+import Header from "../../components/header/Header";
+import Posts from "../../components/posts/Posts";
 
 export default function Home() {
     return (

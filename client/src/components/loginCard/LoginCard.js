@@ -11,7 +11,8 @@ import {
   MDBCheckbox
 }
 from 'mdb-react-ui-kit';
-import './loginCard.css';
+import {Link} from 'react-router-dom';
+import './LoginCard.css';
 
 function App() {
   return (
@@ -35,8 +36,12 @@ function App() {
                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
                 <a href="!#">Forgot password?</a>
               </div>
+              <MDBBtn className="mb-4 w-100">Log in</MDBBtn>
 
-              <MDBBtn className="mb-4 w-100">Sign in</MDBBtn>
+
+                <p className='text-center' >New user?  Sign up now for a new account</p>
+              <Link to="/register"><MDBBtn className="mb-4 w-100">Sign up</MDBBtn></Link>
+              
 
             </MDBCardBody>
 

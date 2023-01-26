@@ -2,7 +2,7 @@ import express from 'express'
 import {list, add, deletePost, edit, like} from '../controllers/postController.js'
 import {addComment, deleteComment, editComment} from '../controllers/commentController.js'
 import multerMiddleware from '../config/multer-cloudinary.js'
-import auth from '../middlewares/auth.js'
+import auth from '../middleware/auth.js'
 const router = express.Router()
 
 // Main Posts

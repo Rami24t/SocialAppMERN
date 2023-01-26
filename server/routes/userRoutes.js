@@ -1,6 +1,6 @@
 import express from 'express'
 import {register, login, emailConfirm, forgotPass, changePass, logout, updateProfile} from '../controllers/userController.js'
-import auth from '../middlewares/auth.js'
+import auth from '../middleware/auth.js'
 import multerMiddleware from '../config/multer-cloudinary.js'
 const router = express.Router()
 
