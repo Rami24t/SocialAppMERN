@@ -1,8 +1,14 @@
 import React from 'react'
+import { MDBContainer } from 'mdb-react-ui-kit'
+import Post from '../post/Post'
 
 const posts = () => {
   return (
-    <div>posts</div>
+    <MDBContainer>
+      <Post />      <Post />      <Post />
+
+
+    </MDBContainer>
   )
 }
 

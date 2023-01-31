@@ -15,7 +15,7 @@ import './RegistrationCard.css';
 
 function App() {
   return (
-    <MDBContainer fluid className='my-5'>
+    <MDBContainer fluid className='my-5 registration'>
 
       <MDBRow className='g-0 align-items-center'>
         <MDBCol col='6'>
@@ -25,18 +25,18 @@ function App() {
 
               <h2 className="fw-bold mb-5">Sign up now</h2>
 
-              <MDBRow>
-                <MDBCol className="col-auto mw-50">
-                  <MDBInput wrapperClass='mb-4' label='First name' id='form1' type='text'/>
-                </MDBCol>
+              {/* <MDBRow> */}
+                {/* <MDBCol className="col-auto mw-50"> */}
+                  <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text'/>
+                {/* </MDBCol> */}
 
-                <MDBCol className="col-auto mw-50">
+                {/* <MDBCol className="col-auto mw-50">
                   <MDBInput wrapperClass='mb-4' label='Last name' id='form2' type='text'/>
-                </MDBCol>
-              </MDBRow>
+                </MDBCol> */}
+              {/* </MDBRow> */}
 
-              <MDBInput wrapperClass='mb-4' label='Email' id='form3' type='email'/>
-              <MDBInput wrapperClass='mb-4' label='Password' id='form4' type='password'/>
+              <MDBInput wrapperClass='mb-4' label='Email' id='form2' type='email'/>
+              <MDBInput wrapperClass='mb-4' label='Password' id='form3' type='password'/>
 
               <div className='d-flex justify-content-center mb-4'>
                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Subscribe to our newsletter' />

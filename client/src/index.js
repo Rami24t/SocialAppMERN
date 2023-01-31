@@ -10,6 +10,7 @@ import Home from './pages/home/Home';
 import Profile from './pages/profile/Profile';
 import ViewProfile from './pages/viewProfile/ViewProfile';
 import ContextProvider from './context/Context';
+import 'semantic-ui-css/semantic.min.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,7 +22,7 @@ root.render(
           <Route path='/register' element={<Register />} />
           <Route path='/home' element={<Home />} />
           <Route path='/profile' element={<Profile />} />
-          <Route path='/viewprofile/:id' element={<ViewProfile />} />
+          <Route path='/view-profile/:id' element={<ViewProfile />} />
         </Routes>
       </BrowserRouter>
     </ContextProvider>

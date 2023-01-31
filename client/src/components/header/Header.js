@@ -4,7 +4,7 @@ export default function App() {
   return (
     <header>
       <div
-        className='p-5 text-center bg-image'
+        className='p-5 mb-7 text-center bg-image'
         style={{ backgroundImage: "url('https://mdbootstrap.com/img/new/slides/041.webp')", height: 400 }}
       >
         <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
@@ -19,7 +19,7 @@ export default function App() {
           </div>
         </div>
       </div>
-      <p className='mt-4'>Scroll down</p>
+      {/* <p className='mt-4'>Scroll down</p> */}
     </header>
   );
 }

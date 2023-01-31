@@ -16,7 +16,7 @@ import './LoginCard.css';
 
 function App() {
   return (
-    <MDBContainer className='my-5'>
+    <MDBContainer className='my-5 login'>
       <MDBCard>
 
         <MDBRow className='g-0 d-flex align-items-center'>
@@ -39,7 +39,7 @@ function App() {
               <MDBBtn className="mb-4 w-100">Log in</MDBBtn>
 
 
-                <p className='text-center' >New user?  Sign up now for a new account</p>
+                <p className='mt-1 text-center' >New user?  Sign up now for a new account</p>
               <Link to="/register"><MDBBtn className="mb-4 w-100">Sign up</MDBBtn></Link>
               
 
