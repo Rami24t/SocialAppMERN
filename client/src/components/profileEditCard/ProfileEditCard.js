@@ -16,17 +16,17 @@ export default function PersonalProfile() {
                   <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                     alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
                   <MDBTypography tag="h5">Marie Horwitz</MDBTypography>
-                  <MDBTypography tag="h5">
-                  <MDBInput label='Name' id='name' type='text' /></MDBTypography>
+                  <MDBTypography tag="h5" className='w-75 m-auto'>
+                  <MDBInput className='text-center' label='Name' id='name' type='text' /></MDBTypography>
                   <MDBCardText>Web Designer</MDBCardText>
-                  <MDBCardText><MDBInput label='Title' id='title' type='text' /></MDBCardText>
+                  <MDBCardText className='w-75 m-auto'><MDBInput className='text-center' label='Title' id='title' type='text' /></MDBCardText>
                   <MDBIcon far icon="save mb-5" />
                 </MDBCol>
                 <MDBCol md="8">
                   <MDBCardBody className="p-4 clearfix">
-                    <MDBTypography tag="h6">Information</MDBTypography>
+                    <MDBTypography tag="h6">Contact Information</MDBTypography>
                     <hr className="mt-0 mb-4" />
-                    <MDBRow className="pt-1">
+                    <MDBRow className="pt-1 mb-3">
                       <MDBCol size="6" className="mb-3">
                         <MDBTypography tag="h6">Email</MDBTypography>
                         <MDBCardText className="text-muted">info@example.com</MDBCardText>
