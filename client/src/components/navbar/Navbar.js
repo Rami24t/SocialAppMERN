@@ -42,7 +42,7 @@ function OffcanvasExample() {
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item>
-                    <NavLink to="/settings">Account settings</NavLink>
+                    <NavLink to="/account">Account settings</NavLink>
                     </NavDropdown.Item>
                   </NavDropdown>
                 </Nav>

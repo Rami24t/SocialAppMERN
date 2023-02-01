@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Comment, Form, Header } from 'semantic-ui-react'
+import { Comment, Header } from 'semantic-ui-react'
 
 const CommentExampleThreaded = () => (
   <Comment.Group threaded>
@@ -49,6 +49,24 @@ const CommentExampleThreaded = () => (
               <a>Reply</a>
             </Comment.Actions>
           </Comment.Content>
+
+          <Comment.Group>
+        <Comment>
+          <Comment.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/jenny.jpg' />
+          <Comment.Content>
+            <Comment.Author as='a'>Jenny Hess</Comment.Author>
+            <Comment.Metadata>
+              <span>Just now</span>
+            </Comment.Metadata>
+            <Comment.Text>Elliot you are always so right :)</Comment.Text>
+            <Comment.Actions>
+              <a>Reply</a>
+            </Comment.Actions>
+          </Comment.Content>
+        </Comment>
+      </Comment.Group>
+
+
         </Comment>
       </Comment.Group>
     </Comment>
@@ -67,10 +85,7 @@ const CommentExampleThreaded = () => (
       </Comment.Content>
     </Comment>
 
-    <Form reply>
-      <Form.TextArea />
-      <Button content='Add Reply' labelPosition='left' icon='edit' primary />
-    </Form>
+    
   </Comment.Group>
 )
 

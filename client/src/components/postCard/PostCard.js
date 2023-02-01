@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -16,6 +16,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Popover from '../popover/Popover'
 import Comments from '../comments/Comments'
+import {Button, Form, Ref } from 'semantic-ui-react'
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -32,6 +33,7 @@ const ExpandMore = styled((props) => {
 export default function RecipeReviewCard() {
   // Popover
   const [anchorEl, setAnchorEl] = useState(null);
+  const mainRef = useRef(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -41,6 +43,16 @@ export default function RecipeReviewCard() {
   };
 
   const [expanded, setExpanded] = useState(false);
+
+  const handleCommentClick = () => {
+    if(!expanded)
+    {
+      setExpanded(true);
+      setTimeout(() => mainRef.current?.firstChild.focus(), 200);
+    }
+    console.log(mainRef.current?.firstChild);
+    mainRef.current?.firstChild.focus();
+  }
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -86,7 +98,7 @@ export default function RecipeReviewCard() {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="Comment">
+        <IconButton onClick={handleCommentClick} aria-label="Comment">
           <CommentIcon />
         </IconButton>
         <ExpandMore
@@ -101,6 +113,13 @@ export default function RecipeReviewCard() {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Comments />
+          {/* reply form */}
+          <Form reply>
+            <Ref innerRef={mainRef}>
+              <Form.TextArea />
+            </Ref>
+            <Button content='Add Reply' labelPosition='left' icon='edit' primary />
+          </Form>
         </CardContent>
       </Collapse>
     </Card>

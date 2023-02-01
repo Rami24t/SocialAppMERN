@@ -21,8 +21,8 @@ export default function PersonalProfile() {
                 <MDBCol md="8">
                   <MDBCardBody className="p-4">
                     <MDBTypography tag="h6">Information</MDBTypography>
-                    <hr className="mt-0 mb-4" />
-                    <MDBRow className="pt-1">
+                    <hr className="mt-0 mb-2" />
+                    <MDBRow className="pt-1 mb-2">
                       <MDBCol size="6" className="mb-3">
                         <MDBTypography tag="h6">Email</MDBTypography>
                         <MDBCardText className="text-muted">info@example.com</MDBCardText>
@@ -33,17 +33,10 @@ export default function PersonalProfile() {
                       </MDBCol>
                     </MDBRow>
 
-                    <MDBTypography tag="h6">Information</MDBTypography>
-                    <hr className="mt-0 mb-4" />
-                    <MDBRow className="pt-1">
-                      <MDBCol size="6" className="mb-3">
-                        <MDBTypography tag="h6">Email</MDBTypography>
-                        <MDBCardText className="text-muted">info@example.com</MDBCardText>
-                      </MDBCol>
-                      <MDBCol size="6" className="mb-3">
-                        <MDBTypography tag="h6">Phone</MDBTypography>
-                        <MDBCardText className="text-muted">123 456 789</MDBCardText>
-                      </MDBCol>
+                    <MDBTypography tag="h6">About Me</MDBTypography>
+                    <hr className="mt-0 mb-2" />
+                    <MDBRow className="pt-1 mb-5">
+                        <MDBCardText className="text-muted">I am a .... something about yourself.</MDBCardText>
                     </MDBRow>
 
                     <div className="d-flex justify-content-start">

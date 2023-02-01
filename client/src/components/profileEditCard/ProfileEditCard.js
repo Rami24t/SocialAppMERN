@@ -17,9 +17,9 @@ export default function PersonalProfile() {
                     alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
                   <MDBTypography tag="h5">Marie Horwitz</MDBTypography>
                   <MDBTypography tag="h5" className='w-75 m-auto'>
-                  <MDBInput className='text-center' label='Name' id='name' type='text' /></MDBTypography>
+                  <MDBInput className='text-light text-center mb-3' label='Name' id='name' type='text' /></MDBTypography>
                   <MDBCardText>Web Designer</MDBCardText>
-                  <MDBCardText className='w-75 m-auto'><MDBInput className='text-center' label='Title' id='title' type='text' /></MDBCardText>
+                  <MDBCardText className='w-75 m-auto mb-2'><MDBInput className='text-center text-light' label='Title' id='title' type='text' /></MDBCardText>
                   <MDBIcon far icon="save mb-5" />
                 </MDBCol>
                 <MDBCol md="8">
@@ -46,16 +46,16 @@ export default function PersonalProfile() {
                       <MDBTextArea label='Write something about yourself' id='textAreaExample' rows={4} />                      </MDBCol>
                     </MDBRow>
 
-                    <div className="mb-5 d-flex flex-column gap-2">
+                    <div className="mb-5 d-flex flex-column gap-2 clearfix">
                     <div>
-                      <MDBIcon fab icon="facebook me-3" size="lg" />
+                      <MDBIcon className="float-end" fab icon="facebook me-3" size="lg" />
                       <MDBInput label='facebook URL' id='typeURL' type='url' /></div>
                       <div>
-                      <MDBIcon fab icon="twitter me-3" size="lg" />
+                      <MDBIcon className='float-end' fab icon="twitter me-3" size="lg" />
                       <MDBInput label='twitter URL' id='typeURL' type='url' />
                     </div>
                     <div>
-                      <MDBIcon fab icon="instagram me-3" size="lg" />
+                      <MDBIcon className='float-end' fab icon="instagram me-3" size="lg" />
                       <MDBInput label='instagram URL' id='typeURL' type='url' /></div>
                     </div>
                     <Button className=' float-end w-50'>Save</Button>
