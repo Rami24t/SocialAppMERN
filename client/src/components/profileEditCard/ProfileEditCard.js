@@ -41,22 +41,22 @@ const handleSave = async () => {
   formdata.set('twitter', data.twitter)
   formdata.set('instagram', data.instagram)
   formdata.set('username', data.username)
-
-
   if (fileData.file) formdata.set('image', fileData.file, 'profileImage')
 
   const config = {
       Headers: {'content-type': 'multipart/form-data'}, 
       withCredentials: true
   }
-
   const response = await axios.post(baseUrl + '/users/profile', formdata, config)
-  console.log("🚀 ~ handleSave ~ response", response)
-
-  if (response.data.success) dispatch({
+  console.log("handleSave response:", response)
+  if (response.data.success) 
+  {
+    dispatch({
       type: 'saveProfile',
       payload: response.data.user
-  })
+    })
+    navigate('/view-profile/myprofile')
+  }
 }
 const handleChange = e => {
   setData({
@@ -66,7 +66,7 @@ const handleChange = e => {
 }
 
 const handleImageChange = e => {
-  console.log("🚀 ~ handleImageChange ~ e", e.currentTarget.files[0])
+  console.log("handleImageChange e", e.currentTarget.files[0])
   
   setFiledata({
       url: URL.createObjectURL(e.currentTarget.files[0]),

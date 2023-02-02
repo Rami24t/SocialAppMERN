@@ -1,6 +1,7 @@
 import React from 'react';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography, MDBIcon } from 'mdb-react-ui-kit';
 import './ProfileCard.css';
+import { Link } from 'react-router-dom';
 
 export default function PersonalProfile({data}) {
   return (
@@ -12,11 +13,13 @@ export default function PersonalProfile({data}) {
               <MDBRow className="g-0">
                 <MDBCol md="4" className="gradient-custom text-center text-white"
                   style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
-                  <MDBCardImage src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                    alt="Avatar" className="my-5" style={{ width: '80px' }} fluid />
+                  <MDBCardImage src={data.image || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"}
+                    alt="Avatar" className="my-5 rounded-circle" style={{ width: '80px' }} fluid />
                   <MDBTypography tag="h5">{data?.name || 'Full Name'}</MDBTypography>
                   <MDBCardText>{data?.title || 'Title'}</MDBCardText>
-                  <MDBIcon far icon="edit mb-5" />
+                  <Link to="/profile">
+                    <MDBIcon far icon="edit mb-5" />
+                  </Link>
                 </MDBCol>
                 <MDBCol md="8">
                   <MDBCardBody className="p-4">
@@ -40,9 +43,9 @@ export default function PersonalProfile({data}) {
                     </MDBRow>
 
                     <div className="d-flex justify-content-start">
-                      <a href={data?.facebook}><MDBIcon fab icon="facebook me-3" size="lg" /></a>
-                      <a href={data?.twitter}><MDBIcon fab icon="twitter me-3" size="lg" /></a>
-                      <a href={data?.instagram}><MDBIcon fab icon="instagram me-3" size="lg" /></a>
+                      {data.facebook && <a href={data?.facebook || '#facebook'}  target="_blank" rel="noopener noreferrer"><MDBIcon fab icon="facebook me-3" size="lg" /></a>}
+                      {data?.twitter && <a href={data?.twitter || '#twitter'} target="_blank" rel="noopener noreferrer"><MDBIcon fab icon="twitter me-3" size="lg" /></a>}
+                      {data?.instagram && <a href={data?.instagram || '#instagram'}  target="_blank" rel="noopener noreferrer"><MDBIcon fab icon="instagram me-3" size="lg" /></a>}
                     </div>
                   </MDBCardBody>
                 </MDBCol>
