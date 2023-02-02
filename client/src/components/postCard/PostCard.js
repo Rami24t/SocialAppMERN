@@ -17,6 +17,18 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Popover from '../popover/Popover'
 import Comments from '../comments/Comments'
 import {Button, Form, Ref } from 'semantic-ui-react'
+import Badge from '@mui/material/Badge';
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    opacity: 0.8,
+    right: -5,
+    top: 14,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 4px',
+  },
+}));
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -95,8 +107,10 @@ export default function RecipeReviewCard() {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" className='me-2'>
+        <StyledBadge badgeContent={93} color="warning">
           <FavoriteIcon />
+        </StyledBadge>
         </IconButton>
         <IconButton onClick={handleCommentClick} aria-label="Comment">
           <CommentIcon />

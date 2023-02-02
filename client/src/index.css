@@ -3,3 +3,10 @@ body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
 
 }
+
+.hover-opacity-75:hover {
+  opacity: 0.85;
+}
+.cursor-pointer {
+  cursor: pointer;
+}

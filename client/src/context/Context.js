@@ -5,8 +5,15 @@ export default function ContextProvider({children})
 {
     const reducer = (state, action) => {
         switch(action.type) {
-            case "login":
-                return {                    
+            case 'login':
+            return {
+                ...state,
+                user: {...action.payload}
+            }
+            case 'logout':
+                return {
+                    user: {},
+                    posts: []
                 }
             default:
                 return state

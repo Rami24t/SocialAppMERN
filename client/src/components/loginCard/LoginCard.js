@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {
   MDBBtn,
   MDBContainer,
@@ -11,10 +11,32 @@ import {
   MDBCheckbox
 }
 from 'mdb-react-ui-kit';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import './LoginCard.css';
+import axios from 'axios';
+import {SocialContext} from '../../context/Context';
 
 function App() {
+  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const navigate = useNavigate();
+  const {dispatch} = useContext(SocialContext);
+  const [data, setData] = useState({
+    emailOrUsername: '',
+    password: ''
+})
+const handleLogin = async () => {
+  const response = await axios.post(baseUrl + "/users/login", data,  {withCredentials: true})
+  console.log("handleLogin response:", response)
+  if (response.data.success) {
+      dispatch({
+          type: 'login',
+          payload: response.data.user
+      })
+      navigate('/home')
+  }
+}
+
+
   return (
     <MDBContainer className='my-5 login'>
       <MDBCard>
@@ -29,14 +51,22 @@ function App() {
 
             <MDBCardBody>
 
-              <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'/>
-              <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'/>
+              <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'
+                        name="email" 
+                        value={data.emailOrUsername} 
+                        onChange={e => setData({...data, emailOrUsername: e.target.value })}
+              />
+              <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'
+                        name="password" 
+                        value={data.password} 
+                        onChange={e => setData({...data, password: e.target.value})}
+              />
 
               <div className="d-flex justify-content-between mx-4 mb-4">
                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
                 <a href="!#">Forgot password?</a>
               </div>
-              <MDBBtn className="mb-4 w-100">Log in</MDBBtn>
+              <MDBBtn onClick={handleLogin} className="mb-4 w-100">Log in</MDBBtn>
 
 
                 <p className='mt-1 text-center' >New user?  Sign up now for a new account</p>

@@ -33,7 +33,7 @@ export const login = async (req, res) => {
         const newUser = user.toObject()
         delete newUser.password
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '1h'})
-        res.cookie('SocialAppMERN', token)
+        res.cookie('SocialAppMERNToken', token)
         res.send({success: true, user: newUser})        
     } catch (error) {
         console.log("login error:", error.message)
@@ -95,7 +95,7 @@ export const changePass = async (req, res) => {
 
 export const logout = async (req, res) => {
     try {
-        res.clearCookie('SocialAppMERN')
+        res.clearCookie('SocialAppMERNToken')
         res.send({success: true})
     } catch (error) {
         console.log("logout error:", error.message)
@@ -106,7 +106,7 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try {
         if (req.file) req.body.image = req.file.path
-        req.body.hobbies = JSON.parse(req.body.hobbies)
+        req.body.likes = JSON.parse(req.body.likes)
         const user = await User.findByIdAndUpdate(
             req.user,
             req.body,

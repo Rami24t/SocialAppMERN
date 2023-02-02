@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
+
 import {
   MDBBtn,
   MDBContainer,
@@ -14,6 +17,30 @@ from 'mdb-react-ui-kit';
 import './RegistrationCard.css';
 
 function App() {
+  const baseUrl=process.env.REACT_APP_BASE_URL
+  const [data, setData] = useState({
+    username: '',
+    email: '',
+    password: ''
+})
+const navigate = useNavigate()
+
+const handleRegister = async () => {
+  try {
+    console.log(baseUrl + '/users/register');
+      const response = await axios.post(baseUrl + '/users/register', data, {withCredentials: true})
+      console.log("handleRegister response:", response)
+
+      if (response.data.success) {
+          navigate('/')
+      } else {
+          if (response.data.errorId === 2) alert('Username must be more than 2 characters')          
+      }
+  } catch (error) {
+     console.log("error:", error.message)
+  }
+}
+
   return (
     <MDBContainer fluid className='my-5 registration'>
 
@@ -27,7 +54,11 @@ function App() {
 
               {/* <MDBRow> */}
                 {/* <MDBCol className="col-auto mw-50"> */}
-                  <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text'/>
+                  <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text'
+                        name="user" 
+                        value={data.username} 
+                        onChange={e => setData({...data, username: e.target.value })}
+                  />
                 {/* </MDBCol> */}
 
                 {/* <MDBCol className="col-auto mw-50">
@@ -35,14 +66,22 @@ function App() {
                 </MDBCol> */}
               {/* </MDBRow> */}
 
-              <MDBInput wrapperClass='mb-4' label='Email' id='form2' type='email'/>
-              <MDBInput wrapperClass='mb-4' label='Password' id='form3' type='password'/>
+              <MDBInput wrapperClass='mb-4' label='Email' id='form2' type='email'
+                        name="email" 
+                        value={data.email} 
+                        onChange={e => setData({...data, email: e.target.value })}
+              />
+              <MDBInput wrapperClass='mb-4' label='Password' id='form3' type='password'
+                        name="password" 
+                        value={data.password} 
+                        onChange={e => setData({...data, password: e.target.value})}
+              />
 
               <div className='d-flex justify-content-center mb-4'>
                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Subscribe to our newsletter' />
               </div>
 
-              <MDBBtn className='w-100 mb-4' size='md'>sign up</MDBBtn>
+              <MDBBtn onClick={handleRegister} className='w-100 mb-4' size='md'>sign up</MDBBtn>
 
               <div className="text-center">
 
