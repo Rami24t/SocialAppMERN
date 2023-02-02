@@ -11,21 +11,34 @@ export default function ContextProvider({children})
                 user: {...action.payload}
             }
             case 'logout':
+                return reset
+            case 'saveProfile':
                 return {
-                    user: {},
-                    posts: []
+                    ...state,
+                    user: {...action.payload}
                 }
             default:
                 return state
             }
         }
-    const [state, dispatch] = useReducer(reducer, 
-        {
-            user: null,
-            posts: [],
-            isFetching: false,
-            error: false
-        })    
+        const reset = {
+                user: {
+                        name: '',
+                        title: '',
+                        email: '',
+                        phone: '',
+                        about: '',
+                        likes:  [],
+                        facebook: '',
+                        twitter: '',
+                        instagram: '',
+                        username: ''
+                     },       
+                posts: [],
+                isFetching: false,
+                error: false
+            }
+    const [state, dispatch] = useReducer(reducer, reset)
   return (
     <SocialContext.Provider value={{state, dispatch}}>
         {children}

@@ -29,7 +29,7 @@ const handleLogin = async () => {
   console.log("handleLogin response:", response)
   if (response.data.success) {
       dispatch({
-          type: 'login',
+          type: 'saveProfile',
           payload: response.data.user
       })
       navigate('/home')
