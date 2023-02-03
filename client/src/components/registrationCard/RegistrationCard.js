@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-
+// import { GoogleLogin } from "react-google-login";
+// import useFetch from '../hooks/useFetch'; 
 import {
   MDBBtn,
   MDBContainer,
@@ -15,6 +16,29 @@ import {
 }
 from 'mdb-react-ui-kit';
 import './RegistrationCard.css';
+  // const signUp = () => {
+  //   const { handleGoogle, loading, error } = useFetch(
+  //     baseUrl + "/users/google"
+  //   );
+    // useEffect(() => {
+    //   /* global google */
+    //   if (window.google) {
+    //     google.accounts.id.initialize({
+    //       client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+    //       callback: handleGoogle,
+    //     });
+  
+    //     google.accounts.id.renderButton(document.getElementById("signUpDiv"), {
+    //       // type: "standard",
+    //       theme: "filled_black",
+    //       // size: "small",
+    //       text: "continue_with",
+    //       shape: "pill",
+    //     });
+  
+    //     // google.accounts.id.prompt()
+    //   }
+    // }, [handleGoogle]);
 
 function App() {
   const baseUrl=process.env.REACT_APP_BASE_URL
@@ -95,7 +119,7 @@ const handleRegister = async () => {
                   <MDBIcon fab icon='twitter' size="sm"/>
                 </MDBBtn>
 
-                <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
+               <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
                   <MDBIcon fab icon='google' size="sm"/>
                 </MDBBtn>
 

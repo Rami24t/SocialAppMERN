@@ -1,3 +1,4 @@
+import React, {useContext} from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -6,9 +7,25 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import {NavLink} from 'react-router-dom';
-import './Navbar.css'
+import './Navbar.css';
+import {SocialContext} from '../../context/Context';
+import axios from 'axios';
 
 function OffcanvasExample() {
+  const baseUrl = 'http://localhost:5000'
+  const {state,dispatch} = useContext(SocialContext);
+  const loggedIn = state.user.name ? true : false;
+
+  const  handleLogOut = async () => {
+   const response = await axios.get(baseUrl + '/users/logout', {withCredentials: true})
+    if (response.status === 200) {
+    dispatch({type: 'logout'})
+  }
+  else {
+    console.log('error logging out')
+  }
+}
+
   return (
     <>
       {['xl'].map((expand) => (
@@ -53,7 +70,9 @@ function OffcanvasExample() {
                     className="me-2"
                     aria-label="Search"
                   /> */}
-                  <NavLink to="/"><Button variant="outline-success">Log In</Button></NavLink>
+                  <NavLink to="/">
+                    <Button onClick={loggedIn ? handleLogOut : null} variant="outline-success">Log {loggedIn ? 'out' : 'in'}  </Button>
+                  </NavLink>
                 </Form>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
@@ -63,5 +82,4 @@ function OffcanvasExample() {
     </>
   );
 }
-
 export default OffcanvasExample;

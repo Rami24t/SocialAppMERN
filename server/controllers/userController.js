@@ -96,7 +96,7 @@ export const changePass = async (req, res) => {
 export const logout = async (req, res) => {
     try {
         res.clearCookie('SocialAppMERNToken')
-        res.send({success: true})
+        res.json({success: true}).status(200)
     } catch (error) {
         console.log("logout error:", error.message)
         res.send({success: false, error: error.message})
