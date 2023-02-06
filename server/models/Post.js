@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 const postSchema = new Schema({
+        title: {
+            type: String,
+            required: true
+        },
         text: {
             type: String,
             required: true
         },
-        image: String,
+        postImage: String,
         author: {
             type: Schema.Types.ObjectId,
             ref: 'User',
@@ -17,14 +21,8 @@ const postSchema = new Schema({
         }],
         comments: [
             {
-                comment: {
-                    type: String,
-                    required: true
-                },
-                author: {
-                    type: Schema.Types.ObjectId,
-                    ref: 'User'
-                }
+                type: Schema.Types.ObjectId,
+                ref: 'Comment'
             }
         ]
     },

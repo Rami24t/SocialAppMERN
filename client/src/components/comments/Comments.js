@@ -16,6 +16,7 @@ const CommentExampleThreaded = () => (
         </Comment.Metadata>
         <Comment.Text>How artistic!</Comment.Text>
         <Comment.Actions>
+          <a>12 Likes</a>
           <a>Reply</a>
         </Comment.Actions>
       </Comment.Content>
@@ -32,6 +33,7 @@ const CommentExampleThreaded = () => (
           <p>This has been very useful for my research. Thanks as well!</p>
         </Comment.Text>
         <Comment.Actions>
+          <a>Like</a>
           <a>Reply</a>
         </Comment.Actions>
       </Comment.Content>
@@ -46,6 +48,7 @@ const CommentExampleThreaded = () => (
             </Comment.Metadata>
             <Comment.Text>Elliot you are always so right :)</Comment.Text>
             <Comment.Actions>
+              <a>Like</a>
               <a>Reply</a>
             </Comment.Actions>
           </Comment.Content>
@@ -60,6 +63,7 @@ const CommentExampleThreaded = () => (
             </Comment.Metadata>
             <Comment.Text>Elliot you are always so right :)</Comment.Text>
             <Comment.Actions>
+              <a>Like</a>
               <a>Reply</a>
             </Comment.Actions>
           </Comment.Content>
@@ -80,6 +84,7 @@ const CommentExampleThreaded = () => (
         </Comment.Metadata>
         <Comment.Text>Dude, this is awesome. Thanks so much</Comment.Text>
         <Comment.Actions>
+          <a>Like</a>
           <a>Reply</a>
         </Comment.Actions>
       </Comment.Content>

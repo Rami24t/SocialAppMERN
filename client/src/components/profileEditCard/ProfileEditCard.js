@@ -4,8 +4,9 @@ import { MDBInput, MDBTextArea, MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardTe
 import './ProfileEditCard.css';
 import { Button } from 'semantic-ui-react';
 import axios from 'axios'
-import {SocialContext} from '../../context/Context';
+import {SocialContext} from '../context/Context';
 import ChipMultipleSelect from '../chipMultipleSelect/ChipMultipleSelect';  
+import { handleImageChange } from '../../utilities/handleImageChange';
 
 export default function PersonalProfile() {
   const baseUrl = process.env.REACT_APP_BASE_URL;
@@ -14,7 +15,7 @@ export default function PersonalProfile() {
 if(!state.user.email)
   navigate('/')
   const [fileData, setFiledata] = useState({
-      url: state?.user?.image || 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp',
+      url: state?.user?.profileImage || 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp',
       file: null
   })
   const [data, setData] = useState({
@@ -47,7 +48,7 @@ const handleSave = async () => {
       Headers: {'content-type': 'multipart/form-data'}, 
       withCredentials: true
   }
-  const response = await axios.post(baseUrl + '/users/profile', formdata, config)
+  const response = await axios.put(baseUrl + '/users/profile', formdata, config)
   console.log("handleSave response:", response)
   if (response.data.success) 
   {
@@ -65,14 +66,6 @@ const handleChange = e => {
   })
 }
 
-const handleImageChange = e => {
-  console.log("handleImageChange e", e.currentTarget.files[0])
-  
-  setFiledata({
-      url: URL.createObjectURL(e.currentTarget.files[0]),
-      file: e.currentTarget.files[0] 
-  })
-}
 const [likes, setLikes] = useState(state?.user?.likes || []);
 
 
@@ -90,16 +83,16 @@ const [likes, setLikes] = useState(state?.user?.likes || []);
                     src={fileData.url}
                     alt="Avatar" className="hover-opacity-75 my-5 rounded-circle cursor-pointer" style={{ width: '80px' }} fluid
                      />
-                     <input type='file' className='d-none' onChange={handleImageChange}/>
+                     <input type='file' className='d-none' onChange={(e)=>handleImageChange(e,setFiledata)}/>
                   </label>
-                  <MDBTypography tag="h5">{data.name}</MDBTypography>
+                  {/* <MDBTypography tag="h5">{data.name}</MDBTypography> */}
                   <MDBTypography tag="h5" className='w-75 m-auto'>
-                  <MDBInput className='text-light text-center mb-3' label='Name' id='name' type='text' 
+                  <MDBInput tag="h5" className='text-light text-center mb-3' label='Name' id='name' type='text' 
                   name='name' 
                   value={data.name}
                   onChange={handleChange}
                   /></MDBTypography>
-                  <MDBCardText>{data.title}</MDBCardText>
+                  {/* <MDBCardText>{data.title}</MDBCardText> */}
                   <MDBCardText className='w-75 m-auto mb-2'>
                   <MDBInput className='text-center text-light' label='Title' id='title' type='text' 
                   name='title'
@@ -115,8 +108,8 @@ const [likes, setLikes] = useState(state?.user?.likes || []);
                     <hr className="mt-0 mb-4" />
                     <MDBRow className="pt-1 mb-3">
                       <MDBCol size="6" className="mb-3">
-                        <MDBTypography tag="h6">Email</MDBTypography>
-                        <MDBCardText className="text-muted">{data.email}</MDBCardText>
+                        {/* <MDBTypography tag="h6">Email</MDBTypography> */}
+                        {/* <MDBCardText className="text-muted">{data.email}</MDBCardText> */}
                         <MDBInput label='Email' id='typeEmail' type='email' 
                         name='email'
                         value={data.email}
@@ -124,8 +117,8 @@ const [likes, setLikes] = useState(state?.user?.likes || []);
                         />
                       </MDBCol>
                       <MDBCol size="6" className="mb-3">
-                        <MDBTypography tag="h6">Phone number</MDBTypography>
-                        <MDBCardText className="text-muted">{data.phone}</MDBCardText>
+                        {/* <MDBTypography tag="h6">Phone number</MDBTypography> */}
+                        {/* <MDBCardText className="text-muted">{data.phone}</MDBCardText> */}
                         <MDBInput label='Phone number' id='typePhone' type='tel'
                         name='phone'
                         value={data.phone}

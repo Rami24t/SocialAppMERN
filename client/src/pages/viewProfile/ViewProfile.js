@@ -1,9 +1,8 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import Navbar from '../../components/navbar/Navbar'
 import ProfileCard from '../../components/profileCard/ProfileCard'
 import { useContext } from 'react';
-import { SocialContext } from '../../context/Context';
+import { SocialContext } from '../../components/context/Context';
 import axios from 'axios';
 
 const ViewProfile = () => {
@@ -26,7 +25,6 @@ const ViewProfile = () => {
 
   return (
     <>
-    <Navbar />
     <ProfileCard data={data}/>
     </>
 

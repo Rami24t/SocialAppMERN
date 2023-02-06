@@ -21,9 +21,10 @@ import Badge from '@mui/material/Badge';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
-    opacity: 0.8,
-    right: -5,
-    top: 14,
+    zIndex: 0,
+    opacity: 0.75,
+    right: -6,
+    top: 7,
     border: `2px solid ${theme.palette.background.paper}`,
     padding: '0 4px',
   },
@@ -42,7 +43,7 @@ const ExpandMore = styled((props) => {
 }));
 
 
-export default function RecipeReviewCard() {
+export default function PostCard() {
   // Popover
   const [anchorEl, setAnchorEl] = useState(null);
   const mainRef = useRef(null);
@@ -81,7 +82,8 @@ export default function RecipeReviewCard() {
         action={
           <IconButton aria-label="settings"
           >
-            <MoreVertIcon                   id="basic-button"
+            <MoreVertIcon
+                  id="basic-button"
                   aria-controls={open ? 'basic-menu' : undefined}
                   aria-haspopup="true"
                   aria-expanded={open ? 'true' : undefined}
@@ -96,7 +98,7 @@ export default function RecipeReviewCard() {
       <CardMedia
         component="img"
         height="194"
-        image="/static/images/cards/paella.jpg"
+        image="https://visitsouthernspain.com/wp-content/uploads/2021/06/spanish-paella.jpg"
         alt="Paella dish"
       />
       <CardContent>
@@ -108,12 +110,15 @@ export default function RecipeReviewCard() {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" className='me-2'>
-        <StyledBadge badgeContent={93} color="warning">
-          <FavoriteIcon />
+        <StyledBadge badgeContent={93} color="primary">
+        {/* Heart icon */}
+          <FavoriteIcon style={{zIndex: 1}} />
         </StyledBadge>
         </IconButton>
         <IconButton onClick={handleCommentClick} aria-label="Comment">
-          <CommentIcon />
+        <StyledBadge badgeContent={3} color="secondary">
+          <CommentIcon style={{zIndex: 1}} />
+        </StyledBadge>
         </IconButton>
         <ExpandMore
           expand={expanded}

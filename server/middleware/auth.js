@@ -6,7 +6,12 @@ export default function auth(req, res, next) {
         req.user = dercrypted.id
         next()        
     } catch (error) {
-        console.log("Error: ", error.message)
-        res.send({success: false, error: error.message})
+        if(error.message === "jwt expired")
+            res.json({success: false, error: "Session expired, please login again"}).status(401)
+        else if(error.message === "invalid token")
+            res.json({success: false, error: "Invalid token, please login again"}).status(401)
+        else
+            res.json({success: false, error: "Something went wrong, please login again"}).status(401)
+        console.log(error.message);
     }
 }

@@ -2,10 +2,12 @@ import Post from '../models/Post.js';
 
 export const add = async (req, res) => {
     try {
+        console.log("req body:", req.body)
         req.body.author = req.user
         if (req.file) 
-            req.body.image = req.file.path
-        const post = await (await Post.create(req.body)).populate({path: 'author', select: 'username email image'})
+            req.body.postImage = req.file.path
+        const post = await Post.create(req.body)
+        // .populate({path: 'author', select: 'username email profileImage'})
         res.send({success: true, post})
     } catch (error) {
         console.log("add error:", error.message)
@@ -18,8 +20,18 @@ export const list = async (req, res) => {
         const posts = await Post
             .find()
             .select('-__v')
-            .populate({path: 'author', select: 'username email image'}) // post author
-            .populate({path: 'comments.author', select: 'username email image'}) // comment author
+            .populate({path: 'author', select: 'username email profileImage'}) // post author
+            .populate({path: 'likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // post likes
+            .populate({path: 'comments', select: '-__v', options: {sort: {createdAt: -1}} })// post comments
+            .populate({path: 'comments.author', select: 'username email profileImage'}) // comment author
+            .populate({path: 'comments.likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // comment likes
+            .populate({path: 'comments.comments', select: '-__v', options: {sort: {createdAt: -1}} }) // comment comments
+            .populate({path: 'comments.comments.author', select: 'username email profileImage'}) // comment comments author
+            .populate({path: 'comments.comments.likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // comment comments likes
+            .populate({path: 'comments.comments.comments' , select: '-__v', options: {sort: {createdAt: -1}} }) // comment comments comments
+            .populate({path: 'comments.comments.comments.author', select: 'username email profileImage'}) // comment comments comments author
+            .populate({path: 'comments.comments.comments.likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // comment comments comments likes
+            .sort({createdAt: -1})
         res.send({success: true, posts})        
     } catch (error) {
         console.log("error:", error.message)

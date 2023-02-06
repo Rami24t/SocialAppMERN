@@ -105,7 +105,7 @@ export const logout = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        if (req.file) req.body.image = req.file.path
+        if (req.file) req.body.profileImage = req.file.path
         req.body.likes = JSON.parse(req.body.likes)
         const user = await User.findByIdAndUpdate(
             req.user,
@@ -115,6 +115,24 @@ export const updateProfile = async (req, res) => {
         if (!user)
             return res.send({success: false, errorId: 404})
         res.send({success: true, user})
+    } catch (error) {
+        console.log("updateProfile error:", error.message)
+        res.send({success: false, error: error.message})
+    }
+}
+
+export const updateCover = async (req, res) => {
+    try {
+        if (req.file)
+            req.body.coverImage = req.file.path
+        const user = await User.findByIdAndUpdate(
+            req.user,
+            req.body,
+            {new: true}
+        ).select('-password -__v')
+        if (!user)
+            return res.send({success: false, errorId: 404})
+        res.json({success: true, coverImage: user.coverImage}).status(200)
     } catch (error) {
         console.log("updateProfile error:", error.message)
         res.send({success: false, error: error.message})

@@ -1,8 +1,11 @@
 import React from 'react'
 import { createContext, useReducer } from 'react'
+import { useNavigate } from 'react-router-dom'
 export const SocialContext = createContext()
+
 export default function ContextProvider({children})
 {
+    const Navigate = useNavigate();
     const reducer = (state, action) => {
         switch(action.type) {
             case 'login':
@@ -11,11 +14,18 @@ export default function ContextProvider({children})
                 user: {...action.payload}
             }
             case 'logout':
+                state = reset;
+                Navigate('/');
                 return reset
             case 'saveProfile':
                 return {
                     ...state,
                     user: {...action.payload}
+                }
+            case 'updateCover':
+                return {
+                    ...state,
+                    user: {...state.user, coverImage: action.payload}
                 }
             default:
                 return state
@@ -32,7 +42,13 @@ export default function ContextProvider({children})
                         facebook: '',
                         twitter: '',
                         instagram: '',
-                        username: ''
+                        username: '',
+                        coverImage: '',
+                        profileImage: '',
+                        followers: [],
+                        followings: [],
+                        isAdmin: false,
+                        _id: '',                       
                      },       
                 posts: [],
                 isFetching: false,

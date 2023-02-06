@@ -19,7 +19,7 @@ const MenuProps = {
   },
 };
 
-const LIKES = [  "Art",  "Photography",  "Cooking",  "Traveling",  "Reading",  "Writing",  "Music",  "Dancing",  "Sports",  "Gaming",  "Crafts",  "Gardening",  "Hiking",  "Camping",  "Fishing",  "Skiing",  "Snowboarding",  "Volunteering",  "Meditation",  "Yoga",  "Fitness",  "Nature",  "Technology",  "Cars",  "Movies",  "TV Shows",  "Theater",  "History",  "Geography",  "Science",  "Mathematics",  "Philosophy",  "Psychology",  "Religion",  "Languages",  "Culture",  "Food",  "Wine",  "Beer",  "Coffee",  "Tea",  "Pets",  "Nature"];
+const LIKES = ["Art",  "Photography",  "Cooking",  "Traveling",  "Reading",  "Writing",  "Music",  "Dancing",  "Sports",  "Gaming",  "Crafts",  "Gardening",  "Hiking",  "Camping",  "Fishing",  "Skiing",  "Snowboarding",  "Volunteering",  "Meditation",  "Yoga",  "Fitness",  "Nature",  "Technology",  "Cars",  "Movies",  "TV Shows",  "Theater",  "History",  "Geography",  "Science",  "Mathematics",  "Philosophy",  "Psychology",  "Religion",  "Languages",  "Culture",  "Food",  "Wine",  "Beer",  "Coffee",  "Tea",  "Pets",  "Nature"];
 
 function getStyles(name, likes, theme) {
   return {
@@ -50,6 +50,7 @@ export default function MultipleSelectChip({likes, setLikes}) {
       <FormControl sx={{ mb: 2, width: '100%' }}>
         <InputLabel id="demo-multiple-chip-label">Likes</InputLabel>
         <Select
+          disabled={Boolean(!setLikes)}
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple

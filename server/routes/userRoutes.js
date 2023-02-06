@@ -1,5 +1,5 @@
 import express from 'express'
-import {register, login, emailConfirm, forgotPass, changePass, logout, updateProfile} from '../controllers/userController.js'
+import {register, login, emailConfirm, forgotPass, changePass, logout, updateCover, updateProfile} from '../controllers/userController.js'
 import auth from '../middleware/auth.js'
 import multerMiddleware from '../config/multer-cloudinary.js'
 const router = express.Router()
@@ -12,6 +12,7 @@ router.get('/logout', logout)
 router.post('/forgotpass', forgotPass)
 router.post('/changepassword', changePass)
 
-router.post('/profile', auth, multerMiddleware.single('image'), updateProfile)
+router.put('/profile', auth, multerMiddleware.single('image'), updateProfile)
+router.put('/cover', auth, multerMiddleware.single('image'), updateCover)
 
 export default router

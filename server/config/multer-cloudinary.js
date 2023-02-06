@@ -23,7 +23,7 @@ const storage = new CloudinaryStorage({
         if (file.mimetype.includes('image')) extension = file.mimetype.slice(6)
         return extension
     },
-      public_id: (req, file) => `${req.user}-profileImage`,
+      public_id: (req, file) => `${req.user}-${req.user.profileImage ? 'profileImage' : req.user.coverImage ? 'coverImage' : 'postImage'}`,
     },
   });
 export default multer({storage})

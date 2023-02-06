@@ -14,7 +14,7 @@ from 'mdb-react-ui-kit';
 import {Link, useNavigate} from 'react-router-dom';
 import './LoginCard.css';
 import axios from 'axios';
-import {SocialContext} from '../../context/Context';
+import {SocialContext} from '../context/Context';
 
 function App() {
   const baseUrl = process.env.REACT_APP_BASE_URL;
@@ -31,7 +31,7 @@ const handleLogin = async () => {
       dispatch({
           type: 'saveProfile',
           payload: response.data.user
-      })
+      })    
       navigate('/home')
   }
 }

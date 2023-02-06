@@ -8,7 +8,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import {Link, NavLink} from 'react-router-dom';
 import './Navbar.css';
-import {SocialContext} from '../../context/Context';
+import {SocialContext} from '../context/Context';
 import axios from 'axios';
 
 function OffcanvasExample() {
