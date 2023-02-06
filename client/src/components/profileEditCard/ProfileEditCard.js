@@ -124,8 +124,8 @@ const [likes, setLikes] = useState(state?.user?.likes || []);
                         />
                       </MDBCol>
                       <MDBCol size="6" className="mb-3">
-                        <MDBTypography tag="h6">{data.phone}</MDBTypography>
-                        <MDBCardText className="text-muted">123 456 789</MDBCardText>
+                        <MDBTypography tag="h6">Phone number</MDBTypography>
+                        <MDBCardText className="text-muted">{data.phone}</MDBCardText>
                         <MDBInput label='Phone number' id='typePhone' type='tel'
                         name='phone'
                         value={data.phone}

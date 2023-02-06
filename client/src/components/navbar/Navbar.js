@@ -6,7 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import {NavLink} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import './Navbar.css';
 import {SocialContext} from '../../context/Context';
 import axios from 'axios';
@@ -31,7 +31,7 @@ function OffcanvasExample() {
       {['xl'].map((expand) => (
         <Navbar key={expand} bg="light" expand={expand} className="">
           <Container fluid>
-            <Navbar.Brand href="#">Social App</Navbar.Brand>
+            <Navbar.Brand><Link to='/'>Social App</Link></Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`}>
             <i className="fa-solid fa-bars" />
             </Navbar.Toggle>
