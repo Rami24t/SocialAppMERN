@@ -9,11 +9,11 @@ const Layout = () => {
     const path = location?.pathname?.split("/")[1]
     
     if(!path || path==="register") {
-        if (state?.user?.name) {
+        if (state?.user?.email) {
             return <Navigate to="/home" />
         }
     } else {
-        if (!state?.user?.name) {
+        if (!state?.user?.email) {
             return <Navigate to="/" />
         }
     }
