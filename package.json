@@ -1,13 +1,13 @@
 {
   "name": "socialappmern",
-  "version": "1.0.0",
-  "description": "a social app made using the mern stack",
+  "version": "0.9.0",
+  "description": "a social app made by rami al-saadi using the mern stack",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server/server.js",
-    "start": "node server/server.js",
+    "server": "nodemon server/index.js",
+    "start": "node server/index.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
@@ -16,7 +16,6 @@
     "url": "git+https://github.com/Rami24t/SocialAppMERN.git"
   },
   "author": "Rami Al-Saadi",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/Rami24t/SocialAppMERN/issues"
   },
