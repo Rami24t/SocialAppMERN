@@ -12,7 +12,7 @@ import {SocialContext} from '../context/Context';
 import axios from 'axios';
 
 function OffcanvasExample() {
-  const baseUrl = 'http://localhost:5000'
+  const baseUrl = process.env.REACT_APP_BASE_URL;
   const {state,dispatch} = useContext(SocialContext);
   const loggedIn = state.user.name ? true : false;
 
