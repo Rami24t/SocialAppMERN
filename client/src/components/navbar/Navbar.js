@@ -14,7 +14,7 @@ import axios from 'axios';
 function OffcanvasExample() {
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const {state,dispatch} = useContext(SocialContext);
-  const loggedIn = state.user.name ? true : false;
+  const loggedIn = state?.user?.name ? true : false;
 
   const  handleLogOut = async () => {
    const response = await axios.get(baseUrl + '/users/logout', {withCredentials: true})

@@ -15,7 +15,7 @@ import { SocialContext } from '../context/Context';
 export default function App( {toggleShow, staticModal, setStaticModal, addNewPost} ) {
   const { state } = useContext(SocialContext);
   const [post, setPost] = useState({
-    author: state.user._id,
+    author: state?.user?._id,
     title: '',
     text: '',
     image: '',
@@ -23,7 +23,7 @@ export default function App( {toggleShow, staticModal, setStaticModal, addNewPos
 
   const handleInputChange = (e) => {
     if(e.target.name === 'image') {
-      setPost({ ...post, image: e.currentTarget.files[0] });
+      setPost({ ...post, image: e.currentTarget?.files[0] });
       return;
     }
     const { name, value } = e.target;
@@ -32,10 +32,10 @@ export default function App( {toggleShow, staticModal, setStaticModal, addNewPos
   const createPost = () => {
     if(!post.title || !post.text) return;
   const formData = new FormData();
-  formData.set('author', post.author)
+  formData.set('author', post?.author)
   formData.set('title', post.title)
   formData.set('text', post.text)
-  if(post.image)
+  if(post?.image)
     formData.set('image', post.image)
   addNewPost(formData);
   setStaticModal(false);
