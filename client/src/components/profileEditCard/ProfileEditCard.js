@@ -32,6 +32,7 @@ if(!state.user.email)
 })
 const handleSave = async () => {
   const formdata = new FormData()
+  if(!data.name) return alert('Name is required')
   formdata.set('name', data.name)
   formdata.set('title', data.title)
   formdata.set('email', data.email)

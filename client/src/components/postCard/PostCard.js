@@ -101,7 +101,7 @@ export default function PostCard({post, dispatch}) {
             <Popover anchorEl={anchorEl} setAnchorEl={setAnchorEl} open={open} handleClose={handleClose} handleClick={handleClick} />
           </IconButton>
         }
-        title={post?.title || 'Post Title'}
+        title={post?.author?.name+' :  '+ (post?.title || 'Post Title')}
         subheader={Date(post?.createdAt).slice(0,21) || 'Post Date'}
       />
       {post?.postImage &&<CardMedia

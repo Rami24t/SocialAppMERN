@@ -17,7 +17,6 @@ import "./RegistrationCard.css";
 function RegistrationCard() {
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const [data, setData] = useState({
-        name: 'default',
     username: "",
     email: "",
     password: "",
