@@ -15,14 +15,31 @@ const Posts = () => {
   const { data, error, isLoading } = useSWR(baseUrl+'/posts/list', fetcher, { refreshInterval: 1000 })
   if (error) return <div>Error...</div>
   if (isLoading) return <div>Loading...</div>
+
+  const deletePost = async (id) => {
+    console.log("deletePost id:", id)
+    try {
+      const res = await axios.delete(baseUrl+'/posts/delete/'+id, { withCredentials: true })
+      console.log("deletePost res:", res)
+      return res.data
+    }
+    catch (err) {
+      console.log("deletePost err:", err.message)
+    }
+  }
+  const editPost = async (id, text) => {
+    // const res = await axios.put(baseUrl+'/posts/edit/'+id, {text}, { withCredentials: true })
+    // return res.data
+  }
+
+
   return (
     <MDBContainer>
       {
         data?.posts?.map(post => (
-        <Post key={post?._id} post={post} dispatch={dispatch} />
+        <Post key={post?._id} post={post} dispatch={dispatch} deletePost={deletePost} editPost={editPost} />
         ))
       }
-      <Post />
     </MDBContainer>
   )
 }

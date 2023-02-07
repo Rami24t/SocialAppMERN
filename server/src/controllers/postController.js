@@ -31,7 +31,7 @@ export const list = async (req, res) => {
             // .populate({path: 'comments.comments.comments' , select: '-__v', options: {sort: {createdAt: -1}} }) // comment comments comments
             // .populate({path: 'comments.comments.comments.author', select: 'username email profileImage'}) // comment comments comments author
             // .populate({path: 'comments.comments.comments.likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // comment comments comments likes
-            // .sort({createdAt: -1})
+            .sort({createdAt: -1})
         res.json({posts}).status(200)        
     } catch (error) {
         console.log("error:", error.message)
@@ -41,6 +41,7 @@ export const list = async (req, res) => {
 
 export const deletePost = async (req, res) => {
     try {
+        console.log("deletePost req.body:", req.body)
         const deletedPost = await Post.findByIdAndDelete(
             {
                 _id: req.body.id,

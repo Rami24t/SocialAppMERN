@@ -1,5 +1,4 @@
 import React, {useState, useRef} from 'react';
-import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -17,8 +16,7 @@ import Popover from '../popover/Popover'
 import Comments from '../comments/Comments'
 import {Button, Form, Ref } from 'semantic-ui-react'
 import Badge from '@mui/material/Badge';
-import { useNavigate } from 'react-router-dom';
-import ViewProfile from '../../pages/viewProfile/ViewProfile';
+import { useNavigate, Link } from 'react-router-dom';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -44,7 +42,7 @@ const ExpandMore = styled((props) => {
 }));
 
 
-export default function PostCard({post, dispatch}) {
+export default function PostCard({post, dispatch, editPost, deletePost}) {
   // Popover
   const [anchorEl, setAnchorEl] = useState(null);
   const mainRef = useRef(null);
@@ -74,6 +72,14 @@ export default function PostCard({post, dispatch}) {
 
   const navigate = useNavigate();
 
+  const postDate = new Date(post?.createdAt).toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  });
   return (
     <Card className="mb-2">
       <CardHeader
@@ -98,18 +104,18 @@ export default function PostCard({post, dispatch}) {
                   aria-expanded={open ? 'true' : undefined}
                   onClick={handleClick}
 />
-            <Popover anchorEl={anchorEl} setAnchorEl={setAnchorEl} open={open} handleClose={handleClose} handleClick={handleClick} />
+            <Popover anchorEl={anchorEl} setAnchorEl={setAnchorEl} open={open} handleClose={handleClose} handleClick={handleClick} editPost={editPost} deletePost={deletePost} />
           </IconButton>
         }
-        title={post?.author?.name+' :  '+ (post?.title || 'Post Title')}
-        subheader={Date(post?.createdAt).slice(0,21) || 'Post Date'}
+        title={post?.author?.name+' says:  '+ (post?.title || 'Post Title')}
+        subheader={postDate || 'Post Date'}
       />
-      {post?.postImage &&<CardMedia
+      {post?.postImage &&<a href={post.postImage} target='blank'><CardMedia
         component="img"
         height= "194"
         image={post?.postImage || ''}
         alt="Post Image"
-      />}
+      /></a>}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {post?.text || 'post text'}
