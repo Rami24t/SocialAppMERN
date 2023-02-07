@@ -12,7 +12,7 @@ const app = express()
 dbConnect()
 
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production' ? 'https://social-app-client.vercel.app' : 'http://localhost:3000',
+    origin: process.env.NODE_ENV === 'production' ? 'https://social-app-client-mern.vercel.app' : 'http://localhost:3000',
     credentials: true,
     preflightContinue: true,
 }))
