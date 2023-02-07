@@ -20,19 +20,19 @@ export const list = async (req, res) => {
         const posts = await Post
             .find()
             .select('-__v')
-            .populate({path: 'author', select: 'username email profileImage'}) // post author
-            .populate({path: 'likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // post likes
-            .populate({path: 'comments', select: '-__v', options: {sort: {createdAt: -1}} })// post comments
-            .populate({path: 'comments.author', select: 'username email profileImage'}) // comment author
-            .populate({path: 'comments.likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // comment likes
-            .populate({path: 'comments.comments', select: '-__v', options: {sort: {createdAt: -1}} }) // comment comments
-            .populate({path: 'comments.comments.author', select: 'username email profileImage'}) // comment comments author
-            .populate({path: 'comments.comments.likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // comment comments likes
-            .populate({path: 'comments.comments.comments' , select: '-__v', options: {sort: {createdAt: -1}} }) // comment comments comments
-            .populate({path: 'comments.comments.comments.author', select: 'username email profileImage'}) // comment comments comments author
-            .populate({path: 'comments.comments.comments.likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // comment comments comments likes
-            .sort({createdAt: -1})
-        res.send({success: true, posts})        
+            .populate({path: 'author', select: 'name username email profileImage likes about phone title facebook twitter instagram'}) // post author
+            // .populate({path: 'likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // post likes
+            // .populate({path: 'comments', select: '-__v', options: {sort: {createdAt: -1}} })// post comments
+            // .populate({path: 'comments.author', select: 'username email profileImage'}) // comment author
+            // .populate({path: 'comments.likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // comment likes
+            // .populate({path: 'comments.comments', select: '-__v', options: {sort: {createdAt: -1}} }) // comment comments
+            // .populate({path: 'comments.comments.author', select: 'username email profileImage'}) // comment comments author
+            // .populate({path: 'comments.comments.likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // comment comments likes
+            // .populate({path: 'comments.comments.comments' , select: '-__v', options: {sort: {createdAt: -1}} }) // comment comments comments
+            // .populate({path: 'comments.comments.comments.author', select: 'username email profileImage'}) // comment comments comments author
+            // .populate({path: 'comments.comments.comments.likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // comment comments comments likes
+            // .sort({createdAt: -1})
+        res.json({posts}).status(200)        
     } catch (error) {
         console.log("error:", error.message)
         res.send({success: false, error: error.message})

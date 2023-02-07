@@ -30,6 +30,7 @@ export default function App( {toggleShow, staticModal, setStaticModal, addNewPos
     setPost({ ...post, [name]: value });
   };
   const createPost = () => {
+    if(!post.title || !post.text) return;
   const formData = new FormData();
   formData.set('author', post.author)
   formData.set('title', post.title)

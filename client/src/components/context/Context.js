@@ -27,6 +27,11 @@ export default function ContextProvider({children})
                     ...state,
                     user: {...state.user, coverImage: action.payload}
                 }
+            case 'setViewProfile':
+                return {
+                    ...state,
+                    viewProfileData: action.payload
+                }
             default:
                 return state
             }

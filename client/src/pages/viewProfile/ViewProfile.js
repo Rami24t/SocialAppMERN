@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom'
 import ProfileCard from '../../components/profileCard/ProfileCard'
 import { useContext } from 'react';
 import { SocialContext } from '../../components/context/Context';
-import axios from 'axios';
+// import axios from 'axios';
 
 const ViewProfile = () => {
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  // const baseUrl = process.env.REACT_APP_BASE_URL;
   let data = {};
   const {state} = useContext(SocialContext);
   const {id} = useParams()
@@ -15,13 +15,14 @@ const ViewProfile = () => {
      data = state.user;
   }
   else {
-     data = getProfile();
+     data = state.viewProfileData;
+     console.log("ViewProfile data:", data)
   }
-    async function getProfile() {
-      const response = await axios.get(baseUrl + "/users/profile/" + id, {withCredentials: true})
-      console.log("getProfile response:", response)
-      return response.data.user
-    }
+    // async function getProfile() {
+    //   const response = await axios.get(baseUrl + "/users/profile/" + id, {withCredentials: true})
+    //   console.log("getProfile response:", response)
+    //   return response.data.user
+    // }
 
   return (
     <>

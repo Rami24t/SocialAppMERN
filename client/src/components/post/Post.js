@@ -1,9 +1,9 @@
 import React from 'react'
 import PostCard from '../../components/postCard/PostCard'
 
-const post = () => {
+const post = ({post, dispatch}) => {
   return (
-    <PostCard />
+    <PostCard post={post} dispatch={dispatch} />
   )
 }
 

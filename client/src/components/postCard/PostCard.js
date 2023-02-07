@@ -1,4 +1,5 @@
 import React, {useState, useRef} from 'react';
+import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -6,10 +7,8 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -18,6 +17,8 @@ import Popover from '../popover/Popover'
 import Comments from '../comments/Comments'
 import {Button, Form, Ref } from 'semantic-ui-react'
 import Badge from '@mui/material/Badge';
+import { useNavigate } from 'react-router-dom';
+import ViewProfile from '../../pages/viewProfile/ViewProfile';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -43,7 +44,7 @@ const ExpandMore = styled((props) => {
 }));
 
 
-export default function PostCard() {
+export default function PostCard({post, dispatch}) {
   // Popover
   const [anchorEl, setAnchorEl] = useState(null);
   const mainRef = useRef(null);
@@ -61,9 +62,9 @@ export default function PostCard() {
     if(!expanded)
     {
       setExpanded(true);
-      setTimeout(() => mainRef.current?.firstChild.focus(), 200);
+      setTimeout(() => mainRef?.current?.firstChild.focus(), 200);
     }
-    console.log(mainRef.current?.firstChild);
+    console.log(mainRef?.current?.firstChild);
     mainRef.current?.firstChild.focus();
   }
 
@@ -71,13 +72,21 @@ export default function PostCard() {
     setExpanded(!expanded);
   };
 
+  const navigate = useNavigate();
+
   return (
     <Card className="mb-2">
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
-          </Avatar>
+          // <Link to={'/view-profile/'+post?.author?._id?.toString()}>
+          <img src={post?.author?.profileImage} alt="author" className="rounded-circle cursor-pointer" style={{width: "40px"}}
+          title={post?.author?.name}
+          onClick={
+            ()=>{dispatch({type: 'setViewProfile', payload: post?.author});
+            navigate('/view-profile/'+post?.author?._id?.toString());
+            }
+            }
+          />
         }
         action={
           <IconButton aria-label="settings"
@@ -92,20 +101,18 @@ export default function PostCard() {
             <Popover anchorEl={anchorEl} setAnchorEl={setAnchorEl} open={open} handleClose={handleClose} handleClick={handleClick} />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={post?.title || 'Post Title'}
+        subheader={Date(post?.createdAt).slice(0,21) || 'Post Date'}
       />
-      <CardMedia
+      {post?.postImage &&<CardMedia
         component="img"
-        height="194"
-        image="https://visitsouthernspain.com/wp-content/uploads/2021/06/spanish-paella.jpg"
-        alt="Paella dish"
-      />
+        height= "194"
+        image={post?.postImage || ''}
+        alt="Post Image"
+      />}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the mussels,
-          if you like.
+          {post?.text || 'post text'}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

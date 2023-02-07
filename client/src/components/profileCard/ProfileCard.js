@@ -14,7 +14,7 @@ export default function PersonalProfile({data}) {
               <MDBRow className="g-0">
                 <MDBCol md="4" className="gradient-custom text-center text-white"
                   style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
-                  <MDBCardImage src={data.profileImage || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"}
+                  <MDBCardImage src={data?.profileImage || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"}
                     alt="Avatar" className="my-5 rounded-circle" style={{ width: '80px' }} fluid />
                   <MDBTypography tag="h5">{data?.name || 'Full Name'}</MDBTypography>
                   <MDBCardText>{data?.title || 'Title'}</MDBCardText>
@@ -29,22 +29,22 @@ export default function PersonalProfile({data}) {
                     <MDBRow className="pt-1 mb-2">
                       <MDBCol size="6" className="mb-3">
                         <MDBTypography tag="h6">Email</MDBTypography>
-                        <MDBCardText className="text-muted">{data.email || 'info@example.com'}</MDBCardText>
+                        <MDBCardText className="text-muted">{data?.email || 'info@example.com'}</MDBCardText>
                       </MDBCol>
                       <MDBCol size="6" className="mb-3">
                         <MDBTypography tag="h6">Phone</MDBTypography>
-                        <MDBCardText className="text-muted">{data.phone || '123 456 789'}</MDBCardText>
+                        <MDBCardText className="text-muted">{data?.phone || '123 456 789'}</MDBCardText>
                       </MDBCol>
                     </MDBRow>
 
                     <MDBTypography tag="h6">About Me</MDBTypography>
                     <hr className="mt-0 mb-2" />
                     <MDBRow className="pt-1 mb-5">
-                        <MDBCardText className="text-muted">{data.about || 'About section...'}</MDBCardText>
+                        <MDBCardText className="text-muted">{data?.about || 'About section...'}</MDBCardText>
                     </MDBRow>
-                    <ChipMultipleSelect likes={data.likes}  />
+                    {data?.likes && <ChipMultipleSelect likes={data?.likes}  />}
                     <div className="d-flex justify-content-start">
-                      {data.facebook && <a href={data?.facebook || '#facebook'}  target="_blank" rel="noopener noreferrer"><MDBIcon fab icon="facebook me-3" size="lg" /></a>}
+                      {data?.facebook && <a href={data?.facebook || '#facebook'}  target="_blank" rel="noopener noreferrer"><MDBIcon fab icon="facebook me-3" size="lg" /></a>}
                       {data?.twitter && <a href={data?.twitter || '#twitter'} target="_blank" rel="noopener noreferrer"><MDBIcon fab icon="twitter me-3" size="lg" /></a>}
                       {data?.instagram && <a href={data?.instagram || '#instagram'}  target="_blank" rel="noopener noreferrer"><MDBIcon fab icon="instagram me-3" size="lg" /></a>}
                     </div>

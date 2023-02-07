@@ -62,9 +62,9 @@ export default function Home() {
     const toggleShow = () => setStaticModal(!staticModal);
 
     const addNewPost = async (formData) => {
-        for (var pair of formData.entries()) {
-            console.log('Pairs: ', pair[0]+ ', ' + pair[1]); 
-        }
+        // for (var pair of formData.entries()) {
+        //     console.log('Pairs: ', pair[0]+ ', ' + pair[1]); 
+        // }
         await axios.post(`${baseUrl}/posts/add`, formData, {
             Headers: {'content-type': 'multipart/form-data'}, 
             withCredentials: true
