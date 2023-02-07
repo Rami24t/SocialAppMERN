@@ -43,7 +43,7 @@ import './RegistrationCard.css';
 function App() {
   const baseUrl=process.env.REACT_APP_BASE_URL
   const [data, setData] = useState({
-    username: '',
+    name: '',
     email: '',
     password: ''
 })
@@ -80,8 +80,8 @@ const handleRegister = async () => {
                 {/* <MDBCol className="col-auto mw-50"> */}
                   <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text'
                         name="user" 
-                        value={data.username} 
-                        onChange={e => setData({...data, username: e.target.value })}
+                        value={data.name} 
+                        onChange={e => setData({...data, name: e.target.value })}
                   />
                 {/* </MDBCol> */}
 
