@@ -52,7 +52,7 @@ const navigate = useNavigate()
 const handleRegister = async () => {
   try {
     console.log(baseUrl + '/users/register');
-      const response = await axios.post(baseUrl + '/users/register', data, {withCredentials: true})
+      const response = await axios.post(baseUrl + '/users/register', data)
       console.log("handleRegister response:", response)
 
       if (response.data.success) {
