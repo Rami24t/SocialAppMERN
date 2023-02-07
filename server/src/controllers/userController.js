@@ -33,7 +33,7 @@ export const login = async (req, res) => {
         const newUser = user.toObject()
         delete newUser.password
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '1h'})
-        res.cookie('SocialAppMERNToken', token)
+        res.cookie('SocialAppMERNToken', token, {sameSite: 'none',  secure: true})
         res.send({success: true, user: newUser})        
     } catch (error) {
         console.log("login error:", error.message)
@@ -95,7 +95,7 @@ export const changePass = async (req, res) => {
 
 export const logout = async (req, res) => {
     try {
-        res.clearCookie('SocialAppMERNToken')
+        res.clearCookie('SocialAppMERNToken', {sameSite: 'none',  secure: true})
         res.json({success: true}).status(200)
     } catch (error) {
         console.log("logout error:", error.message)
