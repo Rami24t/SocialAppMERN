@@ -89,7 +89,7 @@ const [likes, setLikes] = useState(state?.user?.likes || []);
                   <MDBTypography tag="h5" className='w-75 m-auto'>
                   <MDBInput tag="h5" className='text-light text-center mb-3' label='Name' id='name' type='text' 
                   name='name' 
-                  value={data.name}
+                  value={data?.name}
                   onChange={handleChange}
                   /></MDBTypography>
                   {/* <MDBCardText>{data.title}</MDBCardText> */}

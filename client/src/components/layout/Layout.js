@@ -10,6 +10,8 @@ const Layout = () => {
     
     if(!path || path==="register") {
         if (state?.user?.email) {
+            if(!state.user.name || !state.user.profileImage)
+                return <Navigate to="/profile" />
             return <Navigate to="/home" />
         }
     } else {
