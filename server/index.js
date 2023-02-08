@@ -6,6 +6,10 @@ import dbConnect from './src/config/db.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 // import { OAuth2Client } from "google-auth-library"
+// import mongoose from 'mongoose'
+// import Post from './src/models/Post.js'
+// import User from './src/models/User.js'
+
 
 dotenv.config()
 const app = express()
@@ -25,3 +29,5 @@ app.use('/posts', postRoutes)
 
 const port = process.env.PORT || 5001
 app.listen(port, () => console.log('Server is up and running at port: ', port))
+
+// Script to randomize the number of likes and comments on the posts

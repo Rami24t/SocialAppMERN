@@ -17,6 +17,7 @@ import Comments from "../comments/Comments";
 import { Button, Form, Ref } from "semantic-ui-react";
 import Badge from "@mui/material/Badge";
 import { useNavigate, Link } from "react-router-dom";
+import './PostCard.css'
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {

@@ -7,7 +7,7 @@ export default function App({heading, subheading,src, updateCover, addPost}) {
       <label className='d-block'>
       <div
       title='Click to change cover image'
-        className='p-5 mb-7 text-center bg-image'
+        className='p-5 mb-7 text-center bg-image cursor-pointer'
         style={{ backgroundImage: `url(${src})`, height: 400 }}
       >
         <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
@@ -15,7 +15,7 @@ export default function App({heading, subheading,src, updateCover, addPost}) {
             <div className='text-white'>
               <h1 className='mb-3'>{heading}</h1>
               <h4 className='mb-3'>{subheading}</h4>
-              <div className='btn btn-outline-light btn-lg createPost' role='button'
+              <div className='btn btn-outline-light btn-lg createPost fw-bold ' role='button'
               title='Click to create a new post'  onClick={addPost} >
                 Create  Post
               </div>
