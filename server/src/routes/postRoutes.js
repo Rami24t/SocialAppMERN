@@ -10,7 +10,7 @@ router.post('/add', auth, multerMiddleware.single('image'), add)
 router.get('/list', auth, list)
 router.put('/edit', auth, edit)
 router.patch('/likes', auth, like)
-router.delete('/delete', auth, deletePost)
+router.delete('/delete/:postId', auth, deletePost)
 
 // Comments
 router.post('/comments/add', auth, addComment)

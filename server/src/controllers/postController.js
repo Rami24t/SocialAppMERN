@@ -41,18 +41,14 @@ export const list = async (req, res) => {
 
 export const deletePost = async (req, res) => {
     try {
-        console.log("deletePost req.body:", req.body)
-        const deletedPost = await Post.findByIdAndDelete(
-            {
-                _id: req.body.id,
-                author: req.user
-            }       
-        )
-        if (!deletedPost) return res.send({success: false, errorId: 401})
-        res.send({success: true})        
+        const {postId: _id} = req.params
+        const author = await Post.findById(_id).select('author')
+        if (req.user !== author) return res.json({success: false, errorId: 401}).status(401)
+        const post = await Post.findByIdAndDelete(_id)
+        res.json({success: true, post}).status(200)
     } catch (error) {
-        console.log("deletePost error:", error.message)
-        res.send({success: false, error: error.message})
+        console.log("delete post error:", error.message)
+        res.json({success: false, error: error.message}).status(500)
     }
 }
 
