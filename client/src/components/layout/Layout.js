@@ -12,9 +12,12 @@ const Layout = () => {
         if (state?.user?.email) {
             if(!state.user.name || !state.user.profileImage)
                 return <Navigate to="/profile" />
+            else
             return <Navigate to="/home" />
         }
     } else {
+        if(state.user._id && (!state.user.name || !state.user.profileImage))
+        return <Navigate to="/profile" />
         if (!state?.user?.email) {
             return <Navigate to="/" />
         }

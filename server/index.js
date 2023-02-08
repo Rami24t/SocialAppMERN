@@ -15,7 +15,9 @@ app.use(cors({
     origin: process.env.NODE_ENV === 'production' ? 'https://social-app-client-mern.vercel.app' : 'http://localhost:3000',
     credentials: true,
     preflightContinue: true,
+    // "methods": "GET,HEAD,PUT,PATCH,POST,DELETE, OPTIONS"
 }))
+// app.options(cors());
 app.use(express.json())
 app.use(cookieParser())
 app.use('/users', userRoutes)

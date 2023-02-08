@@ -10,8 +10,10 @@ import {Link, NavLink} from 'react-router-dom';
 import './Navbar.css';
 import {SocialContext} from '../context/Context';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function OffcanvasExample() {
+  const navigate = useNavigate();
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const {state,dispatch} = useContext(SocialContext);
   const loggedIn = state?.user?.email ? true : false;
@@ -20,6 +22,7 @@ function OffcanvasExample() {
    const response = await axios.get(baseUrl + '/users/logout', {withCredentials: true})
     if (response.status === 200) {
     dispatch({type: 'logout'})
+    navigate('/')
   }
   else {
     console.log('error logging out')
