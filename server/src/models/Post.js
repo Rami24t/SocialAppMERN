@@ -7,7 +7,6 @@ const postSchema = new Schema({
         },
         text: {
             type: String,
-            required: true
         },
         postImage: String,
         author: {

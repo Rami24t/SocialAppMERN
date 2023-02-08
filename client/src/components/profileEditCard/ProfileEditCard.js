@@ -82,7 +82,10 @@ const [likes, setLikes] = useState(state?.user?.likes || []);
                   <label>
                   <MDBCardImage
                     src={fileData.url}
-                    alt="Avatar" className="hover-opacity-75 my-5 rounded-circle cursor-pointer" style={{ width: '80px' }} fluid
+                    alt="Avatar" 
+                    className="hover-opacity-75 my-5 cursor-pointer rounded-circle object-cover "
+                    style={{ width: "80px", height: "80px" }}
+                    fluid
                      />
                      <input type='file' className='d-none' onChange={(e)=>handleImageChange(e,setFiledata)}/>
                   </label>

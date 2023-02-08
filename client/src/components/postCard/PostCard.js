@@ -94,8 +94,8 @@ export default function PostCard({
           <img
             src={post?.author?.profileImage}
             alt="author"
-            className="rounded-circle cursor-pointer"
-            style={{ width: "40px" }}
+            className="cursor-pointer rounded-circle object-cover "
+            style={{ width: "44px", height: "44px" }}
             title={post?.author?.name}
             onClick={() => {
               dispatch({ type: "setViewProfile", payload: post?.author });
@@ -133,17 +133,20 @@ export default function PostCard({
         <a href={post.postImage} target="blank">
           <CardMedia
             component="img"
-            height="194"
+            height="300"
             image={post?.postImage || ""}
             alt="Post Image"
+            className="cursor-pointer object-contain"
           />
         </a>
       )}
+      {post?.text && (
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {post?.text || "post text"}
         </Typography>
       </CardContent>
+      )}
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" className="me-2">
           <StyledBadge badgeContent={post.likes.length} color="primary">

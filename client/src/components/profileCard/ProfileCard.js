@@ -15,7 +15,9 @@ export default function PersonalProfile({data}) {
                 <MDBCol md="4" className="gradient-custom text-center text-white"
                   style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
                   <MDBCardImage src={data?.profileImage || "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"}
-                    alt="Avatar" className="my-5 rounded-circle" style={{ width: '80px' }} fluid />
+                    alt="Avatar" className="my-5 rounded-circle object-cover" 
+                    style={{ width: "80px", height: "80px" }}
+                    fluid />
                   <MDBTypography tag="h5">{data?.name || 'Full Name'}</MDBTypography>
                   <MDBCardText>{data?.title || 'Title'}</MDBCardText>
                   <Link to="/profile">

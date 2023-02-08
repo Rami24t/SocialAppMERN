@@ -12,14 +12,15 @@ import {
 import NewPostForm from '../NewPostForm/NewPostForm';
 import { SocialContext } from '../context/Context';
 
-export default function App( {toggleShow, staticModal, setStaticModal, addNewPost} ) {
+export default function App( {toggleShow, staticModal, setStaticModal, addNewPost, oldPost = null, heading, avatar } ) {
   const { state } = useContext(SocialContext);
-  const [post, setPost] = useState({
+  const resetPost = {
     author: state?.user?._id,
     title: '',
     text: '',
     image: '',
-  });
+  }
+  const [post, setPost] = useState(oldPost? oldPost : resetPost);
 
   const handleInputChange = (e) => {
     if(e.target.name === 'image') {
@@ -30,7 +31,7 @@ export default function App( {toggleShow, staticModal, setStaticModal, addNewPos
     setPost({ ...post, [name]: value });
   };
   const createPost = () => {
-    if(!post.title || !post.text) return;
+    if(!post.title ) return;
   const formData = new FormData();
   formData.set('author', post?.author)
   formData.set('title', post.title)
@@ -39,6 +40,7 @@ export default function App( {toggleShow, staticModal, setStaticModal, addNewPos
     formData.set('image', post.image)
   addNewPost(formData);
   setStaticModal(false);
+  setPost(resetPost);
 };
 
   return (
@@ -51,7 +53,7 @@ export default function App( {toggleShow, staticModal, setStaticModal, addNewPos
               {/* <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn> */}
             </MDBModalHeader>
             <MDBModalBody>
-                <NewPostForm updatePost={handleInputChange} post={post} />
+                <NewPostForm avatar={avatar} heading={heading} updatePost={handleInputChange} post={post} />
             </MDBModalBody>
             <MDBModalFooter>
               <MDBBtn color='secondary' onClick={toggleShow}>

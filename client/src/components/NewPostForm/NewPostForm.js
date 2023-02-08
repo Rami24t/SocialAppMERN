@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -12,7 +12,16 @@ import {
   MDBTextArea
 } from "mdb-react-ui-kit";
 
-export default function NewPostForm({ updatePost, post }) {
+export default function NewPostForm({ updatePost, post, heading, avatar }) {
+  useEffect(() => {
+    if (!post.image) {
+      setFileData({
+        url: '',
+        file: null
+      })
+    }
+  }, [post.image])
+
   const [fileData,setFileData] = useState({
     url: '',
     file: null
@@ -28,12 +37,16 @@ export default function NewPostForm({ updatePost, post }) {
     <Card className="mb-2">
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
-          </Avatar>
+          <img
+            src={avatar}
+            alt="author avatar"
+            className="cursor-pointer rounded-circle object-cover "
+            style={{ width: "40px", height: "40px" }}
+            title={post?.author?.name}
+          />
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={heading}
+        subheader={Date().toLocaleString().slice(0, 21)}
       />
       <CardContent>
         <MDBInput
@@ -45,14 +58,14 @@ export default function NewPostForm({ updatePost, post }) {
           value={post.title}
           onChange={updatePost}
         />
-        <label>
-        <CardMedia
+        <label className={"cursor-pointer "+ !fileData.file ? 'btn' : '' }>
+        {fileData.file&&<CardMedia
           component="img"
           height="194"
-          image={fileData.url}
+          image={fileData.file ? fileData.url : ''}
           alt="Add Post Image"
-        />
-            Add Image...
+        />}
+            {!fileData.file ? 'Add' : 'Change'} Image...
         <input name="image" type="file" className="d-none" onInput={onChange} />
         </label>
         <Typography variant="body2" color="text.secondary" className="mt-2">
