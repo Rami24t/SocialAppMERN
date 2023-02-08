@@ -37,7 +37,7 @@ const Posts = () => {
     <MDBContainer>
       {
         data?.posts?.map(post => (
-        <Post key={post?._id} post={post} dispatch={dispatch} deletePost={deletePost} editPost={editPost} />
+        <Post key={post?._id} ownPost={post?._id===state.user._id} post={post} dispatch={dispatch} deletePost={deletePost} editPost={editPost} />
         ))
       }
     </MDBContainer>
