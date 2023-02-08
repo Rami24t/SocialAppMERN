@@ -32,12 +32,20 @@ const Posts = () => {
     // return res.data
   }
 
-
+  const toggleLike = async (id) => {
+    try {
+      const res = await axios.patch(baseUrl+'/posts/like/'+id, {}, { withCredentials: true })
+      return res.data.liked
+    }
+    catch (err) {
+      console.log("toggleLike err:", err.message)
+    }
+  }
   return (
     <MDBContainer>
       {
         data?.posts?.map(post => (
-        <Post key={post?._id} ownPost={post?._id===state.user._id} post={post} dispatch={dispatch} deletePost={deletePost} editPost={editPost} />
+        <Post toggleLike={()=>toggleLike(post._id)} key={post?._id} ownPost={post?.author._id===state.user._id} liked={post.likes.includes(state.user._id)} post={post} dispatch={dispatch} deletePost={deletePost} editPost={editPost} />
         ))
       }
     </MDBContainer>

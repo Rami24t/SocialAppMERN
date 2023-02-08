@@ -42,10 +42,12 @@ export const list = async (req, res) => {
 export const deletePost = async (req, res) => {
     try {
         const {postId: _id} = req.params
-        const author = await Post.findById(_id).select('author')
+        const post = await Post.findById(_id)
+        const author = post.author.toString()
         if (req.user !== author) return res.json({success: false, errorId: 401}).status(401)
-        const post = await Post.findByIdAndDelete(_id)
-        res.json({success: true, post}).status(200)
+        else{
+            await post.remove()
+        res.json({success: true, post}).status(200)}
     } catch (error) {
         console.log("delete post error:", error.message)
         res.json({success: false, error: error.message}).status(500)
@@ -73,12 +75,12 @@ export const edit = async (req, res) => {
 
 export const like = async (req, res) => {
     try {
-        const post = await Post.findById(req.body.postId)
-        const liked = post.likes.includes(req.user)
-        let newPost = {}
-        if (liked) { // is in the likes array?
-            newPost = await Post.findByIdAndUpdate(
-                req.body.postId,
+        let liked = null
+        let post = await Post.findById(req.params.postId)
+        console.log(post, 'post')
+        if (post?.likes?.includes(req.user)) { // is in the likes array?
+            post = await Post.findByIdAndUpdate(
+                req.params.postId,
                 {
                     $pull: { // deletes matching items
                         likes: req.user
@@ -86,9 +88,10 @@ export const like = async (req, res) => {
                 },
                 {new: true}
             )
+            liked = true
         } else {
-            newPost = await Post.findByIdAndUpdate(
-                req.body.postId,
+            post = await Post.findByIdAndUpdate(
+                req.params.postId,
                 {
                     $addToSet: {
                         likes: req.user
@@ -96,10 +99,11 @@ export const like = async (req, res) => {
                 },
                 {new: true}
             )
+            liked = false
         }
-        res.send({success: true, likes: newPost.likes})     
+        res.json({success: true, likes: post.likes, liked}).status(200)
     } catch (error) {
         console.log("like error:", error.message)
-        res.send({success: false, error: error.message})       
+        res.json({success: false, error: error.message}).status(500)
     }
 }

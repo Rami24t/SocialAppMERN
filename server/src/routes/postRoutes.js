@@ -9,7 +9,7 @@ const router = express.Router()
 router.post('/add', auth, multerMiddleware.single('image'), add)
 router.get('/list', auth, list)
 router.put('/edit', auth, edit)
-router.patch('/likes', auth, like)
+router.patch('/like/:postId', auth, like)
 router.delete('/delete/:postId', auth, deletePost)
 
 // Comments

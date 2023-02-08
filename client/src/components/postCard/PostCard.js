@@ -42,6 +42,8 @@ const ExpandMore = styled((props) => {
 
 export default function PostCard({
   post,
+  liked,
+  toggleLike,
   dispatch,
   editPost,
   deletePost,
@@ -83,6 +85,7 @@ export default function PostCard({
     minute: "numeric",
     hour12: true,
   });
+  console.log(ownPost)
   return (
     <Card className="mb-2">
       <CardHeader
@@ -143,9 +146,9 @@ export default function PostCard({
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" className="me-2">
-          <StyledBadge badgeContent={93} color="primary">
+          <StyledBadge badgeContent={post.likes.length} color="primary">
             {/* Heart icon */}
-            <FavoriteIcon style={{ zIndex: 1 }} />
+            <FavoriteIcon color={liked ? "warning" : "secondary"} style={{ zIndex: 1 }} onClick={toggleLike} />
           </StyledBadge>
         </IconButton>
         <IconButton onClick={handleCommentClick} aria-label="Comment">

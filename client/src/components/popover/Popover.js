@@ -15,7 +15,7 @@ export default function BasicMenu({anchorEl, open, handleClose, deletePost, edit
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={()=>{handleClose(); editPost()}}>Edit</MenuItem>
+        {/* <MenuItem onClick={()=>{handleClose(); editPost()}}>Edit</MenuItem> */}
         <MenuItem onClick={()=>{handleClose(); deletePost()}}>Delete</MenuItem>
         <MenuItem onClick={handleClose}>Cancel</MenuItem>
       </Menu>
