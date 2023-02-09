@@ -25,6 +25,7 @@ function App() {
     password: ''
 })
 const handleLogin = async () => {
+  try{
   const response = await axios.post(baseUrl + "/users/login", data,  {withCredentials: true})
   console.log("handleLogin response:", response)
   if (response.data.success) {
@@ -34,6 +35,9 @@ const handleLogin = async () => {
       })    
       navigate('/home')
   }
+} catch (error) {
+  console.log(error)
+}
 }
 
 
@@ -44,7 +48,7 @@ const handleLogin = async () => {
         <MDBRow className='g-0 d-flex align-items-center'>
 
           <MDBCol md='4'>
-            <MDBCardImage src='https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg' alt='phone' className='rounded-t-5 rounded-tr-lg-0' fluid />
+            <MDBCardImage src='https://source.unsplash.com/random/600x800/?social' alt='phone' className='rounded-t-5 rounded-tr-lg-0' fluid />
           </MDBCol>
 
           <MDBCol md='8'>

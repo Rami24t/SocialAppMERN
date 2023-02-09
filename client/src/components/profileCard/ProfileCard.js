@@ -19,7 +19,7 @@ export default function PersonalProfile({data}) {
                     style={{ width: "80px", height: "80px" }}
                     fluid />
                   <MDBTypography tag="h5">{data?.name || 'Full Name'}</MDBTypography>
-                  <MDBCardText>{data?.title || 'Title'}</MDBCardText>
+                  <MDBCardText>{data?.title || 'My Title'}</MDBCardText>
                   <Link to="/profile">
                     <MDBIcon far icon="edit mb-5" />
                   </Link>
@@ -31,20 +31,20 @@ export default function PersonalProfile({data}) {
                     <MDBRow className="pt-1 mb-2">
                       <MDBCol size="6" className="mb-3">
                         <MDBTypography tag="h6">Email</MDBTypography>
-                        <MDBCardText className="text-muted">{data?.email || 'info@example.com'}</MDBCardText>
+                        <MDBCardText className="text-muted">{data?.email || 'my-email@example.com'}</MDBCardText>
                       </MDBCol>
                       <MDBCol size="6" className="mb-3">
                         <MDBTypography tag="h6">Phone</MDBTypography>
-                        <MDBCardText className="text-muted">{data?.phone || '123 456 789'}</MDBCardText>
+                        <MDBCardText className="text-muted">{data?.phone || '[My Phone Number]'}</MDBCardText>
                       </MDBCol>
                     </MDBRow>
 
                     <MDBTypography tag="h6">About Me</MDBTypography>
                     <hr className="mt-0 mb-2" />
                     <MDBRow className="pt-1 mb-5">
-                        <MDBCardText className="text-muted">{data?.about || 'About section...'}</MDBCardText>
+                        <MDBCardText className="text-muted">{data?.about || 'My about me section...'}</MDBCardText>
                     </MDBRow>
-                    {data?.likes && <ChipMultipleSelect likes={data?.likes}  />}
+                    {data?.likes?.length > 0 ? <ChipMultipleSelect likes={data?.likes}  /> : null }
                     <div className="d-flex justify-content-start">
                       {data?.facebook && <a href={data?.facebook || '#facebook'}  target="_blank" rel="noopener noreferrer"><MDBIcon fab icon="facebook me-3" size="lg" /></a>}
                       {data?.twitter && <a href={data?.twitter || '#twitter'} target="_blank" rel="noopener noreferrer"><MDBIcon fab icon="twitter me-3" size="lg" /></a>}

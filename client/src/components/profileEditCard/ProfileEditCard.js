@@ -19,16 +19,16 @@ if(!state.user.email)
       file: null
   })
   const [data, setData] = useState({
-    name: state?.user?.name,
-    title: state?.user?.title,
-    email: state?.user?.email,
-    phone: state?.user?.phone,
-    about: state?.user?.about,
+    name: state?.user?.name || '',
+    title: state?.user?.title || '',
+    email: state?.user?.email || '',
+    phone: state?.user?.phone || '',
+    about: state?.user?.about || '',
     likes: state?.user?.likes || [],
-    facebook: state?.user?.facebook,
-    twitter: state?.user?.twitter,
-    instagram: state?.user?.instagram,
-    username: state?.user?.username,
+    facebook: state?.user?.facebook || '', 
+    twitter: state?.user?.twitter || '',
+    instagram: state?.user?.instagram || '',
+    username: state?.user?.username || ''
 })
 const handleSave = async () => {
   const formdata = new FormData()
