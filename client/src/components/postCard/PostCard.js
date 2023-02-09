@@ -68,7 +68,7 @@ export default function PostCard({
       setExpanded(true);
       setTimeout(() => mainRef?.current?.firstChild.focus(), 200);
     }
-    console.log(mainRef?.current?.firstChild);
+    // console.log(mainRef?.current?.firstChild);
     mainRef.current?.firstChild.focus();
   };
 
@@ -86,7 +86,7 @@ export default function PostCard({
     minute: "numeric",
     hour12: true,
   });
-  console.log(ownPost)
+  // console.log(ownPost)
   return (
     <Card className="mb-2">
       <CardHeader

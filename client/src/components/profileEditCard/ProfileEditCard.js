@@ -68,7 +68,7 @@ export default function PersonalProfile() {
         formdata,
         config
       );
-      console.log("handleSave response:", response);
+      // console.log("handleSave response:", response);
       if (response.data.success) {
         dispatch({
           type: "saveProfile",

@@ -13,14 +13,14 @@ const ViewProfile = () => {
   let data = {};
   const {state} = useContext(SocialContext);
   const {id} = useParams()
-  console.log("ViewProfile id:", id)
+  // console.log("ViewProfile id:", id)
   if (id === 'myprofile' && state.user) {
      data = state.user;
   }
   else if(id)
    {
      data = state.viewProfileData;
-     console.log("ViewProfile data:", data)
+    //  console.log("ViewProfile data:", data)
   }
     // async function getProfile() {
     //   const response = await axios.get(baseUrl + "/users/profile/" + id, {withCredentials: true})
