@@ -7,8 +7,10 @@ import axios from "axios";
 import { handleImageChange } from "../../utilities/handleImageChange";
 import { useLocation } from "react-router-dom";
 import CreatePost from "../../components/createPost/CreatePost";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+    const navigate = useNavigate();
     const baseUrl = process.env.REACT_APP_BASE_URL;
     const {state,dispatch} = useContext(SocialContext);
 
@@ -43,6 +45,7 @@ export default function Home() {
             }
             else if(res.status === 401){
                 dispatch({type: 'logout'});
+                navigate('/');
             }
         } catch (error) {
             console.log(error);
@@ -70,12 +73,19 @@ export default function Home() {
             withCredentials: true
         })
         .then(res => {
-            if(res.status === 200){
+               if(res.data.error.startsWith("Session expired"))
+               {
+                dispatch({type: 'logout'});
+                navigate('/');
+               }            
+               if(res.status === 200){
                 dispatch({type: 'addPost', payload: res.data});
                // toggleShow();
+
             }
             else if(res.status === 401){
                 dispatch({type: 'logout'});
+                navigate('/');
             }
         })
         .catch(err => console.log(err));

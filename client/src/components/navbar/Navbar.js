@@ -32,7 +32,7 @@ function OffcanvasExample() {
   return (
     <>
       {['xl'].map((expand) => (
-        <Navbar key={expand} bg="light" expand={expand} className="">
+        <Navbar key={expand} bg="light" expand={expand} className="gradient-nav" >
           <Container fluid>
             <Navbar.Brand><Link to='/'>Social App</Link></Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`}>
