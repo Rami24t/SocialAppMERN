@@ -178,6 +178,7 @@ export default function PostCard({
               <Form.TextArea />
             </Ref>
             <Button
+            onClick={()=>alert("Commenting feature is not available in the demo version, but you can still like and/or unlike the post.\nYou can also view the profile of the author of the post.\nYou can also add or delete your own posts!\nYou can change your cover image.\nYou can update your profile information.\nEnjoy !")}
               content="Add Reply"
               labelPosition="left"
               icon="edit"
