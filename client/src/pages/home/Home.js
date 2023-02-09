@@ -15,7 +15,7 @@ export default function Home() {
     const {state,dispatch} = useContext(SocialContext);
 
     const [fileData, setFiledata] = useState({
-        url: state?.user?.coverImage || 'https://mdbootstrap.com/img/new/slides/041.webp',
+        url: state?.user?.coverImage || 'https://source.unsplash.com/random/1321x583/?nature',
         file: null
       })
 

@@ -8,7 +8,7 @@ export default function App({heading, subheading,src, updateCover, addPost}) {
       <div
       title='Click to change cover image'
         className='p-5 mb-7 text-center bg-image cursor-pointer'
-        style={{ backgroundImage: `url(${src})`, height: 400 }}
+        style={{ backgroundImage: `url(${src || 'https://source.unsplash.com/random/1321x583/?nature'})`, height: 400 }}
       >
         <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
           <div className='d-flex justify-content-center align-items-center h-100'>
