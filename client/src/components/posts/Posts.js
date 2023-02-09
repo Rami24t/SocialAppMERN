@@ -12,7 +12,7 @@ const Posts = () => {
     const res = await axios.get(baseUrl+'/posts/list', { withCredentials: true })
     return res.data
   }
-  const { data, error, isLoading } = useSWR(baseUrl+'/posts/list', fetcher, { refreshInterval: 500 })
+  const { data, error, isLoading } = useSWR(baseUrl+'/posts/list', fetcher, { refreshInterval: 1000 })
   if (error) return <div>Error...</div>
   if (isLoading) return <div>Loading...</div>
 
