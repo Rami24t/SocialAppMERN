@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import userRoutes from './src/routes/userRoutes.js'
 import postRoutes from './src/routes/postRoutes.js'
+import commentRoutes from './src/routes/commentRoutes.js'
 import dbConnect from './src/config/db.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
@@ -26,6 +27,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use('/users', userRoutes)
 app.use('/posts', postRoutes)
+app.use('/comment', commentRoutes)
 
 const port = process.env.PORT || 5001
 app.listen(port, () => console.log('Server is up and running at port: ', port))

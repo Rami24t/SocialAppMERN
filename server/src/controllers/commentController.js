@@ -1,27 +1,56 @@
 import Post from '../models/Post.js'
+import Comment from '../models/Comment.js'
 
 export const addComment = async (req, res) => {
     try {
+        const comment = await Comment.create({ text: req.body.comment, author: req.user })
         const post = await Post.findByIdAndUpdate(
-        req.body.postId,
+        req.params.postId,
         {
             $push: {
-                comments: {
-                    comment: req.body.comment,
-                    author: req.user
-                }
+                comments: comment
             }
         },
         {new: true}
-       )
-        .populate({
-            path: 'comments.author',
-            select: 'username email image'
-        })
-        res.send({success: true, comments: post.comments})        
+       ).populate({path: 'comments', populate: {path: 'author', select: 'username profileImage email'}})
+        res.json({success: true, comments: post.comments}).status(200)
     } catch (error) {
         console.log("add error:", error.message)
-        res.send({success: false, error: error.message})
+        res.json({success: false, error: error.message}).status(500)
+    }
+}
+
+export const likeComment = async (req, res) => {
+    try {
+        let liked = null
+        let comment = await Comment.findById(req.params.id)
+        if (comment?.likes?.includes(req.user)) { // is in the likes array?
+            comment = await Comment.findByIdAndUpdate(
+                req.params.id,
+                {
+                    $pull: { // deletes matching items
+                        likes: req.user
+                    }
+                },
+                {new: true}
+            )
+            liked = false
+        } else {
+            comment = await Comment.findByIdAndUpdate(
+                req.params.id,
+                {
+                    $addToSet: {
+                        likes: req.user
+                    }
+                },
+                {new: true}
+            )
+            liked = true
+        }
+        res.json({success: true, likes: comment.likes, liked}).status(200)
+    } catch (error) {
+        console.log("like error:", error.message)
+        res.json({success: false, error: error.message}).status(500)
     }
 }
 

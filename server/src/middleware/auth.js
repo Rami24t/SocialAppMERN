@@ -7,11 +7,11 @@ export default function auth(req, res, next) {
         next()        
     } catch (error) {
         if(error.message === "jwt expired")
-            res.json({success: false, error: "Session expired, please login again"}).status(401)
+            res.status(401).json({success: false, error: "Session expired, please login again"})
         else if(error.message === "invalid token")
-            res.json({success: false, error: "Invalid token, please login again"}).status(401)
+            res.status(401).json({success: false, error: "Invalid token, please login again"})
         else
-            res.json({success: false, error: "Something went wrong, please login again"}).status(401)
+            res.status(401).json({success: false, error: "Something went wrong, please login again"})
         console.log(error.message);
     }
 }

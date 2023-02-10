@@ -1,7 +1,27 @@
-import React from 'react'
+import React, {useState, useContext} from 'react'
 import { Comment, Header } from 'semantic-ui-react'
+import CommentComponent from '../comment/Comment'
+import axios from 'axios'
+import { SocialContext } from '../context/Context'
 
-const CommentExampleThreaded = () => (
+const CommentExampleThreaded = ({comments}) => {
+const baseUrl = process.env.REACT_APP_BASE_URL;
+
+const toggleLike = async (id) => {
+  try {
+    const res = await axios.patch(baseUrl+'/comment/like/'+id, {}, { withCredentials: true })
+    console.log("toggleLike res:", res.data)
+    return {likes: res.data.likes, liked: res.data.liked}
+  }
+  catch (err) {
+    console.log("toggleLike err:", err.message)
+  }
+}
+
+const {state} = useContext(SocialContext)
+
+  
+  return (
   <Comment.Group threaded>
     <Header as='h3' dividing>
       Comments
@@ -90,8 +110,14 @@ const CommentExampleThreaded = () => (
       </Comment.Content>
     </Comment>
 
+    {comments?.map(comment => (
+    <CommentComponent key={comment?._id} comment={comment} liked={comment.likes.includes(state.user._id)} toggleLike={toggleLike}/>
+    ))}
+
+    
+
     
   </Comment.Group>
 )
-
+    }
 export default CommentExampleThreaded

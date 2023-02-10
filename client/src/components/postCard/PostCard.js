@@ -48,7 +48,7 @@ export default function PostCard({
   dispatch,
   editPost,
   deletePost,
-  ownPost,
+  ownPost,addComment
 }) {
   // Popover
   const [anchorEl, setAnchorEl] = useState(null);
@@ -87,6 +87,11 @@ export default function PostCard({
     hour12: true,
   });
   // console.log(ownPost)
+
+ const [comment, setComment] = useState("");
+
+ console.log(post.comments)
+
   return (
     <Card className="mb-2">
       <CardHeader
@@ -156,8 +161,8 @@ export default function PostCard({
           </StyledBadge>
         </IconButton>
         <IconButton onClick={handleCommentClick} aria-label="Comment">
-          <StyledBadge badgeContent={3} color="secondary">
-            <CommentIcon style={{ zIndex: 1 }} />
+          <StyledBadge badgeContent={post.comments.length} color="secondary">
+            <CommentIcon color="secondary" style={{ zIndex: 1 }} />
           </StyledBadge>
         </IconButton>
         <ExpandMore
@@ -171,14 +176,14 @@ export default function PostCard({
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Comments />
+          <Comments comments={post.comments} />
           {/* reply form */}
           <Form reply>
             <Ref innerRef={mainRef}>
-              <Form.TextArea />
+              <Form.TextArea name='comment' value={comment} onChange={(e)=>setComment(e.currentTarget.value)} />
             </Ref>
             <Button
-            onClick={()=>alert("Commenting feature is not available in the demo version, but you can still like and/or unlike the post.\nYou can also view the profile of the author of the post.\nYou can also add or delete your own posts!\nYou can change your cover image.\nYou can update your profile information.\nEnjoy !")}
+            onClick={()=>{setComment('');addComment(comment, post._id)}}
               content="Add Reply"
               labelPosition="left"
               icon="edit"

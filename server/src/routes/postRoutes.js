@@ -13,8 +13,8 @@ router.patch('/like/:postId', auth, like)
 router.delete('/delete/:postId', auth, deletePost)
 
 // Comments
-router.post('/comments/add', auth, addComment)
-router.patch('/comments/edit', auth, editComment)
-router.delete('/comments/delete/:postId/:commentId', auth, deleteComment)
+router.post('/comment/:postId', auth, addComment)
+router.patch('/comment/edit', auth, editComment)
+router.delete('/comment/delete/:postId/:commentId', auth, deleteComment)
 
 export default router
