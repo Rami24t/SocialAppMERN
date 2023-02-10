@@ -20,6 +20,26 @@ export const addComment = async (req, res) => {
     }
 }
 
+export const reply = async (req, res) => {
+    try {
+        const reply = await Comment.create({ text: req.body.text, author: req.user })
+        const comment = await Comment.findByIdAndUpdate(
+            req.params.id,
+            {
+                $push: {
+                    comments: reply
+                }
+            },
+            {new: true}
+        ).populate({path: 'comments', populate: {path: 'author', select: 'username profileImage email'}})
+        res.json({success: true, comments: comment.comments}).status(200)
+    } catch (error) {
+        console.log("reply error:", error.message)
+        res.json({success: false, error: error.message}).status(500)
+    }
+}
+
+
 export const likeComment = async (req, res) => {
     try {
         let liked = null

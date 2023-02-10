@@ -14,10 +14,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Popover from "../popover/Popover";
 import Comments from "../comments/Comments";
-import { Button, Form, Ref } from "semantic-ui-react";
 import Badge from "@mui/material/Badge";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './PostCard.css'
+import ReplyForm from "../replyForm/ReplyForm";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -66,10 +66,11 @@ export default function PostCard({
   const handleCommentClick = () => {
     if (!expanded) {
       setExpanded(true);
-      setTimeout(() => mainRef?.current?.firstChild.focus(), 200);
+      setTimeout(() => {mainRef?.current?.firstChild?.focus(); mainRef?.current?.firstChild?.scrollIntoView({ behavior: 'smooth' })}, 200);
+      
     }
     // console.log(mainRef?.current?.firstChild);
-    mainRef.current?.firstChild.focus();
+    mainRef?.current?.firstChild?.focus();
   };
 
   const handleExpandClick = () => {
@@ -136,7 +137,7 @@ export default function PostCard({
         subheader={postDate || "Post Date"}
       />
       {post?.postImage && (
-        <a href={post.postImage} target="blank">
+        <a href={post?.postImage} target="blank">
           <CardMedia
             component="img"
             height="300"
@@ -155,13 +156,13 @@ export default function PostCard({
       )}
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" className="me-2">
-          <StyledBadge badgeContent={post.likes.length} color="primary">
+          <StyledBadge badgeContent={post?.likes?.length} color="primary">
             {/* Heart icon */}
             <FavoriteIcon color={liked ? "warning" : "secondary"} style={{ zIndex: 1 }} onClick={toggleLike} />
           </StyledBadge>
         </IconButton>
         <IconButton onClick={handleCommentClick} aria-label="Comment">
-          <StyledBadge badgeContent={post.comments.length} color="secondary">
+          <StyledBadge badgeContent={post?.comments?.length} color="secondary">
             <CommentIcon color="secondary" style={{ zIndex: 1 }} />
           </StyledBadge>
         </IconButton>
@@ -176,20 +177,9 @@ export default function PostCard({
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Comments comments={post.comments} />
+          <Comments comments={post?.comments} />
           {/* reply form */}
-          <Form reply>
-            <Ref innerRef={mainRef}>
-              <Form.TextArea name='comment' value={comment} onChange={(e)=>setComment(e.currentTarget.value)} />
-            </Ref>
-            <Button
-            onClick={()=>{setComment('');addComment(comment, post._id)}}
-              content="Add Reply"
-              labelPosition="left"
-              icon="edit"
-              primary
-            />
-          </Form>
+          <ReplyForm  mainRef={mainRef} comment={comment} setComment={setComment} addComment={addComment} post={post} />
         </CardContent>
       </Collapse>
     </Card>

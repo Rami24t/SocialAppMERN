@@ -94,7 +94,8 @@ export default function PersonalProfile() {
 
   return (
     <section className="vh-100" style={{ backgroundColor: "#f4f5f7" }}>
-      <MDBContainer className="py-5 h-100">
+      <MDBContainer className="py-5 h-75">
+      <h1 className='h3'>Edit Profile</h1>
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="6" className="mb-4 mb-lg-0">
             <MDBCard className="mb-3" style={{ borderRadius: ".5rem" }}>

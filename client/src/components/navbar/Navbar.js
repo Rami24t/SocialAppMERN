@@ -29,9 +29,9 @@ function OffcanvasExample() {
   }
 }
 
+  const expand = 'xl';
   return (
     <>
-      {['xl'].map((expand) => (
         <Navbar key={expand} bg="light" expand={expand} className="gradient-nav" >
           <Container fluid>
             <Navbar.Brand><Link to='/'>Social App</Link></Navbar.Brand>
@@ -74,14 +74,13 @@ function OffcanvasExample() {
                     aria-label="Search"
                   /> */}
                   <NavLink to="/">
-                    <Button onClick={loggedIn ? handleLogOut : null} variant="outline-success">Log {loggedIn ? 'out' : 'in'}  </Button>
+                    <Button  className=' hover-opacity-75  ' onClick={loggedIn ? handleLogOut : null} variant="outline-success">Log {loggedIn ? 'out' : 'in'}  </Button>
                   </NavLink>
                 </Form>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>
         </Navbar>
-      ))}
     </>
   );
 }

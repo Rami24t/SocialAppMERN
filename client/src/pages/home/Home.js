@@ -93,7 +93,7 @@ export default function Home() {
 
     return (
         <>
-        <Header addPost={showAddPost} heading={state?.user?.name} subheading="Home Page" src={fileData?.url} updateCover={updateCover} />
+        <Header addPost={showAddPost} heading={state?.user?.name} subheading="Home" src={fileData?.url} updateCover={updateCover} />
         <CreatePost heading={state?.user?.name} avatar={state?.user?.profileImage} addNewPost={addNewPost} toggleShow={toggleShow} staticModal={staticModal} setStaticModal={setStaticModal}/>
         <div className="homeContainer">
             <Posts/>
