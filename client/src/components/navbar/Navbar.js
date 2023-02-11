@@ -34,7 +34,7 @@ function OffcanvasExample() {
     <>
         <Navbar key={expand} bg="light" expand={expand} className="gradient-nav" >
           <Container fluid>
-            <Navbar.Brand><Link to='/'>Social App</Link></Navbar.Brand>
+            <Navbar.Brand as={NavLink} to='/' exact>Social App</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`}>
             <i className="fa-solid fa-bars" />
             </Navbar.Toggle>
@@ -50,19 +50,17 @@ function OffcanvasExample() {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link><NavLink to="/home">Home</NavLink></Nav.Link>
+                  <Nav.Link as={NavLink} to="/home" activeClassName="activeHome" exact>Home</Nav.Link>
                   {/* <Nav.Link href="#action2">Link</Nav.Link> */}
                   <NavDropdown
                     title="Settings"
                     id={`offcanvasNavbarDropdown-expand-${expand}`}
                   >
-                    <NavDropdown.Item><NavLink to="/profile">Edit Profile</NavLink></NavDropdown.Item>
-                    <NavDropdown.Item>
-                    <NavLink to="/view-profile/myprofile">View Profile</NavLink>
+                    <NavDropdown.Item as={NavLink}  to="/profile" activeClassName="active" exact>Edit Profile</NavDropdown.Item>
+                    <NavDropdown.Item as={NavLink} to="/view-profile/myprofile" activeClassName="active" className=' full-width full ' exact>View Profile
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item>
-                    <NavLink to="/account">Account settings</NavLink>
+                    <NavDropdown.Item as={NavLink}  to="/account" activeClassName="active" exact>Account settings
                     </NavDropdown.Item>
                   </NavDropdown>
                 </Nav>
@@ -73,9 +71,9 @@ function OffcanvasExample() {
                     className="me-2"
                     aria-label="Search"
                   /> */}
-                  <NavLink to="/">
-                    <Button  className=' hover-opacity-75  ' onClick={loggedIn ? handleLogOut : null} variant="outline-success">Log {loggedIn ? 'out' : 'in'}  </Button>
-                  </NavLink>
+                  
+                    <Button as={NavLink} to='/' variant='secondary' className='hover-opacity-75' onClick={loggedIn ? handleLogOut : null}>Log {loggedIn ? 'out' : 'in'}  </Button>
+                  
                 </Form>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
