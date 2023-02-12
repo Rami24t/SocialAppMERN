@@ -39,6 +39,17 @@ export const reply = async (req, res) => {
     }
 }
 
+export const getComment = async (req, res) => {
+    try {
+        const comment = await Comment.findById(req.params.id).populate({path: 'author', select: 'name profileImage email'})
+        res.json({success: true, comment}).status(200)
+    } catch (error) {
+        console.log("get error:", error.message)
+        res.json({success: false, error: error.message}).status(500)
+    }
+}
+
+
 
 export const likeComment = async (req, res) => {
     try {

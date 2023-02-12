@@ -12,11 +12,13 @@ const commentSchema = new Schema({
     },
     comments: [{
         type: Schema.Types.ObjectId,
-        ref: 'Comment'
+        ref: 'Comment',
+        default: []
 }],
     likes: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        default: []
     }],
 }, {
     timestamps: true

@@ -21,7 +21,11 @@ export const list = async (req, res) => {
             .find()
             .select('-__v')
             .populate({path: 'author', select: 'name username email profileImage likes about phone title facebook twitter instagram'}) // post author
-            .populate({path: 'comments', populate: {path: 'author', select: 'name profileImage email'}})
+            .populate(
+                {path: 'comments',
+                        populate: {path: 'author comments', select: 'name profileImage email text author updatedAt comments'
+//                        , populate: {path: 'author', select: 'name profileImage email'}
+                    }})
             // .populate({path: 'likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // post likes
             // .populate({path: 'comments', select: '-__v', options: {sort: {createdAt: -1}} })// post comments
             // .populate({path: 'comments.author', select: 'username email profileImage'}) // comment author

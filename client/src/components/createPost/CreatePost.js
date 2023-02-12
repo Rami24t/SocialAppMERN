@@ -31,7 +31,7 @@ export default function App( {toggleShow, staticModal, setStaticModal, addNewPos
     setPost({ ...post, [name]: value });
   };
   const createPost = () => {
-    if(!post.title ) return;
+    if(!post.title ) return alert('Title is required for creating a new post.');
   const formData = new FormData();
   formData.set('author', post?.author)
   formData.set('title', post.title)

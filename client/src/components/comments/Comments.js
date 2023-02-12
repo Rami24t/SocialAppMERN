@@ -149,6 +149,7 @@ const CommentExampleThreaded = ({ comments }) => {
               src={state.user.profileImage}
               name={state.user.name}
               dispatch={dispatch}
+              uid={state.user._id}
             />
         );
       })}

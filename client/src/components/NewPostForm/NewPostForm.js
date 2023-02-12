@@ -3,13 +3,13 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import { handleImageChange } from "../../utilities/handleImageChange";
 import {
   MDBInput,
-  MDBTextArea
+  MDBTextArea,
+  MDBValidation,
+  MDBValidationItem
 } from "mdb-react-ui-kit";
 
 export default function NewPostForm({ updatePost, post, heading, avatar }) {
@@ -49,7 +49,10 @@ export default function NewPostForm({ updatePost, post, heading, avatar }) {
         subheader={Date().toLocaleString().slice(0, 21)}
       />
       <CardContent>
+      <MDBValidation>
+      <MDBValidationItem feedback="Title is required to make a post" invalid>
         <MDBInput
+          required
           className="text-center mb-1"
           label="Title"
           id="title"
@@ -58,6 +61,7 @@ export default function NewPostForm({ updatePost, post, heading, avatar }) {
           value={post.title}
           onChange={updatePost}
         />
+      </MDBValidationItem>
         <label className={"cursor-pointer "+ !fileData.file ? 'btn' : '' }>
         {fileData.file&&<CardMedia
           component="img"
@@ -78,6 +82,7 @@ export default function NewPostForm({ updatePost, post, heading, avatar }) {
             onChange={updatePost}
           />
         </Typography>
+        </MDBValidation>
       </CardContent>
     </Card>
   );

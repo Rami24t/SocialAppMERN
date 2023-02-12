@@ -24,7 +24,8 @@ const userSchema = new mongoose.Schema({
     facebook: String,
     instagram: String,
     twitter: String,
-    likes: [String],
+    likes: [{type: String,
+        default: []}],
     gender: String,
     verified: {
         type: Boolean,
