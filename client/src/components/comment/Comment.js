@@ -128,6 +128,31 @@ const CommentComponent = ({
       DateTime.DATETIME_MED_WITH_WEEKDAY
     );
 
+  const handleCreateReply = async () => {
+    if (reply.length < 1) return;
+    try {
+      level3Comment.comments.push(...await createReply(reply, level3Comment?._id));
+      setLevel3Comment({ ...level3Comment, comments: level3Comment.comments });
+      setReply("");
+      // setShownLocal(false);
+    } catch (err) {
+      console.log("handleReply err:", err.message);
+    }
+  };
+
+  // if(level3Comment?.author?.name  && !author?.name)
+  //   setAuthor(level3Comment.author);
+  // else if(!level3Comment?.author?.name && author?.name)
+  //   setLevel3Comment({...level3Comment, author: author});
+  //   else 
+    if(!level3Comment?.author?.name && !author?.name)
+    console.log('no author name for comment', level3Comment, author);
+
+function getThis()
+{
+  console.log( '  this:  ' ,this);
+}
+getThis()
     return (
     <Comment>
       <img
@@ -152,7 +177,7 @@ const CommentComponent = ({
           }}
           as="a"
         >
-          {level3Comment?.author?.name || author?.name}
+          {author?.name || level3Comment?.author?.name || comment?.author?.name || "Anonymous"}
         </Comment.Author>
         <Comment.Metadata>
           <span>{level3Comment?.updatedAt && time}</span>
@@ -173,7 +198,7 @@ const CommentComponent = ({
             {level3Comment?.likes?.length || ""} Like
             {level3Comment?.likes?.length > 1 ? "s" : ""}
           </a>
-          {!level3Comment?.Level3 &&
+          {true && !level3Comment.Level3 &&  
           <a
             href="#reply"
             onClick={() => {
@@ -243,8 +268,7 @@ const CommentComponent = ({
                     <Button
                       size="tiny"
                       onClick={() => {
-                        setReply("");
-                        createReply(reply, level3Comment?._id);
+                        handleCreateReply();
                       }}
                       content="Add Reply"
                       labelPosition="left"

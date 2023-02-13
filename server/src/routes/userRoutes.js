@@ -3,7 +3,7 @@ import {getUserPublic, register, login, emailConfirm, forgotPass, changePass, lo
 import auth from '../middleware/auth.js'
 import multerMiddleware from '../config/multer-cloudinary.js'
 const router = express.Router()
-import { check, body, validationResult } from 'express-validator'
+import { check } from 'express-validator'
 
 router.post('/register',
 [

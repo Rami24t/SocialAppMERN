@@ -31,6 +31,7 @@ const CommentExampleThreaded = ({ comments }) => {
         { withCredentials: true }
       );
       console.log("createReply res:", res.data);
+      return res.data.comments;
     } catch (err) {
       console.log("createReply err:", err.message);
     }

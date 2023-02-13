@@ -42,7 +42,7 @@ export const reply = async (req, res) => {
                 }
             },
             {new: true}
-        ).populate({path: 'comments', populate: {path: 'author', select: 'username profileImage email'}})
+        ).populate({path: 'comments', populate: {path: 'author', select: 'name username profileImage email'}})
         res.json({success: true, comments: comment.comments}).status(200)
     } catch (error) {
         console.log("reply error:", error.message)
