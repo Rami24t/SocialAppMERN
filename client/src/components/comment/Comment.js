@@ -8,20 +8,26 @@ import axios from "axios";
 const CommentComponent = ({
   comment,
   toggleLike,
-  liked,
   createReply,
   src,
   name,
   dispatch,
   uid,
+  level2,
 }) => {
-  const [level3Comment, setLevel3Comment] = useState(comment);
   const [author, setAuthor] = useState(comment?.author);
+  const [level3Comment, setLevel3Comment] = useState(typeof comment !== "string" ? {...comment} : comment);
+  const [liked, setLiked] = useState(level3Comment?.likes?.includes(uid));
   const setReplyAuthor = async (id) => {
     try {
+      if(comment.author.name || level3Comment.author.name || author.name)
+        return;
       const popAuthor = await getReplyAuthor(id);
       setAuthor(popAuthor);
-      comment.author = popAuthor;
+      setLevel3Comment(typeof level3Comment !== "string" ? {...level3Comment, author: popAuthor} : {_id: level3Comment, author: popAuthor});
+      comment = level3Comment;
+      if(!comment.likes || typeof comment.likes !== typeof [])
+      await getCommentLikes();
     } catch (err) {
       console.log("setReplyAuthor err:", err.message);
     }
@@ -43,10 +49,14 @@ const CommentComponent = ({
   };
 
   const setLevel3Reply = async (id) => {
+    if(level3Comment.Level3)
+      return;
     try {
       const popReply = await getLevel3Reply(id);
-      setLevel3Comment({...popReply, Level3: true });
-      comment = ({...popReply, Level3: true });
+      setLevel3Comment(typeof level3Comment !== "string" ? {...level3Comment, ...popReply, Level3: true } : 
+      {_id: level3Comment, ...popReply, Level3: true })
+      comment = ({...level3Comment,...popReply, Level3: true });
+      await getCommentLikes();
     } catch (err) {
       console.log("setReplyAuthor err:", err.message);
     }
@@ -66,20 +76,29 @@ const CommentComponent = ({
     }
   };
 
-
-  useEffect(() => {
     if(typeof comment === "string") {
       setLevel3Reply(comment);
     }
     else if (typeof comment.author === "string") {
       setReplyAuthor(comment.author);
     }
-    else {
-      setLevel3Comment({...comment});
-      setAuthor({...comment.author});
+  async function getCommentLikes() {
+    if(typeof level3Comment.likes === typeof [])
+    {
+      setLiked(level3Comment.likes.includes(uid))
+      return level3Comment.likes.includes(uid);
     }
-  }, []);
-
+      try {
+        const id = (typeof level3Comment === "string" ? level3Comment : typeof level3Comment?._id === "string" ? level3Comment?._id : level3Comment?._id?.$oid );
+        if(!id || typeof id !== "string") return console.log('no id for getCommentLikes', level3Comment);
+        const res = await axios.get(process.env.REACT_APP_BASE_URL + "/comment/likes/" + id, {withCredentials: true,});
+        setLevel3Comment({ ...level3Comment, likes: res.data.likes });
+        setLiked(res.data.likes?.includes(uid))
+        return res.data.likes.includes(uid);
+      } catch (err) {
+        console.log("getCommentLikes err:", err.message);
+      }
+    }
 
   const navigate = useNavigate();
   const [shownLocal, setShownLocal] = React.useState(false);
@@ -108,7 +127,7 @@ const CommentComponent = ({
     DateTime.fromISO(level3Comment?.updatedAt).toLocaleString(
       DateTime.DATETIME_MED_WITH_WEEKDAY
     );
- 
+
     return (
     <Comment>
       <img
@@ -144,13 +163,17 @@ const CommentComponent = ({
             href="#like"
             className={liked && "text-primary"}
             onClick={() => {
-              toggleLike(level3Comment._id);
+              setLiked(Boolean(!liked));
+              console.log("level3Comment: ", level3Comment);
+
+              setLevel3Comment({ ...level3Comment, likes: liked ? level3Comment?.likes?.filter((id) => id !== uid) : [...level3Comment?.likes, uid] });
+              toggleLike(level3Comment?._id);
             }}
           >
             {level3Comment?.likes?.length || ""} Like
             {level3Comment?.likes?.length > 1 ? "s" : ""}
           </a>
-          {!comment?.Level3 && !level3Comment?.Level3 &&
+          {!level3Comment?.Level3 &&
           <a
             href="#reply"
             onClick={() => {
@@ -179,11 +202,12 @@ const CommentComponent = ({
                 key={comment2?._id}
                 comment={comment2}
                 toggleLike={toggleLike}
-                liked={comment2?.likes?.includes(uid)}
                 createReply={createReply}
                 src={src}
                 name={name}
                 dispatch={dispatch}
+                uid={uid}
+                level2={true}
               />
             ))}
           {shownLocal && (
@@ -220,7 +244,7 @@ const CommentComponent = ({
                       size="tiny"
                       onClick={() => {
                         setReply("");
-                        createReply(reply, level3Comment._id);
+                        createReply(reply, level3Comment?._id);
                       }}
                       content="Add Reply"
                       labelPosition="left"

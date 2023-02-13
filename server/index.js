@@ -10,8 +10,7 @@ import cors from 'cors'
 // import mongoose from 'mongoose'
 // import Post from './src/models/Post.js'
 // import User from './src/models/User.js'
-// ...rest of the initial code omitted for simplicity.
-import { check, body, validationResult } from 'express-validator'
+import { body } from 'express-validator'
 
 dotenv.config()
 const app = express()

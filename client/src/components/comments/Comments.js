@@ -143,7 +143,6 @@ const CommentExampleThreaded = ({ comments }) => {
             <CommentComponent
               key={comment?._id}
               comment={comment}
-              liked={comment.likes.includes(state.user._id)}
               toggleLike={toggleLike}
               createReply={createReply}
               src={state.user.profileImage}

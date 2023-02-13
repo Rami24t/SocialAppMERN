@@ -20,6 +20,17 @@ export const addComment = async (req, res) => {
     }
 }
 
+export const getCommentLikes = async (req, res) => {
+    try {
+        const comment = await Comment.findById(req.params.id)
+        res.json({success: true, likes: comment.likes}).status(200)
+    } catch (error) {
+        console.log("get error:", error.message)
+        res.json({success: false, error: error.message}).status(500)
+    }
+}
+
+
 export const reply = async (req, res) => {
     try {
         const reply = await Comment.create({ text: req.body.text, author: req.user })
