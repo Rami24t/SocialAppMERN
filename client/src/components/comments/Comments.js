@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Comment, Header } from "semantic-ui-react";
 import CommentComponent from "../comment/Comment";
 import axios from "axios";

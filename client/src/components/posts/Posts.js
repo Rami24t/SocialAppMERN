@@ -60,6 +60,7 @@ const Posts = () => {
 
 
   return (
+    <section style={{maxWidth: '1100px'}} className="mx-auto">
     <MDBContainer>
       {
         data?.posts?.map(post => (
@@ -67,6 +68,7 @@ const Posts = () => {
         ))
       }
     </MDBContainer>
+    </section>
   )
 }
 

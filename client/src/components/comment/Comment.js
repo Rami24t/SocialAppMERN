@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { Comment } from "semantic-ui-react";
 import { DateTime } from "luxon";
 import { Form, Button, Ref } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Interweave } from 'interweave';
+import { UrlMatcher } from 'interweave-autolink';
 
 const CommentComponent = ({
   comment,
@@ -182,7 +184,11 @@ getThis()
         <Comment.Metadata>
           <span>{level3Comment?.updatedAt && time}</span>
         </Comment.Metadata>
-        <Comment.Text>{level3Comment?.text}</Comment.Text>
+        <Comment.Text><Interweave
+        newWindow={true}
+          content={level3Comment?.text}
+          matchers={[new UrlMatcher('url')]}
+          /></Comment.Text>
         <Comment.Actions>
           <a
             href="#like"

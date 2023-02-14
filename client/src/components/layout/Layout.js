@@ -23,10 +23,19 @@ const Layout = () => {
         }
     }
     return (
-            <div>
+            <>
+            <header>
+            <nav>
                 <Navbar />
+            </nav>
+            </header>
+            <main>
                 <Outlet />
-            </div>
+            </main>
+            <footer className=' modal-footer '>
+                <p>by Rami Al-Saadi - 2023 - All Rights Reserved</p>
+            </footer>
+            </>
         )
 }
 export default Layout

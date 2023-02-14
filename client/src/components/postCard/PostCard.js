@@ -18,6 +18,9 @@ import Badge from "@mui/material/Badge";
 import { useNavigate } from "react-router-dom";
 import './PostCard.css'
 import ReplyForm from "../replyForm/ReplyForm";
+import { Interweave } from 'interweave';
+import { UrlMatcher } from 'interweave-autolink';
+
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -94,6 +97,7 @@ export default function PostCard({
  console.log(post.comments)
 
   return (
+    <article>
     <Card className="mb-2">
       <CardHeader
         avatar={
@@ -150,7 +154,11 @@ export default function PostCard({
       {post?.text && (
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {post?.text || "post text"}
+          <Interweave
+          newWindow={true}
+          content={post?.text || "post text"}
+          matchers={[new UrlMatcher('url')]}
+          />
         </Typography>
       </CardContent>
       )}
@@ -183,5 +191,6 @@ export default function PostCard({
         </CardContent>
       </Collapse>
     </Card>
+    </article>
   );
 }
