@@ -42,7 +42,7 @@ const CommentExampleThreaded = ({ comments }) => {
       <Header as="h3" dividing>
         Comments
       </Header>
-
+{/* 
       <Comment>
         <Comment.Avatar
           as="a"
@@ -59,14 +59,14 @@ const CommentExampleThreaded = ({ comments }) => {
             <a>Reply</a>
           </Comment.Actions>
         </Comment.Content>
-      </Comment>
+      </Comment> */}
 
-      <Comment>
-        <Comment.Avatar
+      {/* <Comment> */}
+        {/* <Comment.Avatar
           as="a"
           src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
-        />
-        <Comment.Content>
+        /> */}
+        {/* <Comment.Content>
           <Comment.Author as="a">Elliot Fu</Comment.Author>
           <Comment.Metadata>
             <span>Yesterday at 12:30AM</span>
@@ -78,9 +78,9 @@ const CommentExampleThreaded = ({ comments }) => {
             <a>Like</a>
             <a>Reply</a>
           </Comment.Actions>
-        </Comment.Content>
+        </Comment.Content> */}
 
-        <Comment.Group>
+        {/* <Comment.Group>
           <Comment>
             <Comment.Avatar
               as="a"
@@ -137,7 +137,7 @@ const CommentExampleThreaded = ({ comments }) => {
             <a>Reply</a>
           </Comment.Actions>
         </Comment.Content>
-      </Comment>
+      </Comment> */}
 
       {comments?.map((comment) => {
         return (

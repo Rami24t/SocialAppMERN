@@ -3,6 +3,8 @@ import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCar
 import './ProfileCard.css';
 import { Link } from 'react-router-dom';
 import ChipMultipleSelect from '../chipMultipleSelect/ChipMultipleSelect';
+import { Interweave } from 'interweave';
+import { UrlMatcher } from 'interweave-autolink';
 
 export default function PersonalProfile({data}) {
   return (
@@ -43,7 +45,13 @@ export default function PersonalProfile({data}) {
                     <MDBTypography tag="h6">About Me</MDBTypography>
                     <hr className="mt-0 mb-2" />
                     <MDBRow className="pt-1 mb-5">
-                        <MDBCardText className="text-muted">{data?.about || 'My about me section...'}</MDBCardText>
+                        <MDBCardText className="text-muted">
+                        <Interweave
+                          newWindow={true}
+                          content={data?.about || "post text"}
+                          matchers={[new UrlMatcher('url')]}/>
+                          {data?.about || 'My about me section...'}
+                        </MDBCardText>
                     </MDBRow>
                     {data?.likes?.length > 0 ? <ChipMultipleSelect likes={data?.likes}  /> : null }
                     <div className="d-flex justify-content-start">
