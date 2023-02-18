@@ -48,9 +48,8 @@ export default function PersonalProfile({data}) {
                         <MDBCardText className="text-muted">
                         <Interweave
                           newWindow={true}
-                          content={data?.about || "post text"}
+                          content={data?.about || 'My about me section...'}
                           matchers={[new UrlMatcher('url')]}/>
-                          {data?.about || 'My about me section...'}
                         </MDBCardText>
                     </MDBRow>
                     {data?.likes?.length > 0 ? <ChipMultipleSelect likes={data?.likes}  /> : null }
