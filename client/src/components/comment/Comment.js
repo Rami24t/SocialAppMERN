@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { Comment } from "semantic-ui-react";
 import { DateTime } from "luxon";
 import { Form, Button, Ref } from "semantic-ui-react";
@@ -20,21 +20,23 @@ const CommentComponent = ({
   const [author, setAuthor] = useState(comment?.author);
   const [level3Comment, setLevel3Comment] = useState(typeof comment !== "string" ? {...comment} : comment);
   const [liked, setLiked] = useState(level3Comment?.likes?.includes(uid));
-  const setReplyAuthor = async (id) => {
+  const setReplyAuthor = useCallback(async (id) => {
     try {
       if(comment.author.name || level3Comment.author.name || author.name)
         return;
       const popAuthor = await getReplyAuthor(id);
       setAuthor(popAuthor);
-      setLevel3Comment(typeof level3Comment !== "string" ? {...level3Comment, author: popAuthor} : {_id: level3Comment, author: popAuthor});
+      setLevel3Comment((prev)=>typeof prev !== "string" ? {...prev, author: popAuthor} : {_id: prev, author: popAuthor});
       comment = level3Comment;
-      if(!comment.likes || typeof comment.likes !== typeof [])
+      if(!comment.likes || !Array.isArray(level3Comment.likes))
+        // typeof comment.likes !== typeof [])
       await getCommentLikes();
     } catch (err) {
       console.log("setReplyAuthor err:", err.message);
     }
-  };
-  const getReplyAuthor = async (id) => {
+  }, [comment, level3Comment, author, uid]);
+
+  const getReplyAuthor =  useCallback(async (id) => {
     if(typeof id !== "string") return id
     try {
       const res = await axios
@@ -48,9 +50,9 @@ const CommentComponent = ({
       console.log("getReplyAuthor err:", err.message);
       return id
     }
-  };
+  }, []);
 
-  const setLevel3Reply = async (id) => {
+  const setLevel3Reply =  useCallback(async (id) => {
     if(level3Comment.Level3)
       return;
     try {
@@ -62,8 +64,9 @@ const CommentComponent = ({
     } catch (err) {
       console.log("setReplyAuthor err:", err.message);
     }
-  };
-  const getLevel3Reply = async (id) => {
+  }, [comment, level3Comment, author, uid]);
+
+  const getLevel3Reply =  useCallback(async (id) => {
     if(typeof id !== "string") return id
     try {
       const res = await axios
@@ -76,15 +79,20 @@ const CommentComponent = ({
       console.log("getLevel3Comment err:", err.message);
       return id
     }
-  };
+  }, []);
 
+useEffect(() => {
     if(typeof comment === "string") {
       setLevel3Reply(comment);
     }
     else if (typeof comment.author === "string") {
       setReplyAuthor(comment.author);
     }
-  async function getCommentLikes() {
+}, [comment, setReplyAuthor, setLevel3Reply]);
+
+
+
+  const getCommentLikes = useCallback(async function getCommentLikes() {
     if(typeof level3Comment.likes === typeof [])
     {
       setLiked(level3Comment.likes.includes(uid))
@@ -100,7 +108,7 @@ const CommentComponent = ({
       } catch (err) {
         console.log("getCommentLikes err:", err.message);
       }
-    }
+    }, [level3Comment, uid]);
 
   const navigate = useNavigate();
   const [shownLocal, setShownLocal] = React.useState(false);
@@ -120,15 +128,18 @@ const CommentComponent = ({
       }, 100);
   };
 
-  const relDay =
-    DateTime.fromISO(level3Comment?.updatedAt).toRelativeCalendar() || "just now";
-  const time =
+  const relDay = useMemo(() => DateTime.fromISO(level3Comment?.updatedAt).toRelativeCalendar() || "just now"
+  , [level3Comment]);
+
+  const time = useMemo(() => {
+    return (
     relDay[0].toLocaleUpperCase() +
     relDay.slice(1) +
     ", on " +
     DateTime.fromISO(level3Comment?.updatedAt).toLocaleString(
       DateTime.DATETIME_MED_WITH_WEEKDAY
-    );
+    )
+    );}, [relDay]);
 
   const handleCreateReply = async () => {
     if (reply.length < 1) return;
@@ -147,8 +158,8 @@ const CommentComponent = ({
   // else if(!level3Comment?.author?.name && author?.name)
   //   setLevel3Comment({...level3Comment, author: author});
   //   else 
-    if(!level3Comment?.author?.name && !author?.name)
-    console.log('no author name for comment', level3Comment, author);
+    // if(!level3Comment?.author?.name && !author?.name)
+    // console.log('no author name for comment', level3Comment, author);
 
 function getThis()
 {
