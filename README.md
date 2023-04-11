@@ -25,3 +25,18 @@ This is a full stack (front-end and back-end) web apllication project that I cod
 - Add a comment reply to any other comment
 - Delete any of your own posts
 
+## Programming Languages used in this project:
+
+- JavaScript
+- JSX
+- CSS
+- HTML
+
+## Technology Stack
+
+- React (JS Framework)
+
+- MongoDB (Database)
+- Mongoose (Object Data Modeling)
+- Express (Web Framework)
+- Node.js runtime environment (Server)
