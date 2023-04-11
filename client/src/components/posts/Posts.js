@@ -11,16 +11,22 @@ const Posts = () => {
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const {state, dispatch} = useContext(SocialContext)
   const fetcher = async () => {
-    const res = await axios.get(baseUrl+'/posts/list', { withCredentials: true })
-    if(res.status === 401 || res.status === 403) {
-      dispatch({type: 'logout'})
-      navigate('/')
+    try {
+      const res = await axios.get(baseUrl+'/posts/list', { withCredentials: true })
+      if(res.status === 401 || res.status === 403) {
+        dispatch({type: 'logout'})
+        navigate('/')
+      }
+      if(res.data && res.data.posts)
+      return res.data
+    } catch (error) {
+      console.log(error)
+      if(error.response.status === 401 || error.response.status === 403) {
+        setTimeout(() => fetcher(), 1000)
+      }
     }
-    return res.data
   }
-  const { data, error, isLoading } = useSWR(baseUrl+'/posts/list', fetcher, { refreshInterval: 1000 })
-  if (error) return <div>Error...{error}</div>
-  if (isLoading) return <div>Loading...</div>
+  const { data, error, isLoading } = useSWR(baseUrl+'/posts/list', fetcher, { refreshInterval: 2000 })
 
   const deletePost = async (id) => {
     console.log("deletePost id:", id)
@@ -34,8 +40,15 @@ const Posts = () => {
     }
   }
   const editPost = async (id, text) => {
-    // const res = await axios.put(baseUrl+'/posts/edit/'+id, {text}, { withCredentials: true })
-    // return res.data
+    console.log("editPost id:", id)
+    // try {
+    //   const res = await axios.put(baseUrl+'/posts/edit/'+id, {text}, { withCredentials: true })
+    //   console.log("editPost res:", res)
+    //   return res.data
+    // }
+    // catch (err) {
+    //   console.log("editPost err:", err.message)
+    // }
   }
 
   const toggleLike = async (id) => {
@@ -58,13 +71,14 @@ const Posts = () => {
     }
   }
 
-
+  if (error) return <div>Error...{error}</div>
+  if (isLoading) return <div>Loading...</div>
   return (
-    <section style={{maxWidth: '1100px'}} className="mx-auto">
+    <section style={{maxWidth: '1600px', columns: '400px 2'}} className="mx-auto">
     <MDBContainer>
       {
-        data?.posts?.map(post => (
-        <Post toggleLike={()=>toggleLike(post._id)} addComment={addComment} key={post?._id} ownPost={post?.author._id===state.user._id} liked={post.likes.includes(state.user._id)} post={post} dispatch={dispatch} deletePost={deletePost} editPost={editPost} />
+        data?.posts && data?.posts?.map(post => (
+        <Post toggleLike={()=>toggleLike(post._id)} addComment={addComment} key={post._id || Math.random()*100000000} ownPost={post.author?._id===state.user?._id} liked={post.likes?.includes(state.user?._id)} post={post} dispatch={dispatch} deletePost={deletePost} editPost={editPost} />
         ))
       }
     </MDBContainer>
