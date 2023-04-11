@@ -139,10 +139,10 @@ const CommentExampleThreaded = ({ comments }) => {
         </Comment.Content>
       </Comment> */}
 
-      {comments?.map((comment) => {
+      {comments?.map((comment, index) => {
         return (
             <CommentComponent
-              key={comment?._id}
+              key={comment?._id || index}
               comment={comment}
               toggleLike={toggleLike}
               createReply={createReply}

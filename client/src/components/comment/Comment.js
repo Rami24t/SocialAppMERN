@@ -239,9 +239,9 @@ getThis()
           }
         >
           {level3Comment?.comments &&
-            level3Comment?.comments?.map((comment2) => (
+            level3Comment?.comments?.map((comment2, index) => (
               <CommentComponent
-                key={comment2?._id}
+                key={comment2?._id || index}
                 comment={comment2}
                 toggleLike={toggleLike}
                 createReply={createReply}
