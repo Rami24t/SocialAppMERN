@@ -16,6 +16,7 @@ import {
   MDBValidationItem,
 } from "mdb-react-ui-kit";
 import "./RegistrationCard.css";
+import { set } from "mongoose";
 function RegistrationCard() {
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const [data, setData] = useState({
@@ -35,6 +36,10 @@ function RegistrationCard() {
       }
     } catch (error) {
       console.log("error:", error.message);
+      if(error.message === "Network Error")
+      setTimeout(() => {
+        handleRegister();
+      }, 1000);
     }
   };
 
