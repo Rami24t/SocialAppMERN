@@ -25,18 +25,25 @@ function App() {
     emailOrUsername: "",
     password: "",
   });
+  const attemptLogin = async () => {
+    let response = await axios.post(baseUrl + "/users/login", data, {
+      withCredentials: true,
+    });
+    // console.log("handleLogin response:", response);
+    if (response.data.success) {
+      dispatch({
+        type: "saveProfile",
+        payload: response.data.user,
+      });
+      navigate("/home");
+    }
+    return response.data.success;
+  };
   const handleLogin = async () => {
     try {
-      const response = await axios.post(baseUrl + "/users/login", data, {
-        withCredentials: true,
-      });
-      console.log("handleLogin response:", response);
-      if (response.data.success) {
-        dispatch({
-          type: "saveProfile",
-          payload: response.data.user,
-        });
-        navigate("/home");
+      const success = await attemptLogin();
+      if (!success) {
+        setTimeout(() => {attemptLogin()} , 1000);
       }
     } catch (error) {
       console.log(error);
@@ -60,9 +67,12 @@ function App() {
             <MDBCardBody>
               {" "}
               <MDBValidation>
-                <MDBValidationItem feedback="Please enter your email or username" invalid>
+                <MDBValidationItem
+                  feedback="Please enter your email or username"
+                  invalid
+                >
                   <MDBInput
-                  required
+                    required
                     wrapperClass="mb-5"
                     label="Email address"
                     id="form1"
@@ -78,7 +88,7 @@ function App() {
                   invalid
                 >
                   <MDBInput
-                  required
+                    required
                     wrapperClass="mb-4"
                     label="Password"
                     id="form2"
