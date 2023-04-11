@@ -14,6 +14,7 @@ import 'semantic-ui-css/semantic.min.css'
 import Account from './pages/account/Account';
 import Layout from './components/layout/Layout';
 
+try {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
@@ -30,5 +31,8 @@ root.render(
         </Route>
         </Routes>
     </ContextProvider>
-      </BrowserRouter>
-);
+      </BrowserRouter>  
+  );
+} catch (error) {
+  console.log(error);
+}
