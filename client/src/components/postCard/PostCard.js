@@ -147,7 +147,8 @@ export default function PostCard({
             height="300"
             image={post?.postImage || ""}
             alt="Post Image"
-            className="cursor-pointer object-contain"
+            style={{ objectFit: "cover", objectPosition: "center" }}
+            className="cursor-pointer object-contain object-center"
           />
         </a>
       )}
