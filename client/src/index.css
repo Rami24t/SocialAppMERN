@@ -1,7 +1,9 @@
 body {
   margin: 0;
   font-family: Roboto, Helvetica, Arial, sans-serif;
-
+}
+p, .text{
+  font-family: 'Nunito', 'Roboto',  sans-serif;
 }
 
 .hover-opacity-75:hover {
