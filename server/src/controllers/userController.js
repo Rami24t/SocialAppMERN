@@ -42,9 +42,9 @@ export const login = async (req, res) => {
         }).select("-__v");
 
         console.log("logging in user:", user);
-        if (!user) return res.send({ success: false, errorId: 404 });
+        if (!user) return res.status(404).json({ success: false, errorId: 404 });
         const passMatch = await bcrypt.compare(req.body.password, user.password);
-        if (!passMatch) return res.send({ success: false, errorId: 401 });
+        if (!passMatch) return res.status(401).json({ success: false, errorId: 401 });
         const newUser = user.toObject();
         delete newUser.password;
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {

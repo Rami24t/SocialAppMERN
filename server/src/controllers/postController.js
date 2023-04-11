@@ -37,10 +37,10 @@ export const list = async (req, res) => {
             // .populate({path: 'comments.comments.comments.author', select: 'username email profileImage'}) // comment comments comments author
             // .populate({path: 'comments.comments.comments.likes', select: 'username email profileImage', options: {sort: {createdAt: -1}} }) // comment comments comments likes
             .sort({createdAt: -1})
-        res.json({posts}).status(200)        
+        res.status(200).json({posts})
     } catch (error) {
         console.log("error:", error.message)
-        res.json({success: false, error: error.message}).status(500)
+        res.json({success: false, error: error.message})
     }
 }
 
