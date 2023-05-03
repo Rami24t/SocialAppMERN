@@ -46,6 +46,9 @@ export default function PersonalProfile() {
   const handleSave = async () => {
     const formdata = new FormData();
     if (!data.name) return alert("Name is required");
+    if (!data.title) return alert("Title is required");
+    if (!data.email) return alert("Email is required");
+    if (!state?.user?.profileImage && !fileData.file) return alert("Profile Image is required");
     formdata.set("name", data.name);
     formdata.set("title", data.title);
     formdata.set("email", data.email);
