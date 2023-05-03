@@ -37,7 +37,9 @@ export const login = async (req, res) => {
         const user = await User.findOne({
             $or: [
                 { username: req.body.emailOrUsername },
-                { email: req.body.emailOrUsername },
+                {
+                     email: req.body.emailOrUsername
+                     },
             ],
         }).select("-__v");
 
