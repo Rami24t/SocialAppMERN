@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import sendEmail from "../utilities/email.js";
+// import sendEmail from "../utilities/email.js";
 import { validationResult } from "express-validator";
 
 const SALT_ROUNDS = 10;
@@ -9,7 +9,7 @@ export const register = async (req, res) => {
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({ success: false, errors: errors.array() });
         }
         
         const salt = await bcrypt.genSalt(SALT_ROUNDS);
@@ -20,11 +20,11 @@ export const register = async (req, res) => {
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
-        sendEmail(token);
-        res.send({ success: true });
+        // sendEmail(token);
+        res.json({ success: true });
     } catch (error) {
         console.log("registration error:", error.message);
-        res.send({ success: false, error: error.message });
+        res.json({ success: false, error: error });
     }
 };
 
