@@ -45,7 +45,7 @@ function RegistrationCard() {
         else if(response.data.error.code === 11000)
         {
           if(response.data.error.keyValue)
-          showError(`The ${JSON.stringify(response.data.error.keyValue)} is already taken!`)
+          showError(`The ${JSON.stringify(response.data.error.keyValue).slice(1,-1)} is already taken!`)
         }
       }
       console.log(response.data.error)
