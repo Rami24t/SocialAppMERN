@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import {
   MDBBtn,
   MDBContainer,
@@ -17,6 +16,15 @@ import {
 } from "mdb-react-ui-kit";
 import "./RegistrationCard.css";
 
+import Stack from '@mui/material/Stack';
+// import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
 function RegistrationCard() {
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const [data, setData] = useState({
@@ -28,23 +36,54 @@ function RegistrationCard() {
   const handleRegister = async () => {
     try {
       const response = await axios.post(baseUrl + "/users/register", data);
-      if (response.data.success) {
+      // console.log('response threw no error')
+      if (response.data?.success) {
         navigate("/");
       } else {
-        if (response.data.errorId === 2)
+        if (response.data.errorId === 2) // code in this if statement could be unreachable since an error in the previous lines should cause the skipping of these parts
           alert("Username must be more than 2 characters");
+        else if(response.data.error.code === 11000)
+        {
+          if(response.data.error.keyValue)
+          showError(`The ${JSON.stringify(response.data.error.keyValue)} is already taken!`)
+        }
       }
+      console.log(response.data.error)
     } catch (error) {
       console.log("error:", error.message);
-      if(error.message === "Network Error")
-      setTimeout(() => {
-        handleRegister();
-      }, 1000);
+      if (error.message === "Network Error")
+        setTimeout(() => {
+          handleRegister();
+        }, 1000);
+       else if (error.response?.data?.errors[0])
+        showError(error.response.data.errors[0].msg);
     }
   };
 
+  // Response Alert
+  const [alert, setAlert] = useState({ severity: "", message: '', open: false })
+  const showError = (error) => {
+    setAlert(prev => ({ ...prev, severity: "error", message: error, open: true }));
+  };
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlert(prev => ({ ...prev, open: false }));
+  };
+  // ---
+
   return (
     <MDBContainer fluid className="my-5 registration">
+
+      <Stack spacing={2} sx={{ width: '100%' }}>
+        <Snackbar open={alert.open} autoHideDuration={6000} onClose={handleCloseAlert}>
+          <Alert onClose={handleCloseAlert} severity={alert.severity} sx={{ width: '100%' }}>
+            {alert.message}
+          </Alert>
+        </Snackbar>
+      </Stack>
+
       <MDBRow className="g-0 align-items-center">
         <MDBCol col="6">
           <MDBCard
