@@ -16,11 +16,10 @@ import Popover from "../popover/Popover";
 import Comments from "../comments/Comments";
 import Badge from "@mui/material/Badge";
 import { useNavigate } from "react-router-dom";
-import './PostCard.css'
+import "./PostCard.css";
 import ReplyForm from "../replyForm/ReplyForm";
-import { Interweave } from 'interweave';
-import { UrlMatcher } from 'interweave-autolink';
-
+import { Interweave } from "interweave";
+import { UrlMatcher } from "interweave-autolink";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -51,7 +50,8 @@ export default function PostCard({
   dispatch,
   editPost,
   deletePost,
-  ownPost,addComment
+  ownPost,
+  addComment,
 }) {
   // Popover
   const [anchorEl, setAnchorEl] = useState(null);
@@ -69,8 +69,10 @@ export default function PostCard({
   const handleCommentClick = () => {
     if (!expanded) {
       setExpanded(true);
-      setTimeout(() => {mainRef?.current?.firstChild?.focus(); mainRef?.current?.firstChild?.scrollIntoView({ behavior: 'smooth' })}, 200);
-      
+      setTimeout(() => {
+        mainRef?.current?.firstChild?.focus();
+        mainRef?.current?.firstChild?.scrollIntoView({ behavior: "smooth" });
+      }, 200);
     }
     // console.log(mainRef?.current?.firstChild);
     mainRef?.current?.firstChild?.focus();
@@ -92,106 +94,136 @@ export default function PostCard({
   });
   // console.log(ownPost)
 
- const [comment, setComment] = useState("");
+  const [comment, setComment] = useState("");
 
- console.log(post.comments)
+  //  console.log(post.comments)
 
   return (
     <article>
-    <Card className="mb-2">
-      <CardHeader
-        avatar={
-          // <Link to={'/view-profile/'+post?.author?._id?.toString()}>
-          <img
-            src={post?.author?.profileImage}
-            alt="author"
-            className="cursor-pointer rounded-circle object-cover "
-            style={{ width: "44px", height: "44px" }}
-            title={post?.author?.name}
-            onClick={() => {
-              dispatch({ type: "setViewProfile", payload: post?.author });
-              navigate("/view-profile/" + post?.author?._id?.toString());
-            }}
-          />
-        }
-        action={
-          ownPost && (
-            <IconButton aria-label="settings">
-              <MoreVertIcon
-                id="basic-button"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
+      <Card className="mb-2">
+        <CardHeader
+          avatar={
+            // <Link to={'/view-profile/'+post?.author?._id?.toString()}>
+            <img
+              src={post?.author?.profileImage.replace(
+                "/upload",
+                "/upload/c_thumb,g_face,h_80,w_80/f_auto,q_auto"
+              )}
+              alt="author"
+              className="cursor-pointer rounded-circle object-cover "
+              style={{ width: "44px", height: "44px" }}
+              title={post?.author?.name}
+              onClick={() => {
+                dispatch({ type: "setViewProfile", payload: post?.author });
+                navigate("/view-profile/" + post?.author?._id?.toString());
+              }}
+            />
+          }
+          action={
+            ownPost && (
+              <IconButton aria-label="settings">
+                <MoreVertIcon
+                  id="basic-button"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                />
+                <Popover
+                  ownPost={ownPost}
+                  anchorEl={anchorEl}
+                  setAnchorEl={setAnchorEl}
+                  open={open}
+                  handleClose={handleClose}
+                  handleClick={handleClick}
+                  editPost={editPost}
+                  deletePost={deletePost}
+                />
+              </IconButton>
+            )
+          }
+          title={
+            post?.author?.name + " says:  " + (post?.title || "Post Title")
+          }
+          subheader={postDate || "Post Date"}
+        />
+        {post?.postImage && (
+          <a href={post?.postImage} target="_blank" rel="noreferrer">
+            <CardMedia
+              component="img"
+              height="300"
+              image={
+                post?.postImage
+                  ? // ? window.innerWidth < 400
+                    post.postImage.replace(
+                      "upload/",
+                      "upload/if_w_gt_h/c_auto,h_310/if_else/c_auto,w_390/if_end/f_auto/q_auto/co_white,l_text:Arial_12:Rami's%20Social%20App/fl_layer_apply,g_south/"
+                    )
+                  : // : post.postImage.replace(
+                    //     "upload/",
+                    //     "upload/if_w_gt_h/c_auto,h_310/if_else/c_auto,w_390/if_end/f_auto/q_auto/co_white,l_text:Arial_12:Rami's%20Social%20App/fl_layer_apply,g_south/"
+                    //   )
+                    ""
+              }
+              alt="Post Image"
+              style={{ objectFit: "cover", objectPosition: "center" }}
+              className="cursor-pointer object-contain object-center"
+            />
+          </a>
+        )}
+        {post?.text && (
+          <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              <Interweave
+                newWindow={true}
+                content={post?.text || "post text"}
+                matchers={[new UrlMatcher("url")]}
               />
-              <Popover
-                ownPost={ownPost}
-                anchorEl={anchorEl}
-                setAnchorEl={setAnchorEl}
-                open={open}
-                handleClose={handleClose}
-                handleClick={handleClick}
-                editPost={editPost}
-                deletePost={deletePost}
+            </Typography>
+          </CardContent>
+        )}
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites" className="me-2">
+            <StyledBadge badgeContent={post?.likes?.length} color="primary">
+              {/* Heart icon */}
+              <FavoriteIcon
+                color={liked ? "warning" : "secondary"}
+                style={{ zIndex: 1 }}
+                onClick={toggleLike}
               />
-            </IconButton>
-          )
-        }
-        title={post?.author?.name + " says:  " + (post?.title || "Post Title")}
-        subheader={postDate || "Post Date"}
-      />
-      {post?.postImage && (
-        <a href={post?.postImage} target="blank">
-          <CardMedia
-            component="img"
-            height="300"
-            image={post?.postImage || ""}
-            alt="Post Image"
-            style={{ objectFit: "cover", objectPosition: "center" }}
-            className="cursor-pointer object-contain object-center"
-          />
-        </a>
-      )}
-      {post?.text && (
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          <Interweave
-          newWindow={true}
-          content={post?.text || "post text"}
-          matchers={[new UrlMatcher('url')]}
-          />
-        </Typography>
-      </CardContent>
-      )}
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" className="me-2">
-          <StyledBadge badgeContent={post?.likes?.length} color="primary">
-            {/* Heart icon */}
-            <FavoriteIcon color={liked ? "warning" : "secondary"} style={{ zIndex: 1 }} onClick={toggleLike} />
-          </StyledBadge>
-        </IconButton>
-        <IconButton onClick={handleCommentClick} aria-label="Comment">
-          <StyledBadge badgeContent={post?.comments?.length} color="secondary">
-            <CommentIcon color="secondary" style={{ zIndex: 1 }} />
-          </StyledBadge>
-        </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Comments comments={post?.comments} />
-          {/* reply form */}
-          <ReplyForm  mainRef={mainRef} comment={comment} setComment={setComment} addComment={addComment} post={post} />
-        </CardContent>
-      </Collapse>
-    </Card>
+            </StyledBadge>
+          </IconButton>
+          <IconButton onClick={handleCommentClick} aria-label="Comment">
+            <StyledBadge
+              badgeContent={post?.comments?.length}
+              color="secondary"
+            >
+              <CommentIcon color="secondary" style={{ zIndex: 1 }} />
+            </StyledBadge>
+          </IconButton>
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Comments comments={post?.comments} />
+            {/* reply form */}
+            <ReplyForm
+              mainRef={mainRef}
+              comment={comment}
+              setComment={setComment}
+              addComment={addComment}
+              post={post}
+            />
+          </CardContent>
+        </Collapse>
+      </Card>
     </article>
   );
 }

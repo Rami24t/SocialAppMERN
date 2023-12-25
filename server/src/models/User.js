@@ -1,18 +1,19 @@
 import mongoose from "mongoose";
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema(
+  {
     username: {
-        type: String,
-        unique: true,
-        required: true
+      type: String,
+      unique: true,
+      required: true,
     },
     email: {
-        type: String,
-        unique: true,
-        required: true
+      type: String,
+      unique: true,
+      required: true,
     },
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     name: String,
     title: String,
@@ -24,12 +25,13 @@ const userSchema = new mongoose.Schema({
     facebook: String,
     instagram: String,
     twitter: String,
-    likes: [{type: String,
-        default: []}],
+    likes: [{ type: String, default: [] }],
     gender: String,
     verified: {
-        type: Boolean,
-        default: false
-    }
-}, {timeStamps: true})
-export default mongoose.model('User', userSchema)
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timeStamps: true }
+);
+export default mongoose.model("User", userSchema);

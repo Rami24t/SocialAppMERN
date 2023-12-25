@@ -14,7 +14,7 @@ const CommentExampleThreaded = ({ comments }) => {
         {},
         { withCredentials: true }
       );
-      console.log("toggleLike res:", res.data);
+      // console.log("toggleLike res:", res.data);
       return { likes: res.data.likes, liked: res.data.liked };
     } catch (err) {
       console.log("toggleLike err:", err.message);
@@ -30,7 +30,7 @@ const CommentExampleThreaded = ({ comments }) => {
         { text: reply },
         { withCredentials: true }
       );
-      console.log("createReply res:", res.data);
+      // console.log("createReply res:", res.data);
       return res.data.comments;
     } catch (err) {
       console.log("createReply err:", err.message);
@@ -42,7 +42,7 @@ const CommentExampleThreaded = ({ comments }) => {
       <Header as="h3" dividing>
         Comments
       </Header>
-{/* 
+      {/* 
       <Comment>
         <Comment.Avatar
           as="a"
@@ -62,11 +62,11 @@ const CommentExampleThreaded = ({ comments }) => {
       </Comment> */}
 
       {/* <Comment> */}
-        {/* <Comment.Avatar
+      {/* <Comment.Avatar
           as="a"
           src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
         /> */}
-        {/* <Comment.Content>
+      {/* <Comment.Content>
           <Comment.Author as="a">Elliot Fu</Comment.Author>
           <Comment.Metadata>
             <span>Yesterday at 12:30AM</span>
@@ -80,7 +80,7 @@ const CommentExampleThreaded = ({ comments }) => {
           </Comment.Actions>
         </Comment.Content> */}
 
-        {/* <Comment.Group>
+      {/* <Comment.Group>
           <Comment>
             <Comment.Avatar
               as="a"
@@ -141,16 +141,16 @@ const CommentExampleThreaded = ({ comments }) => {
 
       {comments?.map((comment, index) => {
         return (
-            <CommentComponent
-              key={comment?._id || index}
-              comment={comment}
-              toggleLike={toggleLike}
-              createReply={createReply}
-              src={state.user.profileImage}
-              name={state.user.name}
-              dispatch={dispatch}
-              uid={state.user._id}
-            />
+          <CommentComponent
+            key={comment?._id || index}
+            comment={comment}
+            toggleLike={toggleLike}
+            createReply={createReply}
+            src={state.user.profileImage}
+            name={state.user.name}
+            dispatch={dispatch}
+            uid={state.user._id}
+          />
         );
       })}
     </Comment.Group>

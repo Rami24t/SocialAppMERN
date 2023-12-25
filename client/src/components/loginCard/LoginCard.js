@@ -40,22 +40,25 @@ function App() {
     return response.data.success;
   };
   const handleLogin = async (e) => {
-    if(!data.emailOrUsername || !data.password) return;
+    if (!data.emailOrUsername || !data.password) return;
     e.preventDefault();
     e.target.disabled = true;
     try {
       const success = await attemptLogin();
       if (!success) {
-        setTimeout(() => {attemptLogin()} , 1000);
+        setTimeout(() => {
+          attemptLogin();
+        }, 1000);
       }
     } catch (error) {
       e.target.disabled = false;
       console.log(error.message);
-      if(error.message === "Network Error"){
-        setTimeout(() => {handleLogin()} , 2000);
+      if (error.message === "Network Error") {
+        setTimeout(() => {
+          handleLogin();
+        }, 2000);
       }
-      if(error.response.status === 404 || error.response.status === 401)
-      {
+      if (error.response.status === 404 || error.response.status === 401) {
         alert("Please enter a valid email/password combination");
       }
     }
@@ -120,7 +123,7 @@ function App() {
                   />
                   <a href="!#">Forgot password?</a>
                 </div>
-                <MDBBtn onClick={(e)=>handleLogin(e)} className="mb-4 w-100">
+                <MDBBtn onClick={(e) => handleLogin(e)} className="mb-4 w-100">
                   Log in
                 </MDBBtn>
                 <p className="mt-1 text-center">

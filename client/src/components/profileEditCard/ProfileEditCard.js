@@ -48,7 +48,8 @@ export default function PersonalProfile() {
     if (!data.name) return alert("Name is required");
     if (!data.title) return alert("Title is required");
     if (!data.email) return alert("Email is required");
-    if (!state?.user?.profileImage && !fileData.file) return alert("Profile Image is required");
+    if (!state?.user?.profileImage && !fileData.file)
+      return alert("Profile Image is required");
     formdata.set("name", data.name);
     formdata.set("title", data.title);
     formdata.set("email", data.email);
@@ -78,8 +79,7 @@ export default function PersonalProfile() {
           payload: response.data.user,
         });
         navigate("/view-profile/myprofile");
-      }
-      else if(response.status === 401) {
+      } else if (response.status === 401) {
         navigate("/");
       }
     } catch (error) {
@@ -98,7 +98,7 @@ export default function PersonalProfile() {
   return (
     <section className="vh-100" style={{ backgroundColor: "#f4f5f7" }}>
       <MDBContainer className="py-5 h-75">
-      <h1 className='h3'>Edit Profile</h1>
+        <h1 className="h3">Edit Profile</h1>
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="6" className="mb-4 mb-lg-0">
             <MDBCard className="mb-3" style={{ borderRadius: ".5rem" }}>

@@ -1,7 +1,7 @@
 export default function getHtml(template, token) {
-    switch (template) {
-        case 'welcome': 
-            return `
+  switch (template) {
+    case "welcome":
+      return `
             <!DOCTYPE html>
             <html>
               <body style="margin: 0; padding: 0;background-color: #000000;min-height:70vh;width:100%;color:#fff;">
@@ -10,9 +10,9 @@ export default function getHtml(template, token) {
                 <a href="http://localhost:3000/emailconfirm/${token}">Verify your email</a>
               </body>
             </html>
-            `
-        case 'forgotpass':
-            return `
+            `;
+    case "forgotpass":
+      return `
             <!DOCTYPE html>
             <html>
               <body style="margin: 0; padding: 0;background-color: #000000;min-height:70vh;width:100%;color:#fff;">
@@ -21,6 +21,6 @@ export default function getHtml(template, token) {
                 <a href="http://localhost:3000/changepassword/${token}">Change your password</a>
               </body>
             </html>
-            `
-    }
+            `;
+  }
 }

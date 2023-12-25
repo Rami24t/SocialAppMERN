@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Chip from '@mui/material/Chip';
+import * as React from "react";
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Chip from "@mui/material/Chip";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -19,7 +19,51 @@ const MenuProps = {
   },
 };
 
-const LIKES = ["Art",  "Photography",  "Cooking",  "Traveling",  "Reading",  "Writing",  "Music",  "Dancing",  "Sports",  "Gaming",  "Crafts",  "Gardening",  "Hiking",  "Camping",  "Fishing",  "Skiing",  "Snowboarding",  "Volunteering",  "Meditation",  "Yoga",  "Fitness",  "Nature",  "Technology",  "Cars",  "Movies",  "TV Shows",  "Theater",  "History",  "Geography",  "Science",  "Mathematics",  "Philosophy",  "Psychology",  "Religion",  "Languages",  "Culture",  "Food",  "Wine",  "Beer",  "Coffee",  "Tea",  "Pets",  "Nature"];
+const LIKES = [
+  "Art",
+  "Photography",
+  "Cooking",
+  "Traveling",
+  "Reading",
+  "Writing",
+  "Music",
+  "Dancing",
+  "Sports",
+  "Gaming",
+  "Crafts",
+  "Gardening",
+  "Hiking",
+  "Camping",
+  "Fishing",
+  "Skiing",
+  "Snowboarding",
+  "Volunteering",
+  "Meditation",
+  "Yoga",
+  "Fitness",
+  "Nature",
+  "Technology",
+  "Cars",
+  "Movies",
+  "TV Shows",
+  "Theater",
+  "History",
+  "Geography",
+  "Science",
+  "Mathematics",
+  "Philosophy",
+  "Psychology",
+  "Religion",
+  "Languages",
+  "Culture",
+  "Food",
+  "Wine",
+  "Beer",
+  "Coffee",
+  "Tea",
+  "Pets",
+  "Nature",
+];
 
 function getStyles(name, likes, theme) {
   return {
@@ -30,9 +74,9 @@ function getStyles(name, likes, theme) {
   };
 }
 
-export default function MultipleSelectChip({likes, setLikes}) {
+export default function MultipleSelectChip({ likes, setLikes }) {
   const theme = useTheme();
- // const [likes, setLikes] = React.useState([]);
+  // const [likes, setLikes] = React.useState([]);
 
   const handleChange = (event) => {
     const {
@@ -40,14 +84,14 @@ export default function MultipleSelectChip({likes, setLikes}) {
     } = event;
     setLikes(
       // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
+      typeof value === "string" ? value.split(",") : value
     );
     // setLikes(likes)
-};
+  };
 
   return (
     <div>
-      <FormControl sx={{ mb: 2, width: '100%' }}>
+      <FormControl sx={{ mb: 2, width: "100%" }}>
         <InputLabel id="demo-multiple-chip-label">Likes</InputLabel>
         <Select
           disabled={Boolean(!setLikes)}
@@ -58,9 +102,8 @@ export default function MultipleSelectChip({likes, setLikes}) {
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {
-                selected.map((value) => (
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+              {selected.map((value) => (
                 <Chip key={value} label={value} />
               ))}
             </Box>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -9,23 +9,23 @@ import {
   MDBInput,
   MDBTextArea,
   MDBValidation,
-  MDBValidationItem
+  MDBValidationItem,
 } from "mdb-react-ui-kit";
 
 export default function NewPostForm({ updatePost, post, heading, avatar }) {
   useEffect(() => {
     if (!post.image) {
       setFileData({
-        url: '',
-        file: null
-      })
+        url: "",
+        file: null,
+      });
     }
-  }, [post.image])
+  }, [post.image]);
 
-  const [fileData,setFileData] = useState({
-    url: '',
-    file: null
-  })
+  const [fileData, setFileData] = useState({
+    url: "",
+    file: null,
+  });
   const onChange = (e) => {
     if (e.currentTarget.files[0]) {
       handleImageChange(e, setFileData);
@@ -49,39 +49,49 @@ export default function NewPostForm({ updatePost, post, heading, avatar }) {
         subheader={Date().toLocaleString().slice(0, 21)}
       />
       <CardContent>
-      <MDBValidation>
-      <MDBValidationItem feedback="Title is required to make a post" invalid>
-        <MDBInput
-          required
-          className="text-center mb-1"
-          label="Title"
-          id="title"
-          type="text"
-          name="title"
-          value={post.title}
-          onChange={updatePost}
-        />
-      </MDBValidationItem>
-        <label className={"cursor-pointer "+ !fileData.file ? 'btn' : '' }>
-        {fileData.file&&<CardMedia
-          component="img"
-          height="194"
-          image={fileData.file ? fileData.url : ''}
-          alt="Add Post Image"
-        />}
-            {!fileData.file ? 'Add' : 'Change'} Image...
-        <input name="image" type="file" className="d-none" onInput={onChange} />
-        </label>
-        <Typography variant="body2" color="text.secondary" className="mt-2">
-          <MDBTextArea
-            label="Write something ..."
-            id="textAreaExample"
-            rows={4}
-            name="text"
-            value={post.text}
-            onChange={updatePost}
-          />
-        </Typography>
+        <MDBValidation>
+          <MDBValidationItem
+            feedback="Title is required to make a post"
+            invalid
+          >
+            <MDBInput
+              required
+              className="text-center mb-1"
+              label="Title"
+              id="title"
+              type="text"
+              name="title"
+              value={post.title}
+              onChange={updatePost}
+            />
+          </MDBValidationItem>
+          <label className={"cursor-pointer " + !fileData.file ? "btn" : ""}>
+            {fileData.file && (
+              <CardMedia
+                component="img"
+                height="194"
+                image={fileData.file ? fileData.url : ""}
+                alt="Add Post Image"
+              />
+            )}
+            {!fileData.file ? "Add" : "Change"} Image...
+            <input
+              name="image"
+              type="file"
+              className="d-none"
+              onInput={onChange}
+            />
+          </label>
+          <Typography variant="body2" color="text.secondary" className="mt-2">
+            <MDBTextArea
+              label="Write something ..."
+              id="textAreaExample"
+              rows={4}
+              name="text"
+              value={post.text}
+              onChange={updatePost}
+            />
+          </Typography>
         </MDBValidation>
       </CardContent>
     </Card>

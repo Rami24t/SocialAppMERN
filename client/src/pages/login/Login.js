@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react'
-import LoginCard from '../../components/loginCard/LoginCard'
+import React, { useEffect } from "react";
+import LoginCard from "../../components/loginCard/LoginCard";
 
 const Login = () => {
   useEffect(() => {
-    document.title = "Social App MERN | Sign In"
-  }, [])
+    document.title = "Social App MERN | Sign In";
+  }, []);
   return (
     <div>
       <LoginCard />
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

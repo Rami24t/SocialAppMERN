@@ -1,12 +1,18 @@
-import express from 'express'
+import express from "express";
 // import multerMiddleware from '../config/multer-cloudinary.js'
-import auth from '../middleware/auth.js'
-const router = express.Router()
-import {deleteComment,getCommentLikes, getComment , likeComment, reply} from '../controllers/commentController.js'
+import auth from "../middleware/auth.js";
+const router = express.Router();
+import {
+  deleteComment,
+  getCommentLikes,
+  getComment,
+  likeComment,
+  reply,
+} from "../controllers/commentController.js";
 
-router.patch('/like/:id', auth, likeComment)
-router.post('/reply/:id', auth, reply)
-router.get('/:id', auth, getComment)
-router.get('/likes/:id', auth, getCommentLikes)
+router.patch("/like/:id", auth, likeComment);
+router.post("/reply/:id", auth, reply);
+router.get("/:id", auth, getComment);
+router.get("/likes/:id", auth, getCommentLikes);
 
-export default router
+export default router;
