@@ -21,8 +21,15 @@ const Posts = () => {
       }
       if (res.data && res.data.posts) return res.data;
     } catch (error) {
-      console.log(error);
-      if (error.response.status === 401 || error.response.status === 403) {
+      // console.log('Fetcher error',error);
+      if (error.response.data.error === "Session expired, please login again") {
+        dispatch({ type: "logout" });
+        navigate("/");
+        return;
+      } else if (
+        error.response.status === 401 ||
+        error.response.status === 403
+      ) {
         setTimeout(() => fetcher(), 1000);
       }
     }
@@ -44,7 +51,7 @@ const Posts = () => {
     }
   };
   const editPost = async (id, text) => {
-    // console.log("editPost id:", id)
+    console.log("editPost id:", id);
     // try {
     //   const res = await axios.put(baseUrl+'/posts/edit/'+id, {text}, { withCredentials: true })
     //   console.log("editPost res:", res)
