@@ -70,10 +70,15 @@ function App() {
         <MDBRow className="g-0 d-flex align-items-center">
           <MDBCol md="4">
             <MDBCardImage
-              src="https://source.unsplash.com/random/600x800/?social"
-              alt="phone"
-              className="rounded-t-5 rounded-tr-lg-0"
+              width="433"
+              height="578"
               fluid
+              src="https://source.unsplash.com/random/433x578/?social"
+              alt=""
+              className="rounded-t-5 rounded-tr-lg-0"
+              style={{ transform: "scale(0)", transition: "transform 1s" }}
+              onLoad={(e) => { e.target.style.transform = "scale(1)" }}
+              lazy
             />
           </MDBCol>
 
