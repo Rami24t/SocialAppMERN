@@ -17,7 +17,7 @@ import "./LoginCard.css";
 import axios from "axios";
 import { SocialContext } from "../context/Context";
 
-function App() {
+function LoginCard() {
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const navigate = useNavigate();
   const { dispatch } = useContext(SocialContext);
@@ -77,7 +77,9 @@ function App() {
               alt=""
               className="rounded-t-5 rounded-tr-lg-0"
               style={{ transform: "scale(0)", transition: "transform 1s" }}
-              onLoad={(e) => { e.target.style.transform = "scale(1)" }}
+              onLoad={(e) => {
+                e.target.style.transform = "scale(1)";
+              }}
               lazy
             />
           </MDBCol>
@@ -146,4 +148,4 @@ function App() {
   );
 }
 
-export default App;
+export default LoginCard;
