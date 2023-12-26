@@ -110,6 +110,12 @@ export default function PostCard({
                 "/upload/c_thumb,g_face,h_80,w_80/f_auto,q_auto"
               )}
               alt="author"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src =
+                  "https://source.unsplash.com/random/44x44/?face?" +
+                  post?.author?.name;
+              }}
               className="cursor-pointer rounded-circle object-cover "
               style={{ width: "44px", height: "44px" }}
               title={post?.author?.name}
@@ -148,7 +154,14 @@ export default function PostCard({
           subheader={postDate || "Post Date"}
         />
         {post?.postImage && (
-          <a href={post?.postImage} target="_blank" rel="noreferrer">
+          <a
+            href={post?.postImage.replace(
+              "upload/",
+              `upload/c_limit,h_${window.innerHeight}/f_auto/q_auto/co_white,l_text:Arial_12:Rami's%20Social%20App/fl_layer_apply,g_south/`
+            )}
+            target="_blank"
+            rel="noreferrer"
+          >
             <CardMedia
               component="img"
               height="300"
@@ -157,7 +170,7 @@ export default function PostCard({
                   ? // ? window.innerWidth < 400
                     post.postImage.replace(
                       "upload/",
-                      "upload/if_w_gt_h/c_auto,h_310/if_else/c_auto,w_390/if_end/f_auto/q_auto/co_white,l_text:Arial_12:Rami's%20Social%20App/fl_layer_apply,g_south/"
+                      "upload/if_w_gt_h/c_auto,h_31/if_else/c_auto,w_39/if_end/f_auto/q_auto/co_white,l_text:Arial_12:Rami's%20Social%20App/fl_layer_apply,g_south/"
                     )
                   : // : post.postImage.replace(
                     //     "upload/",
@@ -165,9 +178,31 @@ export default function PostCard({
                     //   )
                     ""
               }
+              onLoad={(e) => {
+                if (
+                  !e.target.src.includes(
+                    "upload/if_w_gt_h/c_auto,h_31/if_else/c_auto,w_39/if_end/f_auto/q_auto/co_white,l_text:Arial_12:Rami's%20Social%20App/fl_layer_apply,g_south/"
+                  )
+                ) {
+                  e.target.onLoad = null;
+                  return;
+                }
+                e.target.src = post?.postImage.replace(
+                  "upload/",
+                  `upload/c_lfill,g_auto,w_${e.target.clientWidth},h_${e.target.clientHeight}/f_auto/q_auto/co_white,l_text:Arial_12:Rami's%20Social%20App/fl_layer_apply,g_south/`
+                );
+              }}
               alt="Post Image"
-              style={{ objectFit: "cover", objectPosition: "center" }}
+              style={{ objectFit: "contain", objectPosition: "center" }}
               className="cursor-pointer object-contain object-center"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = `https://source.unsplash.com/random/${
+                  e.target.clientWidth
+                }x${e.target.clientHeight}/?${
+                  post?.title || post?.text || post?.author?.name || "random"
+                }`;
+              }}
             />
           </a>
         )}
