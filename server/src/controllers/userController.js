@@ -28,6 +28,120 @@ export const register = async (req, res) => {
   }
 };
 
+export const ghRegister = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ success: false, errors: errors.array() });
+    }
+    const ghQueryParamsString = `client_id=${process.env.GH_CLIENT_ID}&client_secret=${process.env.GH_CLIENT_SECRET}&code=${req.body.code}`;
+    // console.log("ghQueryParamsString", ghQueryParamsString);
+    const ghResponse = await fetch(
+      `https://github.com/login/oauth/access_token?${ghQueryParamsString}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => data);
+    await fetch("https://api.github.com/user", {
+      method: "GET",
+      headers: {
+        Authorization: "token " + ghResponse.access_token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log("data2", data);
+        req.body.username = data.login + data.id + "_gh";
+        req.body.verified = true;
+        req.body.gitHubId = data.id;
+        data.avatar_url && (req.body.profileImage = data.avatar_url);
+        data.name && (req.body.name = data.name);
+        data.bio && (req.body.about = data.bio);
+        data.location && (req.body.location += `; location:${data.location}`);
+        if (data.email) req.body.email = data.email;
+        data.html_url && (req.body.github = data.html_url);
+        data.blog && (req.body.website = data.blog);
+        data.twitter_username && (req.body.twitter = data.twitter_username);
+      });
+    // if(await User.findOne({ username: req.body.username }))
+    //   {
+    //     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    //       expiresIn: "1h",
+    //     });
+    //     res.cookie("SocialAppMERNToken", token, { sameSite: "none", secure: true });
+    //     return res.json({ success: true, user: user.toObject() });
+    //   }
+    const user = await User.create(req.body);
+    console.log("register user: ", user);
+    res.json({ success: true });
+  } catch (error) {
+    console.log("registration error:", error.message);
+    res.json({ success: false, error: error });
+  }
+};
+
+export const ghLogin = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  try {
+    const ghQueryParamsString =
+      "client_id=" +
+      process.env.GH_CLIENT_ID +
+      "&client_secret=" +
+      process.env.GH_CLIENT_SECRET +
+      "&code=" +
+      req.body.code;
+    const ghResponse = await fetch(
+      "https://github.com/login/oauth/access_token?" + ghQueryParamsString,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => data);
+    // const hashedPass = await bcrypt.hash(ghResponse.access_token, salt);
+    const username = await fetch("https://api.github.com/user", {
+      method: "GET",
+      headers: {
+        Authorization: "token " + ghResponse.access_token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => data.login + data.id + "_gh") // user.github = data.html_url;
+      .catch((error) => {
+        console.log(error);
+        res.status(401).json({ success: false, error: error, errorId: 401 }); // if (!passMatch) return res.status(401).json({ success: false, errorId: 401 });
+      });
+    const user = await User.findOne({ username: username }).select("-__v");
+    if (!user) return res.status(404).json({ success: false, errorId: 404 });
+    console.log("ghLogin ~ ghResponse", ghResponse);
+    console.log("logging in user._id:", user._id);
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    console.log("ghLogin token:", token);
+    res.cookie("SocialAppMERNToken", token, { sameSite: "none", secure: true });
+    console.log(res.cookie);
+    res.json({ success: true, user: user.toObject() });
+  } catch (error) {
+    console.log("login error:", error.message);
+    res.json({ success: false, error: error.message });
+  }
+};
+
 export const login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

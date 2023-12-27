@@ -2,6 +2,8 @@ import express from "express";
 import {
   getUserPublic,
   register,
+  ghRegister,
+  ghLogin,
   login,
   emailConfirm,
   forgotPass,
@@ -31,12 +33,22 @@ router.post(
   ],
   register
 );
-router.post("/emailconfirm", emailConfirm);
+router.post(
+  "/gh-register",
+  [check("code", "code is required").notEmpty().trim()],
+  ghRegister
+);
 router.post("/login", [check("*").notEmpty().trim().escape()], login);
+router.post(
+  "/gh-login",
+  [check("code", "code is required").notEmpty().trim().escape()],
+  ghLogin
+);
 router.get("/logout", logout);
 
 router.get("/public/:id", auth, getUserPublic);
 
+router.post("/emailconfirm", emailConfirm);
 router.post("/forgotpass", forgotPass);
 router.post("/changepassword", changePass);
 
