@@ -9,7 +9,7 @@ const Layout = () => {
   const path = location?.pathname?.split("/")[1];
 
   if (!path || path === "register") {
-    if (state?.user?.email) {
+    if (state?.user?.email || state?.user?.gitHubId) {
       if (!state.user.name || !state.user.profileImage)
         return <Navigate to="/profile" />;
       else return <Navigate to="/home" />;
@@ -21,7 +21,7 @@ const Layout = () => {
       (!state.user.name || !state.user.profileImage)
     )
       return <Navigate to="/profile" />;
-    if (!state?.user?.email) {
+    if (!state?.user?.email && !state?.user?.gitHubId) {
       return <Navigate to="/" />;
     }
   }

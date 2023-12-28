@@ -16,7 +16,7 @@ function OffcanvasExample() {
   const navigate = useNavigate();
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const { state, dispatch } = useContext(SocialContext);
-  const loggedIn = state?.user?.email ? true : false;
+  const loggedIn = Boolean(state?.user?.email || state?.user?.gitHubId);
 
   const handleLogOut = async () => {
     const response = await axios.get(baseUrl + "/users/logout", {
