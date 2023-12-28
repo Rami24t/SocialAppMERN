@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -33,6 +33,41 @@ function RegistrationCard() {
     password: "",
   });
   const navigate = useNavigate();
+  useEffect(() => {
+    const handleGHRegister = async () => {
+      try {
+        const response = await axios.post(baseUrl + "/users/gh-register", {
+          code: paramsCode,
+        });
+        // console.log('response threw no error')
+        if (response.data?.success) {
+          navigate("/");
+        } else if (response.data.error.code === 11000) {
+          if (response.data.error.keyValue.username) {
+            showError(
+              `The account ${JSON.stringify(
+                response.data.error.keyValue.username
+              ).slice(1, -13)} is already registered!`
+            );
+            setTimeout(() => {
+              navigate("/");
+            }, 2000);
+          }
+        }
+      } catch (error) {
+        console.log("error:", error);
+        if (error.message === "Network Error")
+          if (error.response?.data?.errors[0])
+            showError(error.response.data.errors[0].msg);
+      }
+    };
+    const paramsCode = new URLSearchParams(window.location.search).get("code");
+    if (paramsCode) {
+      // setData({ ...data, code: paramsCode });
+      handleGHRegister(paramsCode);
+    }
+  }, []);
+
   const handleRegister = async () => {
     try {
       const response = await axios.post(baseUrl + "/users/register", data);
@@ -186,7 +221,7 @@ function RegistrationCard() {
                 <div className="text-center">
                   <p>or sign up with:</p>
 
-                  <MDBBtn
+                  {/* <MDBBtn
                     tag="a"
                     color="none"
                     className="mx-3"
@@ -202,24 +237,29 @@ function RegistrationCard() {
                     style={{ color: "#1266f1" }}
                   >
                     <MDBIcon fab icon="twitter" size="sm" />
-                  </MDBBtn>
+                  </MDBBtn> */}
 
-                  <MDBBtn
+                  {/* <MDBBtn
                     tag="a"
                     color="none"
                     className="mx-3"
                     style={{ color: "#1266f1" }}
                   >
                     <MDBIcon fab icon="google" size="sm" />
-                  </MDBBtn>
+                  </MDBBtn> */}
 
                   <MDBBtn
                     tag="a"
                     color="none"
-                    className="mx-3"
+                    className="mx-3 p-1"
                     style={{ color: "#1266f1" }}
+                    onClick={() => {
+                      window.location.assign(
+                        `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GH_CLIENT_ID}&redirect_uri=${window.location.origin}${window.location.pathname}`
+                      );
+                    }}
                   >
-                    <MDBIcon fab icon="github" size="sm" />
+                    <MDBIcon fab icon="github" size="xl" />
                   </MDBBtn>
                 </div>
               </MDBValidation>
