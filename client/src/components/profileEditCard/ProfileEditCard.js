@@ -24,7 +24,7 @@ export default function PersonalProfile() {
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const { state, dispatch } = useContext(SocialContext);
   const navigate = useNavigate();
-  if (!state.user.email) navigate("/");
+  if (!state?.user?.email && !state?.user?.gitHubId) navigate("/");
   const [fileData, setFiledata] = useState({
     url:
       state?.user?.profileImage ||
@@ -35,10 +35,12 @@ export default function PersonalProfile() {
     name: state?.user?.name || "",
     title: state?.user?.title || "",
     email: state?.user?.email || "",
+    gitHubId: state?.user?.gitHubId || "",
     phone: state?.user?.phone || "",
     about: state?.user?.about || "",
     likes: state?.user?.likes || [],
     facebook: state?.user?.facebook || "",
+    github: state?.user?.github || "",
     twitter: state?.user?.twitter || "",
     instagram: state?.user?.instagram || "",
     username: state?.user?.username || "",
@@ -223,15 +225,15 @@ export default function PersonalProfile() {
                         <MDBIcon
                           className="float-end"
                           fab
-                          icon="twitter me-3"
+                          icon="github me-3"
                           size="lg"
                         />
                         <MDBInput
-                          label="twitter URL"
+                          label="github URL"
                           id="typeURL"
                           type="url"
-                          name="twitter"
-                          value={data.twitter || ""}
+                          name="github"
+                          value={data.github || ""}
                           onChange={handleChange}
                         />
                       </div>

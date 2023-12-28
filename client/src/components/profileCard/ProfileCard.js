@@ -97,13 +97,13 @@ export default function PersonalProfile({ data }) {
                           <MDBIcon fab icon="facebook me-3" size="lg" />
                         </a>
                       )}
-                      {data?.twitter && (
+                      {data?.github && (
                         <a
-                          href={data?.twitter || "#twitter"}
+                          href={data?.github || "#github"}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <MDBIcon fab icon="twitter me-3" size="lg" />
+                          <MDBIcon fab icon="github me-3" size="lg" />
                         </a>
                       )}
                       {data?.instagram && (
