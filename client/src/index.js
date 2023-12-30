@@ -12,6 +12,7 @@ import ViewProfile from "./pages/viewProfile/ViewProfile";
 import ContextProvider from "./components/context/Context";
 import "semantic-ui-css/semantic.min.css";
 import Account from "./pages/account/Account";
+import Verification from "./pages/verification/Verification";
 import Layout from "./components/layout/Layout";
 
 try {
@@ -23,6 +24,7 @@ try {
           <Route element={<Layout />}>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/emailverification/:token" element={<Verification />} />
             <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/view-profile/:id" element={<ViewProfile />} />

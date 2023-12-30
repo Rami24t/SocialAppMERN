@@ -21,7 +21,7 @@ const Layout = () => {
       (!state.user.name || !state.user.profileImage)
     )
       return <Navigate to="/profile" />;
-    if (!state?.user?.email && !state?.user?.gitHubId) {
+    if (!state?.user?.email && !state?.user?.gitHubId && path !== "emailverification") {
       return <Navigate to="/" />;
     }
   }
