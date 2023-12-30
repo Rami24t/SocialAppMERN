@@ -1,16 +1,7 @@
+// Desc: send email to user using nodemailer and gmail account (for development)
 import nodemailer from "nodemailer";
+import getSubject from "./getSubject.js";
 import getHtml from "./getHtml.js";
-
-function getSubject(template) {
-  switch (template) {
-    case "welcome":
-      return "Welcome to our social app ✔";
-    case "forgotpass":
-      return "Instructions on how to change your password at social app";
-    default:
-      "";
-  }
-}
 
 export default async function main(token, template) {
   const data = {
