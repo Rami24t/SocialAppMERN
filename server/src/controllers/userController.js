@@ -2,10 +2,11 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 // import sendEmail from "../utilities/email.js";
+import sendEmail from "../utilities/sendGridMail.js";
 import { validationResult } from "express-validator";
 
 const SALT_ROUNDS = 10;
-export const register = async (req, res) => {
+ const register = async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -20,7 +21,7 @@ export const register = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    // sendEmail(token);
+    sendEmail(token);
     res.json({ success: true });
   } catch (error) {
     console.log("registration error:", error.message);
@@ -28,7 +29,7 @@ export const register = async (req, res) => {
   }
 };
 
-export const ghRegister = async (req, res) => {
+ const ghRegister = async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -69,14 +70,6 @@ export const ghRegister = async (req, res) => {
         data.blog && (req.body.website = data.blog);
         data.twitter_username && (req.body.twitter = data.twitter_username);
       });
-    // if(await User.findOne({ username: req.body.username }))
-    //   {
-    //     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    //       expiresIn: "1h",
-    //     });
-    //     res.cookie("SocialAppMERNToken", token, { sameSite: "none", secure: true });
-    //     return res.json({ success: true, user: user.toObject() });
-    //   }
     const user = await User.create(req.body);
     console.log("register user: ", user);
     res.json({ success: true });
@@ -86,7 +79,7 @@ export const ghRegister = async (req, res) => {
   }
 };
 
-export const ghLogin = async (req, res) => {
+ const ghLogin = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -142,7 +135,7 @@ export const ghLogin = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+ const login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -175,29 +168,51 @@ export const login = async (req, res) => {
   }
 };
 
-export const emailConfirm = async (req, res) => {
+const sendVerificationLink = async (req, res) => {
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
+  //   return res.status(400).json({ errors: errors.array() });
+  // }
+  try {
+    const decoded = jwt.decode(req.body.token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+    const passMatch = await bcrypt.compare(req.body.password, user.password);
+    if (!passMatch)
+      return res.status(401).json({ success: false, errorId: 401 });  
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    sendEmail(token);
+    res.send({ success: true });
+  }
+  catch (error) {
+    console.log("sendVerificationLink error:", error.message);
+    res.send({ success: false, error: error.message });
+  }
+}
+
+ const verifyEmail = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
   try {
     const token = req.body.token;
-    const decrypted = jwt.verify(token, process.env.JWT);
-    console.log("emailConfirm ~ decrypted", decrypted);
+    const decrypted = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findByIdAndUpdate(
       { _id: decrypted.id },
       { verified: true },
       { new: true }
     );
-    console.log("emailConfirm ~ user", user);
+    console.log("verifyEmail ~ user", user);
     res.send({ success: true });
   } catch (error) {
-    console.log("emailConfirm error:", error.message);
-    res.send({ success: false, error: error.message });
+    console.log("verifyEmail error:", error.message);
+    res.json({ success: false, error: error.message });
   }
 };
 
-export const forgotPass = async (req, res) => {
+ const forgotPass = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -221,7 +236,7 @@ export const forgotPass = async (req, res) => {
   }
 };
 
-export const changePass = async (req, res) => {
+ const changePass = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -243,7 +258,7 @@ export const changePass = async (req, res) => {
   }
 };
 
-export const logout = async (req, res) => {
+ const logout = async (req, res) => {
   try {
     res.clearCookie("SocialAppMERNToken", { sameSite: "none", secure: true });
     res.json({ success: true }).status(200);
@@ -253,7 +268,7 @@ export const logout = async (req, res) => {
   }
 };
 
-export const getUserPublic = async (req, res) => {
+ const getUserPublic = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -268,7 +283,7 @@ export const getUserPublic = async (req, res) => {
   }
 };
 
-export const updateProfile = async (req, res) => {
+ const updateProfile = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -287,7 +302,7 @@ export const updateProfile = async (req, res) => {
   }
 };
 
-export const updateCover = async (req, res) => {
+ const updateCover = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -303,4 +318,19 @@ export const updateCover = async (req, res) => {
     console.log("updateCover error:", error.message);
     res.send({ success: false, error: error.message });
   }
+};
+
+export {
+  register,
+  ghRegister,
+  ghLogin,
+  login,
+  verifyEmail,
+  sendVerificationLink,
+  forgotPass,
+  changePass,
+  logout,
+  getUserPublic,
+  updateProfile,
+  updateCover,
 };

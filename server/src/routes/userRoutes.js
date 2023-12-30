@@ -5,7 +5,8 @@ import {
   ghRegister,
   ghLogin,
   login,
-  emailConfirm,
+  sendVerificationLink,
+  verifyEmail,
   forgotPass,
   changePass,
   logout,
@@ -48,7 +49,8 @@ router.get("/logout", logout);
 
 router.get("/public/:id", auth, getUserPublic);
 
-router.post("/emailconfirm", emailConfirm);
+router.post("/send-verification-link", sendVerificationLink);
+router.post("/verify", verifyEmail);
 router.post("/forgotpass", forgotPass);
 router.post("/changepassword", changePass);
 
