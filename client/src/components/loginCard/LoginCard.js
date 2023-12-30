@@ -144,7 +144,7 @@ function LoginCard() {
                 >
                   <MDBInput
                     required
-                    wrapperClass="mb-4"
+                    wrapperClass="mb-5"
                     label="Password"
                     id="form2"
                     type="password"
@@ -183,7 +183,7 @@ function LoginCard() {
                       );
                     }}
                   >
-                    <MDBIcon fab icon="github" size="xl" />
+                    <MDBIcon fab icon="github" size="2xl" />
                   </MDBBtn>
                 </div>
                 <p className="mt-5 text-center">
