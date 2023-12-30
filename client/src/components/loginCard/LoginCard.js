@@ -10,7 +10,6 @@ import {
   MDBValidation,
   MDBValidationItem,
   MDBInput,
-  MDBCheckbox,
   MDBIcon,
 } from "mdb-react-ui-kit";
 import { Link, useNavigate } from "react-router-dom";
@@ -156,15 +155,9 @@ function LoginCard() {
                     }
                   />
                 </MDBValidationItem>
-                <div className="d-flex justify-content-between mx-4 mb-4">
-                  <MDBCheckbox
-                    name="flexCheck"
-                    value=""
-                    id="flexCheckDefault"
-                    label="Remember me"
-                  />
+                {/* <div className="d-flex justify-content-between mx-4 mb-4">
                   <a href="!#">Forgot password?</a>
-                </div>
+                </div> */}
                 <MDBBtn onClick={(e) => handleLogin(e)} className="mb-4 w-100">
                   Log in
                 </MDBBtn>

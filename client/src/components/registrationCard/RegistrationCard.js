@@ -122,6 +122,13 @@ function RegistrationCard() {
   };
   // ---
 
+  // Terms and cookies checkbox state
+  const [terms, setTerms] = useState(false);
+  const handleTerms = () => {
+    setTerms(!terms);
+  };
+  // ---
+
   return (
     <MDBContainer fluid className="my-5 registration">
       <Stack spacing={2} sx={{ width: "100%" }}>
@@ -203,15 +210,17 @@ function RegistrationCard() {
                 </MDBValidationItem>
                 <div className="d-flex justify-content-center mb-4">
                   <MDBCheckbox
-                    name="flexCheck"
-                    value=""
-                    id="flexCheckDefault"
-                    label="Subscribe to our newsletter"
+                    name="terms"
+                    value={terms}
+                    onChange={handleTerms}
+                    id="terms"
+                    label="I accept all terms and cookies"
                   />
                 </div>
 
                 <MDBBtn
-                  onClick={handleRegister}
+                  onClick={terms && handleRegister}
+                  disabled={!terms}
                   className="w-100 mb-4"
                   size="md"
                 >
@@ -219,25 +228,7 @@ function RegistrationCard() {
                 </MDBBtn>
 
                 <div className="text-center">
-                  <p>or sign up with:</p>
-
-                  {/* <MDBBtn
-                    tag="a"
-                    color="none"
-                    className="mx-3"
-                    style={{ color: "#1266f1" }}
-                  >
-                    <MDBIcon fab icon="facebook-f" size="sm" />
-                  </MDBBtn>
-
-                  <MDBBtn
-                    tag="a"
-                    color="none"
-                    className="mx-3"
-                    style={{ color: "#1266f1" }}
-                  >
-                    <MDBIcon fab icon="twitter" size="sm" />
-                  </MDBBtn> */}
+                  <p>or sign up with</p>
 
                   {/* <MDBBtn
                     tag="a"
@@ -249,17 +240,17 @@ function RegistrationCard() {
                   </MDBBtn> */}
 
                   <MDBBtn
-                    tag="a"
-                    color="none"
+                    disabled={!terms}
                     className="mx-3 p-1"
-                    style={{ color: "#1266f1" }}
-                    onClick={() => {
+                    tag="a"
+                    onClick={() =>
+                      terms &&
                       window.location.assign(
                         `https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GH_CLIENT_ID}&redirect_uri=${window.location.origin}${window.location.pathname}`
-                      );
-                    }}
+                      )
+                    }
                   >
-                    <MDBIcon fab icon="github" size="xl" />
+                    <MDBIcon fab icon="github" size="2xl" />
                   </MDBBtn>
                 </div>
               </MDBValidation>
