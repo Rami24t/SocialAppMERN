@@ -1,24 +1,24 @@
 {
     "rewrites": [
-        {
-            "source": "/sitemap.xml",
-            "has": [
-                {
-                    "type": "host",
-                    "value": "social-app-client-mern.vercel.app"
-                }
-            ],
-            "destination": "/sitemap-app.xml"
-        },
-        {
-            "source": "/sitemap.xml",
-            "has": [
-                {
-                    "type": "host",
-                    "value": "social.ramidev.tech"
-                }
-            ],
-            "destination": "/sitemap-tech.xml"
-        }
+      {
+        "source": "/sitemap.xml",
+        "has": [
+          {
+            "type": "host",
+            "value": "social.ramidev.tech"
+          }
+        ],
+        "destination": "/sitemap-tech.xml"
+      },
+      {
+        "source": "/sitemap.xml",
+        "has": [
+          {
+            "type": "host",
+            "value": "social-app-client-mern.vercel.app"
+          }
+        ],
+        "destination": "/sitemap-app.xml"
+      }
     ]
-}
+  }
