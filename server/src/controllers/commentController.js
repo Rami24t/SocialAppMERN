@@ -130,7 +130,7 @@ export const deleteComment = async (req, res) => {
   }
 };
 
-export const editComment = async (req, res) => {
+export const updateComment = async (req, res) => {
   try {
     const post = await Post.findByIdAndUpdate(
       req.body.postId,
@@ -144,15 +144,15 @@ export const editComment = async (req, res) => {
         new: true,
       }
     ).populate({ path: "comments.author", select: "username image email" });
-    console.log("editComment ~ post:", post);
+    console.log("updateComment ~ post:", post);
     res.send({ success: true, comments: post.comments });
   } catch (error) {
-    console.log("editComment ~ error:", error.message);
+    console.log("updateComment ~ error:", error.message);
     res.send({ success: false, error: error.message });
   }
 };
 
-export const editCommentJS = async (req, res) => {
+export const updateCommentJS = async (req, res) => {
   try {
     const post = await Post.findById(req.body.postId);
     const commentIdx = post.comments.findIndex(
@@ -168,10 +168,10 @@ export const editCommentJS = async (req, res) => {
         new: true,
       }
     ).populate({ path: "comments.author", select: "username image email" });
-    console.log("editCommentJS ~ post", commentIdx);
+    console.log("updateCommentJS ~ post", commentIdx);
     res.send({ success: true, comments: newPost.comments });
   } catch (error) {
-    console.log("editComment ~ error:", error.message);
+    console.log("updateComment ~ error:", error.message);
     res.send({ success: false, error: error.message });
   }
 };
