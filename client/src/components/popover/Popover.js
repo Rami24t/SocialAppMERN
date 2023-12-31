@@ -24,6 +24,14 @@ export default function BasicMenu({
         <MenuItem
           onClick={() => {
             handleClose();
+            editPost();
+          }}
+        >
+          Edit
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            handleClose();
             deletePost();
           }}
         >
