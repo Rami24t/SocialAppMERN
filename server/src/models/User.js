@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       unique: true,
       required: true,
+      immutable: true,
     },
     email: {
       type: String,
@@ -12,6 +13,7 @@ const userSchema = new mongoose.Schema(
       required: function () {
         return !this.gitHubId;
       },
+      immutable: !this.gitHubId,
     },
     gitHubId: {
       type: String,
@@ -19,6 +21,7 @@ const userSchema = new mongoose.Schema(
       required: function () {
         return !this.email;
       },
+      immutable: true,
     },
     password: {
       type: String,
@@ -36,7 +39,10 @@ const userSchema = new mongoose.Schema(
     facebook: String,
     instagram: String,
     twitter: String,
-    github: String,
+    github: {
+      type: String,
+      immutable: this.gitHubId,
+    },
     // linkedin: String,
     // website: String,
     likes: [{ type: String, default: [] }],
