@@ -13,7 +13,9 @@ const userSchema = new mongoose.Schema(
       required: function () {
         return !this.gitHubId;
       },
-      immutable: !this.gitHubId,
+      immutable: function () {
+        return !this.gitHubId;
+      },
     },
     gitHubId: {
       type: String,
@@ -41,7 +43,9 @@ const userSchema = new mongoose.Schema(
     twitter: String,
     github: {
       type: String,
-      immutable: this.gitHubId,
+      immutable: function () {
+        return this.gitHubId;
+      },
     },
     // linkedin: String,
     // website: String,
