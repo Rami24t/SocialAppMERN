@@ -21,13 +21,14 @@ export const list = async (req, res) => {
       .populate({
         path: "author",
         select:
-          "name username email profileImage likes about phone title facebook twitter instagram",
+          "name username email gitHubId verified profileImage likes about phone title facebook github twitter instagram",
       }) // post author
       .populate({
         path: "comments",
         populate: {
           path: "author comments",
-          select: "name profileImage email text author updatedAt comments",
+          select:
+            "name profileImage verified email text author updatedAt comments",
           //                        , populate: {path: 'author', select: 'name profileImage email'}
         },
       })
