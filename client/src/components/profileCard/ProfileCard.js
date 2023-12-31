@@ -50,6 +50,17 @@ export default function PersonalProfile({ data }) {
                     {data?.name || "Full Name"}
                   </MDBTypography>
                   <MDBCardText>{data?.title || "My Title"}</MDBCardText>
+                  {data?.verified ? (
+                    <p className="text-light">
+                      <MDBIcon icon="check-circle" />
+                      {` Verified (${data?.gitHubId ? "GitHub" : "Email"})`}
+                    </p>
+                  ) : (
+                    <p className="text-danger">
+                      <MDBIcon icon="times-circle" />
+                      {` (${data.gitHubId ? "GitHub" : "E-Mail"}) Not Verified`}
+                    </p>
+                  )}
                   <Link to="/profile">
                     <MDBIcon far icon="edit mb-5" />
                   </Link>
