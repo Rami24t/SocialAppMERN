@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { MDBContainer } from "mdb-react-ui-kit";
 import Post from "../post/Post";
 import { SocialContext } from "../context/Context";
@@ -50,16 +50,26 @@ const Posts = () => {
       console.log("deletePost err:", err.message);
     }
   };
-  const editPost = async (id, text) => {
-    console.log("editPost id:", id);
-    // try {
-    //   const res = await axios.put(baseUrl+'/posts/edit/'+id, {text}, { withCredentials: true })
-    //   console.log("editPost res:", res)
-    //   return res.data
-    // }
-    // catch (err) {
-    //   console.log("editPost err:", err.message)
-    // }
+  const updatePost = async (id, formData) => {
+    console.log("updatePost", id, formData);
+    try {
+      const res = await axios.put(`${baseUrl}/posts/update/${id}`, formData, {
+        Headers: { "content-type": "multipart/form-data" },
+        withCredentials: true,
+      });
+      // console.log(res);
+      return res.data;
+    } catch (err) {
+      // if (error.message.startsWith("Session expired")) {
+      //   alert("Session expired, please login again");
+      //   dispatch({ type: "logout" });
+      //   navigate("/");
+      //  else if (res.status === 401) {
+      //   dispatch({ type: "logout" });
+      //   navigate("/");
+      // }
+      console.log("updatePost err:", err.message);
+    }
   };
 
   const toggleLike = async (id) => {
@@ -100,15 +110,15 @@ const Posts = () => {
         {data?.posts &&
           data?.posts?.map((post) => (
             <Post
+              key={post._id || Math.random() * 100000000}
               toggleLike={() => toggleLike(post._id)}
               addComment={addComment}
-              key={post._id || Math.random() * 100000000}
               ownPost={post.author?._id === state.user?._id}
               liked={post.likes?.includes(state.user?._id)}
               post={post}
               dispatch={dispatch}
               deletePost={deletePost}
-              editPost={editPost}
+              updatePost={updatePost}
             />
           ))}
       </MDBContainer>

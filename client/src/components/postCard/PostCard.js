@@ -92,6 +92,11 @@ export default function PostCard({
     minute: "numeric",
     hour12: true,
   });
+  const postEdit = (post?.createdAt !== post?.updatedAt) ? ` (edited on ${new Date(post?.updatedAt).toLocaleString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  })})` : "";
   // console.log(ownPost)
 
   const [comment, setComment] = useState("");
@@ -151,7 +156,7 @@ export default function PostCard({
           title={
             post?.author?.name + " says:  " + (post?.title || "Post Title")
           }
-          subheader={postDate || "Post Date"}
+          subheader={(postDate || "Post Date") + postEdit || ""}
         />
         {post?.postImage && (
           <a

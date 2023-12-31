@@ -6,7 +6,7 @@ import { SocialContext } from "../../components/context/Context";
 import axios from "axios";
 import { handleImageChange } from "../../utilities/handleImageChange";
 import { useLocation } from "react-router-dom";
-import CreatePost from "../../components/createPost/CreatePost";
+import CreatePost from "../../components/postFormModal/PostFormModal";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
@@ -60,8 +60,8 @@ export default function Home() {
     document.title = "Social App 💗";
   }, []);
 
-  const [staticModal, setStaticModal] = useState(false);
-  const toggleShow = () => setStaticModal(!staticModal);
+  const [postFormModal, setPostFormModal] = useState(false);
+  const toggleShow = () => setPostFormModal(!postFormModal);
 
   const addNewPost = async (formData) => {
     // for (var pair of formData.entries()) {
@@ -102,8 +102,8 @@ export default function Home() {
         avatar={state?.user?.profileImage}
         addNewPost={addNewPost}
         toggleShow={toggleShow}
-        staticModal={staticModal}
-        setStaticModal={setStaticModal}
+        show={postFormModal}
+        setShow={setPostFormModal}
       />
       <div className="homeContainer">
         <Posts />
