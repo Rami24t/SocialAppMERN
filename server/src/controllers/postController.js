@@ -67,22 +67,19 @@ export const deletePost = async (req, res) => {
   }
 };
 
-export const edit = async (req, res) => {
+export const updatePost = async (req, res) => {
   try {
-    const { postId: _id, author, text } = req.body;
     if (req.user !== req.body.author)
       return res.send({ success: false, errorId: 0 });
-    const newPost = await Post.findByIdAndUpdate(
-      {
-        _id,
-        author,
-      },
-      { text },
-      { new: true }
-    );
+    if (req.file) req.body.postImage = req.file.path;
+
+    console.log("req.body:", req.body);
+    const newPost = await Post.findByIdAndUpdate(req.params.postId, req.body, {
+      new: true,
+    });
     res.send({ success: true });
   } catch (error) {
-    console.log("edit post error:", error.message);
+    console.log("update post error:", error.message);
     res.send({ success: false, error: error.message });
   }
 };
