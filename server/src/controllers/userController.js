@@ -6,7 +6,7 @@ import sendEmail from "../utilities/sendGridMail.js";
 import { validationResult } from "express-validator";
 
 const SALT_ROUNDS = 10;
- const register = async (req, res) => {
+const register = async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -29,7 +29,7 @@ const SALT_ROUNDS = 10;
   }
 };
 
- const ghRegister = async (req, res) => {
+const ghRegister = async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -79,7 +79,7 @@ const SALT_ROUNDS = 10;
   }
 };
 
- const ghLogin = async (req, res) => {
+const ghLogin = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -135,7 +135,7 @@ const SALT_ROUNDS = 10;
   }
 };
 
- const login = async (req, res) => {
+const login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -178,20 +178,19 @@ const sendVerificationLink = async (req, res) => {
     const user = await User.findById(decoded.id);
     const passMatch = await bcrypt.compare(req.body.password, user.password);
     if (!passMatch)
-      return res.status(401).json({ success: false, errorId: 401 });  
+      return res.status(401).json({ success: false, errorId: 401 });
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
     sendEmail(token);
     res.send({ success: true });
-  }
-  catch (error) {
+  } catch (error) {
     console.log("sendVerificationLink error:", error.message);
     res.send({ success: false, error: error.message });
   }
-}
+};
 
- const verifyEmail = async (req, res) => {
+const verifyEmail = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -212,7 +211,7 @@ const sendVerificationLink = async (req, res) => {
   }
 };
 
- const forgotPass = async (req, res) => {
+const forgotPass = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -236,7 +235,7 @@ const sendVerificationLink = async (req, res) => {
   }
 };
 
- const changePass = async (req, res) => {
+const changePass = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -258,7 +257,7 @@ const sendVerificationLink = async (req, res) => {
   }
 };
 
- const logout = async (req, res) => {
+const logout = async (req, res) => {
   try {
     res.clearCookie("SocialAppMERNToken", { sameSite: "none", secure: true });
     res.json({ success: true }).status(200);
@@ -268,7 +267,7 @@ const sendVerificationLink = async (req, res) => {
   }
 };
 
- const getUserPublic = async (req, res) => {
+const getUserPublic = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -283,26 +282,33 @@ const sendVerificationLink = async (req, res) => {
   }
 };
 
- const updateProfile = async (req, res) => {
+const updateProfile = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
   try {
+    const found = await User.findById(req.user);
+    if (!found) return res.send({ success: false, errorId: 404 });
     if (req.file) req.body.profileImage = req.file.path;
     req.body.likes = JSON.parse(req.body.likes);
-    const user = await User.findByIdAndUpdate(req.user, req.body, {
+    if (req.body.username) delete req.body.username;
+    if (req.body.password) delete req.body.password;
+    if (req.body.verified) delete req.body.verified;
+    if (req.body.gitHubId) delete req.body.gitHubId;
+    if (found.gitHubId && req.body.github) delete req.body.github;
+    if (!found.gitHubId && req.body.email) delete req.body.email;
+    const resUser = await User.findByIdAndUpdate(req.user, req.body, {
       new: true,
     }).select("-password -__v");
-    if (!user) return res.send({ success: false, errorId: 404 });
-    res.send({ success: true, user });
+    res.send({ success: true, user: resUser }).status(200);
   } catch (error) {
     console.log("updateProfile error:", error.message);
     res.send({ success: false, error: error.message });
   }
 };
 
- const updateCover = async (req, res) => {
+const updateCover = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
