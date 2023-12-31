@@ -30,7 +30,7 @@ const storage = new CloudinaryStorage({
           ? "coverImage"
           : file.originalname === "profileImage"
           ? "profileImage"
-          : `postImage${Date.now() + file.originalname}`
+          : `postImage${file.size + file.originalname}`
       }`,
   },
 });
