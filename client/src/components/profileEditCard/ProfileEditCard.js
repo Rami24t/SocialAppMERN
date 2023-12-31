@@ -36,12 +36,12 @@ export default function PersonalProfile() {
     title: state?.user?.title || "",
     email: state?.user?.email || "",
     gitHubId: state?.user?.gitHubId || "",
+    verified: state?.user?.verified || false,
     phone: state?.user?.phone || "",
     about: state?.user?.about || "",
     likes: state?.user?.likes || [],
     facebook: state?.user?.facebook || "",
     github: state?.user?.github || "",
-    twitter: state?.user?.twitter || "",
     instagram: state?.user?.instagram || "",
     username: state?.user?.username || "",
   });
@@ -49,17 +49,17 @@ export default function PersonalProfile() {
     const formdata = new FormData();
     if (!data.name) return alert("Name is required");
     if (!data.title) return alert("Title is required");
-    if (!data.email) return alert("Email is required");
+    // if (!data.email && !data.gitHubId) return alert("Email is required");
     if (!state?.user?.profileImage && !fileData.file)
       return alert("Profile Image is required");
     formdata.set("name", data.name);
     formdata.set("title", data.title);
-    formdata.set("email", data.email);
+    // data.gitHubId && formdata.set("email", data.email);
     formdata.set("phone", data.phone);
     formdata.set("about", data.about);
     formdata.set("likes", JSON.stringify(likes));
     formdata.set("facebook", data.facebook);
-    formdata.set("twitter", data.twitter);
+    !data.gitHubId && formdata.set("github", data.github);
     formdata.set("instagram", data.instagram);
     formdata.set("username", data.username);
     if (fileData.file) formdata.set("image", fileData.file, "profileImage");
@@ -82,6 +82,7 @@ export default function PersonalProfile() {
         });
         navigate("/view-profile/myprofile");
       } else if (response.status === 401) {
+        alert(response);
         navigate("/");
       }
     } catch (error) {
@@ -152,6 +153,17 @@ export default function PersonalProfile() {
                       onChange={handleChange}
                     />
                   </MDBCardText>
+                  {data?.verified ? (
+                    <p className="text-light">
+                      <MDBIcon icon="check-circle" />
+                      {` Verified by ${data?.gitHubId ? "GitHub" : "Email"}`}
+                    </p>
+                  ) : (
+                    <p className="text-light">
+                      <MDBIcon icon="times-circle" />
+                      {` Not Verified`}
+                    </p>
+                  )}
                   <MDBIcon
                     onClick={handleSave}
                     far
@@ -160,6 +172,7 @@ export default function PersonalProfile() {
                     style={{ cursor: "pointer" }}
                   />
                 </MDBCol>
+
                 <MDBCol md="8">
                   <MDBCardBody className="p-4 clearfix">
                     <MDBTypography tag="h6">Information</MDBTypography>
@@ -168,14 +181,25 @@ export default function PersonalProfile() {
                       <MDBCol size="6" className="mb-3">
                         {/* <MDBTypography tag="h6">Email</MDBTypography> */}
                         {/* <MDBCardText className="text-muted">{data.email}</MDBCardText> */}
-                        <MDBInput
-                          label="Email"
-                          id="typeEmail"
-                          type="email"
-                          name="email"
-                          value={data.email}
-                          onChange={handleChange}
-                        />
+                        {data.email ? (
+                          <MDBInput
+                            label="Email"
+                            id="typeEmail"
+                            type="email"
+                            name="email"
+                            value={data.email}
+                            disabled
+                          />
+                        ) : (
+                          <MDBInput
+                            label="Username"
+                            id="username"
+                            type="text"
+                            name="username"
+                            value={data.username}
+                            disabled
+                          />
+                        )}
                       </MDBCol>
                       <MDBCol size="6" className="mb-3">
                         {/* <MDBTypography tag="h6">Phone number</MDBTypography> */}
@@ -234,7 +258,8 @@ export default function PersonalProfile() {
                           type="url"
                           name="github"
                           value={data.github || ""}
-                          onChange={handleChange}
+                          onChange={!data.gitHubId && handleChange}
+                          disabled={data.gitHubId}
                         />
                       </div>
                       <div>
