@@ -37,13 +37,45 @@ const CommentExampleThreaded = ({ comments }) => {
     }
   };
 
+  const deleteComment = async (id) => {
+    if (!id) return;
+    try {
+      const res = await axios.delete(baseUrl + "/comment/" + id, {
+        withCredentials: true,
+      });
+      console.log("deleteComment res:", res.data);
+      return res.data.success;
+    } catch (err) {
+      console.log("deleteComment err:", err.message);
+    }
+  };
+
   return (
     <Comment.Group threaded>
       <Header as="h3" dividing>
         Comments
       </Header>
-      {/* 
-      <Comment>
+      {comments?.map((comment, index) => {
+        return (
+          <CommentComponent
+            key={comment?._id || index}
+            comment={comment}
+            toggleLike={toggleLike}
+            createReply={createReply}
+            deleteComment={deleteComment}
+            src={state.user.profileImage}
+            name={state.user.name}
+            dispatch={dispatch}
+            uid={state.user._id}
+          />
+        );
+      })}
+    </Comment.Group>
+  );
+};
+export default CommentExampleThreaded;
+
+/*<Comment>
         <Comment.Avatar
           as="a"
           src="https://react.semantic-ui.com/images/avatar/small/matt.jpg"
@@ -59,14 +91,14 @@ const CommentExampleThreaded = ({ comments }) => {
             <a>Reply</a>
           </Comment.Actions>
         </Comment.Content>
-      </Comment> */}
+      </Comment>
 
-      {/* <Comment> */}
-      {/* <Comment.Avatar
+       <Comment> 
+       <Comment.Avatar
           as="a"
           src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
-        /> */}
-      {/* <Comment.Content>
+        />
+       <Comment.Content>
           <Comment.Author as="a">Elliot Fu</Comment.Author>
           <Comment.Metadata>
             <span>Yesterday at 12:30AM</span>
@@ -78,9 +110,9 @@ const CommentExampleThreaded = ({ comments }) => {
             <a>Like</a>
             <a>Reply</a>
           </Comment.Actions>
-        </Comment.Content> */}
+        </Comment.Content>
 
-      {/* <Comment.Group>
+       <Comment.Group>
           <Comment>
             <Comment.Avatar
               as="a"
@@ -137,23 +169,4 @@ const CommentExampleThreaded = ({ comments }) => {
             <a>Reply</a>
           </Comment.Actions>
         </Comment.Content>
-      </Comment> */}
-
-      {comments?.map((comment, index) => {
-        return (
-          <CommentComponent
-            key={comment?._id || index}
-            comment={comment}
-            toggleLike={toggleLike}
-            createReply={createReply}
-            src={state.user.profileImage}
-            name={state.user.name}
-            dispatch={dispatch}
-            uid={state.user._id}
-          />
-        );
-      })}
-    </Comment.Group>
-  );
-};
-export default CommentExampleThreaded;
+      </Comment> */
