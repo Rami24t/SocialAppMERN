@@ -86,6 +86,7 @@ const Posts = () => {
   };
 
   const addComment = async (comment, postId) => {
+    if (!comment) return;
     try {
       // const res =
       await axios.post(

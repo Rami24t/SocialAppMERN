@@ -24,6 +24,7 @@ const CommentExampleThreaded = ({ comments }) => {
   const { state, dispatch } = useContext(SocialContext);
 
   const createReply = async (reply, commentId) => {
+    if (!reply) return false;
     try {
       const res = await axios.post(
         baseUrl + "/comment/reply/" + commentId,

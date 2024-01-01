@@ -16,7 +16,7 @@ const ReplyForm = ({ comment, setComment, post, addComment, mainRef }) => {
       <Button
         onClick={() => {
           setComment("");
-          addComment(comment, post._id);
+          comment && addComment(comment, post._id);
         }}
         content="Add Reply"
         labelPosition="left"
