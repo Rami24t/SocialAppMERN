@@ -29,9 +29,13 @@ export const addComment = async (req, res) => {
 export const getCommentLikes = async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.id);
+    if (!comment)
+      return res
+        .json({ success: false, error: "Comment not found" })
+        .status(404);
     res.json({ success: true, likes: comment.likes }).status(200);
   } catch (error) {
-    console.log("get error:", error.message);
+    console.log("getCommentLikes error:", error.message);
     res.json({ success: false, error: error.message }).status(500);
   }
 };
@@ -69,7 +73,7 @@ export const getComment = async (req, res) => {
     });
     res.json({ success: true, comment }).status(200);
   } catch (error) {
-    console.log("get error:", error.message);
+    console.log("getComment error:", error.message);
     res.json({ success: false, error: error.message }).status(500);
   }
 };
@@ -112,18 +116,24 @@ export const likeComment = async (req, res) => {
 
 export const deleteComment = async (req, res) => {
   try {
-    const post = await Post.findByIdAndUpdate(
-      req.params.postId,
-      {
-        $pull: {
-          comments: {
-            _id: req.params.commentId,
-          },
-        },
-      },
-      { new: true }
-    ).populate({ path: "comments.author", select: "username image email" });
-    res.send({ success: true, comments: post.comments });
+    // const post = await Post.findByIdAndUpdate(
+    //   req.params.postId,
+    //   {
+    //     $pull: {
+    //       comments: {
+    //         _id: req.params.commentId,
+    //       },
+    //     },
+    //   },
+    //   { new: true }
+    // ).populate({ path: "comments.author", select: "username image email" });
+    // res.send({ success: true, comments: post.comments });
+
+    const comment = await Comment.findOneAndDelete({
+      author: req.user,
+      _id: req.params.commentId,
+    });
+    res.json({ success: true, comment }).status(200);
   } catch (error) {
     console.log("deleteComment error:", error.message);
     res.send({ success: false, error: error.message });
