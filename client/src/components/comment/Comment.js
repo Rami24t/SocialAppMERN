@@ -246,7 +246,7 @@ const CommentComponent = ({
           {author?.name ||
             level3Comment?.author?.name ||
             comment?.author?.name ||
-            "Anonymous"}
+            "....."}
         </Comment.Author>
         <Comment.Metadata>
           <span>{level3Comment?.updatedAt && time}</span>
