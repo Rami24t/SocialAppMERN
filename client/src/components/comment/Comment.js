@@ -143,7 +143,7 @@ const CommentComponent = ({
   );
 
   const navigate = useNavigate();
-  const [shownLocal, setShownLocal] = React.useState(false);
+  const [shownLocal, setShownLocal] = useState(false);
   const [reply, setReply] = useState("");
   const mainRef = useRef(null);
 
@@ -216,6 +216,16 @@ const CommentComponent = ({
           "https://react.semantic-ui.com/images/avatar/small/matt.jpg"
         }
         alt="avatar"
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src =
+            "https://source.unsplash.com/random/44x44/?face?" +
+              level3Comment?.author?.name ||
+            author?.name ||
+            comment.author.name ||
+            name ||
+            "";
+        }}
         style={{ width: "36px", height: "36px" }}
         className="ui avatar image object-cover rounded-full"
         onClick={() => {
@@ -339,6 +349,11 @@ const CommentComponent = ({
               <img
                 as="a"
                 alt="avatar"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src =
+                    "https://source.unsplash.com/random/44x44/?face?" + name;
+                }}
                 style={{ width: "36px", height: "36px" }}
                 className="ui avatar image object-cover rounded-full"
                 src={
