@@ -17,6 +17,7 @@ const CommentComponent = ({
   comment,
   toggleLike,
   createReply,
+  deleteComment,
   src,
   name,
   dispatch,
@@ -113,6 +114,7 @@ const CommentComponent = ({
 
   const getCommentLikes = useCallback(
     async function getCommentLikes() {
+      if (!level3Comment?.text && !level3Comment.author) return;
       if (typeof level3Comment.likes === typeof []) {
         setLiked(level3Comment.likes.includes(uid));
         return level3Comment.likes.includes(uid);
@@ -125,7 +127,7 @@ const CommentComponent = ({
             ? level3Comment?._id
             : level3Comment?._id?.$oid;
         if (!id || typeof id !== "string")
-          return console.log("no id for getCommentLikes", level3Comment);
+          return console.log("getCommentLikes ~ no id for", level3Comment);
         const res = await axios.get(
           process.env.REACT_APP_BASE_URL + "/comment/likes/" + id,
           { withCredentials: true }
@@ -203,6 +205,7 @@ const CommentComponent = ({
   //   console.log( '  this:  ' ,this);
   // }
   // getThis()
+  if (!level3Comment?.text && !level3Comment.author) return;
   return (
     <Comment>
       <img
@@ -275,7 +278,7 @@ const CommentComponent = ({
             {level3Comment?.likes?.length || ""} Like
             {level3Comment?.likes?.length > 1 ? "s" : ""}
           </a>
-          {true && !level3Comment.Level3 && (
+          {!level3Comment.Level3 && (
             <a
               href="#reply"
               onClick={() => {
@@ -283,8 +286,27 @@ const CommentComponent = ({
                 toggleReply(level3Comment?._id);
               }}
             >
-              Reply
+              {level3Comment?.comments?.length || ""}
+              {level3Comment?.comments?.length > 1 ? " Replies" : " Reply"}
             </a>
+          )}
+          {(uid === level3Comment?.author?._id || uid === author?._id) && (
+            <>
+              {/* <a
+                href="#edit"
+                // onClick={edit}
+              >
+                Edit
+              </a> */}
+              <a
+                href="#deleteComment"
+                onClick={() => {
+                  deleteComment(level3Comment?._id) && setLevel3Comment({});
+                }}
+              >
+                Delete
+              </a>
+            </>
           )}
         </Comment.Actions>
       </Comment.Content>
@@ -303,6 +325,7 @@ const CommentComponent = ({
                 key={comment2?._id || index}
                 comment={comment2}
                 toggleLike={toggleLike}
+                deleteComment={deleteComment}
                 createReply={createReply}
                 src={src}
                 name={name}
