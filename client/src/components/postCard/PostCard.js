@@ -73,7 +73,7 @@ export default function PostCard({
         mainRef?.current?.firstChild?.focus();
         mainRef?.current?.firstChild?.scrollIntoView({ behavior: "smooth", block: "center" });
         setTimeout(() => {
-          mainRef?.current?.firstChild?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          mainRef?.current?.firstChild?.scrollIntoView({ behavior: "smooth", block: "center" });
         }, 600);
       }, 200);
     }
