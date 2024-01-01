@@ -73,7 +73,7 @@ export const updatePost = async (req, res) => {
       return res.send({ success: false, errorId: 0 });
     if (req.file) req.body.postImage = req.file.path;
 
-    console.log("req.body:", req.body);
+    // console.log("req.body:", req.body);
     const newPost = await Post.findByIdAndUpdate(req.params.postId, req.body, {
       new: true,
     });

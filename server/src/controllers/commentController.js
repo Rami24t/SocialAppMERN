@@ -154,7 +154,7 @@ export const updateComment = async (req, res) => {
         new: true,
       }
     ).populate({ path: "comments.author", select: "username image email" });
-    console.log("updateComment ~ post:", post);
+    // console.log("updateComment ~ post:", post);
     res.send({ success: true, comments: post.comments });
   } catch (error) {
     console.log("updateComment ~ error:", error.message);
@@ -178,7 +178,7 @@ export const updateCommentJS = async (req, res) => {
         new: true,
       }
     ).populate({ path: "comments.author", select: "username image email" });
-    console.log("updateCommentJS ~ post", commentIdx);
+    // console.log("updateCommentJS ~ post", commentIdx);
     res.send({ success: true, comments: newPost.comments });
   } catch (error) {
     console.log("updateComment ~ error:", error.message);

@@ -19,7 +19,7 @@ const storage = new CloudinaryStorage({
     folder: "SocialAppMERN",
     format: async (req, file) => {
       //      console.log('The file inside multer: ', file)
-      console.log(req, file);
+      // console.log(req, file);
       let extension = "";
       if (file.mimetype.includes("image")) extension = file.mimetype.slice(6);
       return extension;

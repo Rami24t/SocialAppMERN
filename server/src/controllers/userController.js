@@ -71,10 +71,10 @@ const ghRegister = async (req, res) => {
         data.twitter_username && (req.body.twitter = data.twitter_username);
       });
     const user = await User.create(req.body);
-    console.log("register user: ", user);
+    console.log("ghRegister user: ", user);
     res.json({ success: true });
   } catch (error) {
-    console.log("registration error:", error.message);
+    console.log("ghRegistration error:", error.message);
     res.json({ success: false, error: error });
   }
 };
@@ -120,14 +120,14 @@ const ghLogin = async (req, res) => {
     const user = await User.findOne({ username: username }).select("-__v");
     if (!user) return res.status(404).json({ success: false, errorId: 404 });
     console.log("ghLogin ~ ghResponse", ghResponse);
-    console.log("logging in user._id:", user._id);
+    // console.log("logging in user._id:", user._id);
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    console.log("ghLogin token:", token);
+    // console.log("ghLogin token:", token);
     res.cookie("SocialAppMERNToken", token, { sameSite: "none", secure: true });
-    console.log(res.cookie);
+    // console.log(res.cookie);
     res.json({ success: true, user: user.toObject() });
   } catch (error) {
     console.log("login error:", error.message);
@@ -203,7 +203,7 @@ const verifyEmail = async (req, res) => {
       { verified: true },
       { new: true }
     );
-    console.log("verifyEmail ~ user", user);
+    // console.log("verifyEmail ~ user", user);
     res.send({ success: true });
   } catch (error) {
     console.log("verifyEmail error:", error.message);

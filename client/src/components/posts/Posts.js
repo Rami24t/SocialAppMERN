@@ -51,7 +51,7 @@ const Posts = () => {
     }
   };
   const updatePost = async (id, formData) => {
-    console.log("updatePost", id, formData);
+    // console.log("updatePost", id, formData);
     try {
       const res = await axios.put(`${baseUrl}/posts/update/${id}`, formData, {
         Headers: { "content-type": "multipart/form-data" },

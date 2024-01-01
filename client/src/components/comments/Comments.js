@@ -44,7 +44,7 @@ const CommentExampleThreaded = ({ comments }) => {
       const res = await axios.delete(baseUrl + "/comment/" + id, {
         withCredentials: true,
       });
-      console.log("deleteComment res:", res.data);
+      // console.log("deleteComment res:", res.data);
       return res.data.success;
     } catch (err) {
       console.log("deleteComment err:", err.message);
