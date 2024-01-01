@@ -24,7 +24,7 @@ app.use(
       process.env.NODE_ENV === "production"
         ? [
             "https://social-app-client-mern.vercel.app",
-            "https://social.ramidev.tech/",
+            "https://social.ramidev.tech",
           ]
         : "http://localhost:3000",
     credentials: true,
