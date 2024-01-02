@@ -34,7 +34,6 @@ const PasswordForm = ({ password, setPassword, handleSubmit, cancel }) => (
               required
               wrapperClass="mb-5"
               label="Password"
-              id="form2"
               type="password"
               name="password"
               value={password}

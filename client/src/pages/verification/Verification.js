@@ -9,7 +9,7 @@ const Verification = () => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    setShowForm(false);
+    // setShowForm(false);
     axios
       .post(`${process.env.REACT_APP_BASE_URL}/users/send-verification-link`, {
         token,

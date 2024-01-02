@@ -21,7 +21,7 @@ const register = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    sendEmail(token);
+    sendEmail(token, "welcome");
     res.json({ success: true });
   } catch (error) {
     console.log("registration error:", error.message);
@@ -176,13 +176,14 @@ const sendVerificationLink = async (req, res) => {
   try {
     const decoded = jwt.decode(req.body.token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id);
+    // if (!user) return res.json({ success: false, errorId: 404 });
     const passMatch = await bcrypt.compare(req.body.password, user.password);
     if (!passMatch)
       return res.status(401).json({ success: false, errorId: 401 });
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    sendEmail(token);
+    sendEmail(token, "welcome");
     res.send({ success: true });
   } catch (error) {
     console.log("sendVerificationLink error:", error.message);
