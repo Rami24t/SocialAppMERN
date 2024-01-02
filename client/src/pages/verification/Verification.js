@@ -22,6 +22,12 @@ const Verification = () => {
         } else {
           alert("Failed to send new verification link!");
         }
+      })
+      .catch((err) => {
+        console.log(err.message);
+        alert("Failed to send new verification link!");
+      })
+      .finally(() => {
         navigate("/");
       });
   };

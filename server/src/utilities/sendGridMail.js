@@ -38,10 +38,11 @@ async function sendEmail(token, template = "welcome") {
     name: "Rami",
   };
 
-  sgMail
+  return sgMail
     .send(msgData)
-    .then(() => {
-      console.log("Email sent");
+    .then((data) => {
+      console.log("Email sent, ", data[0].statusCode);
+      return data;
     })
     .catch((error) => {
       console.error(error);

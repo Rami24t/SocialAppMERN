@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-// import sendEmail from "../utilities/email.js";
+// import sendEmail from "../utilities/nodemail.js";
 import sendEmail from "../utilities/sendGridMail.js";
 import { validationResult } from "express-validator";
 
@@ -21,8 +21,8 @@ const register = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    sendEmail(token, "welcome");
-    res.json({ success: true });
+    const sendEmailRes = await sendEmail(token, "welcome");
+    res.json({ success: true, sendEmailRes });
   } catch (error) {
     console.log("registration error:", error.message);
     res.json({ success: false, error: error });
@@ -179,12 +179,12 @@ const sendVerificationLink = async (req, res) => {
     // if (!user) return res.json({ success: false, errorId: 404 });
     const passMatch = await bcrypt.compare(req.body.password, user.password);
     if (!passMatch)
-      return res.status(401).json({ success: false, errorId: 401 });
+      return res.status(401).send({ success: false, errorId: 401 });
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    sendEmail(token, "welcome");
-    res.send({ success: true });
+    const sendEmailRes = await sendEmail(token, "welcome");
+    res.send({ success: true, sendEmailRes });
   } catch (error) {
     console.log("sendVerificationLink error:", error.message);
     res.send({ success: false, error: error.message });
@@ -228,8 +228,8 @@ const forgotPass = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    sendEmail(token, "forgotpass");
-    res.send({ success: true });
+    const sendEmailRes = await sendEmail(token, "forgotpass");
+    res.send({ success: true, sendEmailRes });
   } catch (error) {
     console.log("forgotPass error:", error.message);
     res.send({ success: false, error: error.message });
