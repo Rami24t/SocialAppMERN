@@ -29,7 +29,7 @@ export default function getHtml(template, token) {
           <span style="font-size: 18px;">Please verify your email address </span>
           <span style="color: #000000; font-size: 18px; font-family: arial, helvetica, sans-serif;">
               to get access to logging in</span>
-          <p>Kindly click the following link {{verificationLink}} to verify your account</p>
+          <p>Kindly click the following link to verify your account</p>
           <a href="https://social-app-client-mern.vercel.app/emailverification/${token}">
               Verify your account
           </a>
