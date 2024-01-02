@@ -14,12 +14,12 @@ async function sendEmail(token, template = "welcome") {
     subject: getSubject(template),
     text: `Welcome to Social App! Please Verify Your Email Address to complete your registration.
 
-    We welcome you dear Ellen123 in our Social Posts App!
+    Welcome in Social Posts!
     
-    Please verify your email address to get access to logging in. ( https://verificationlink.com )
+    Please verify your email address to get access to logging in. ( https://social-app-client-mern.vercel.app/verify/${token} )
     *Thank you!*
     
-    Verify Email Now ( https://verificationlink.com )
+    Verify Email Now ( https://social-app-client-mern.vercel.app/verify/${token} )
     
     *Here’s what happens next:*
     
@@ -34,11 +34,12 @@ async function sendEmail(token, template = "welcome") {
     
     Contact Support`,
     html: getHtml(template, token),
-    verificationLink: `http://localhost:3000/verify/${token}`,
+    verificationLink: `https://social-app-client-mern.vercel.app/verify/${token}`,
     name: "Rami",
   };
 
-  sgMail.send(msgData)
+  sgMail
+    .send(msgData)
     .then(() => {
       console.log("Email sent");
     })
