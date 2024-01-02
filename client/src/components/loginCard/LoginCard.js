@@ -86,10 +86,10 @@ function LoginCard() {
           return response.data.success;
         } else {
           console.log("log in failed ! response.data:", response.data);
-          }
+        }
       } catch (error) {
         console.log("error:", error);
-        if(error.response.request.status === 404) {
+        if (error.response.request.status === 404) {
           alert("Please register first");
           navigate("/register");
         }
@@ -101,24 +101,24 @@ function LoginCard() {
   return (
     <MDBContainer className="my-5 login">
       <MDBCard>
-        <MDBRow className="g-0 d-flex align-items-center">
-          <MDBCol md="4">
+        <MDBRow className="g-3 d-flex p-md-5 align-items-center justify-content-around">
+          <MDBCol md="4" className="text-center">
             <MDBCardImage
-              width="433"
-              height="578"
+              width="380"
+              height="433"
               fluid
-              src="https://source.unsplash.com/random/433x578/?social"
+              src="https://source.unsplash.com/random/380x433/?social"
               alt=""
-              className="rounded-t-5 rounded-tr-lg-0"
+              className="rounded"
               style={{ transform: "scale(0)", transition: "transform 1s" }}
               onLoad={(e) => {
                 e.target.style.transform = "scale(1)";
               }}
-              lazy
+              loading="lazy"
             />
           </MDBCol>
 
-          <MDBCol md="8">
+          <MDBCol md="8" style={{ maxWidth: "380px" }}>
             <MDBCardBody>
               {" "}
               <MDBValidation>
