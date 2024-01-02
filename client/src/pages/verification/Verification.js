@@ -1,10 +1,31 @@
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
 import axios from "axios";
+import PasswordForm from "./PasswordForm";
+import { MDBContainer } from "mdb-react-ui-kit";
 
 const Verification = () => {
   const { token } = useParams();
   const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setShowForm(false);
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}/users/send-verification-link`, {
+        token,
+        password,
+      })
+      .then((res) => {
+        // console.log(res);
+        if (res.data.success) {
+          alert("New verification link sent to your email!");
+        } else {
+          alert("Failed to send new verification link!");
+        }
+        navigate("/");
+      });
+  };
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     axios
@@ -21,32 +42,29 @@ const Verification = () => {
             "Email verification failed!\nWould you like to get a new verification link?"
           );
           if (sendNewLink) {
-            const password = window.prompt(
-              "Enter your password to get a new verification link:"
-            );
-            axios
-              .post(
-                `${process.env.REACT_APP_BASE_URL}/users/send-verification-link`,
-                { token, password }
-              )
-              .then((res) => {
-                // console.log(res);
-                if (res.data.success) {
-                  alert("New verification link sent to your email!");
-                } else {
-                  alert("Failed to send new verification link!");
-                }
-                navigate("/");
-              });
+            setShowForm(true);
           }
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [navigate, token]);
 
-  return <div></div>;
+  const [showForm, setShowForm] = useState(false);
+
+  return (
+    <MDBContainer className="my-5 login">
+      {showForm && (
+        <PasswordForm
+          password={password}
+          setPassword={setPassword}
+          handleSubmit={handleSubmit}
+          cancel={() => navigate("/")}
+        />
+      )}
+    </MDBContainer>
+  );
 };
 
 export default Verification;
