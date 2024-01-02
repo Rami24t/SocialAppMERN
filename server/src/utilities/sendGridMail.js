@@ -9,8 +9,8 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 async function sendEmail(token, template = "welcome") {
   const msgData = {
-    to: "al.s.a.ad.i.ra.m.i.2.4@gmail.com", // Change to your recipient
-    from: "rami.s.s.aadi@gmail.com", // Change to your verified sender
+    to: "al.s.a.ad.i.ra.m.i.2.4@gmail.com", // recipient
+    from: "rami.s.s.aadi@gmail.com", // verified sender
     subject: getSubject(template),
     text: `Welcome to Social App! Please Verify Your Email Address to complete your registration.
 
