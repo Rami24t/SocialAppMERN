@@ -21,7 +21,12 @@ const register = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    const sendEmailRes = await sendEmail(token, "welcome");
+    const sendEmailRes = await sendEmail(
+      token,
+      "welcome",
+      user.email,
+      user.username
+    );
     res.json({ success: true, sendEmailRes });
   } catch (error) {
     console.log("registration error:", error.message);
@@ -183,7 +188,12 @@ const sendVerificationLink = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    const sendEmailRes = await sendEmail(token, "welcome");
+    const sendEmailRes = await sendEmail(
+      token,
+      "welcome",
+      user.email,
+      user.username
+    );
     res.send({ success: true, sendEmailRes });
   } catch (error) {
     console.log("sendVerificationLink error:", error.message);
@@ -228,7 +238,7 @@ const forgotPass = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    const sendEmailRes = await sendEmail(token, "forgotpass");
+    const sendEmailRes = await sendEmail(token, "forgotpass", user.email);
     res.send({ success: true, sendEmailRes });
   } catch (error) {
     console.log("forgotPass error:", error.message);

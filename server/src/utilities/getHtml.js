@@ -1,4 +1,4 @@
-export default function getHtml(template, token) {
+export default function getHtml(template, token, recipientsEmail = "") {
   switch (template) {
     case "welcome":
       return `<!DOCTYPE html>
@@ -26,13 +26,18 @@ export default function getHtml(template, token) {
       
       <body>
           <p>Welcome to Social App!</p>
-          <span style="font-size: 18px;">Please verify your email address </span>
+          <span style="font-size: 18px;">Please verify your email address ${recipientsEmail}</span>
           <span style="color: #000000; font-size: 18px; font-family: arial, helvetica, sans-serif;">
-              to get access to logging in</span>
+              Please verify that you recently registered this email on Social App to get access to logging in</span>
           <p>Kindly click the following link to verify your account</p>
           <a href="https://social-app-client-mern.vercel.app/emailverification/${token}">
               Verify your account
           </a>
+          <p>If you did not register this email on Social App, kindly ignore this email</p>
+          <p>Regards,</p>
+          <p>Social App Team</p>
+          <p>Have any questions? <a href="mailto:${process.env.CONTACT_LINK}">Contact us</a></p>
+          <p>© 2020 Social App. All rights reserved.</p>
       </body>
       
       </html>
