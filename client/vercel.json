@@ -5,6 +5,16 @@
         "has": [
           {
             "type": "host",
+            "value": "social.ramidev.site"
+          }
+        ],
+        "destination": "/sitemap-site.xml"
+      },
+      {
+        "source": "/sitemap.xml",
+        "has": [
+          {
+            "type": "host",
             "value": "social.ramidev.tech"
           }
         ],
